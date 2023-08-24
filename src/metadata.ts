@@ -1,0 +1,11 @@
+/* eslint-disable */
+export default async () => {
+    const t = {
+        ["./modules/base/activities/activity.model"]: await import("./modules/base/activities/activity.model"),
+        ["./modules/base/companies/company.model"]: await import("./modules/base/companies/company.model"),
+        ["./modules/base/units/unit.model"]: await import("./modules/base/units/unit.model"),
+        ["./modules/base/personnels/personnel.model"]: await import("./modules/base/personnels/personnel.model"),
+        ["./modules/base/positions/position.model"]: await import("./modules/base/positions/position.model")
+    };
+    return { "@nestjs/graphql": { "models": [[import("./modules/base/activities/activity.model"), { "Activity": { _id: {}, title: {}, description: { nullable: true }, type: {}, position: {}, company: {} } }], [import("./modules/base/activities/dto/create-activity.input"), { "CreateActivityInput": { title: {}, description: { nullable: true }, type: {}, job: {}, company: {} } }], [import("./modules/base/positions/position.model"), { "Position": { title: { type: () => String }, unit: { type: () => t["./modules/base/units/unit.model"].Unit }, supervisor: { type: () => t["./modules/base/personnels/personnel.model"].Personnel }, company: { type: () => t["./modules/base/companies/company.model"].Company } } }], [import("./modules/base/companies/company.model"), { "Company": { name: { type: () => String } } }], [import("./modules/base/personnels/personnel.model"), { "Personnel": { firstname: { type: () => String }, lastname: { type: () => String }, password: { type: () => String }, nationalNumber: { type: () => String }, code: { type: () => String }, position: { type: () => String }, company: { type: () => t["./modules/base/companies/company.model"].Company } } }], [import("./modules/base/units/unit.model"), { "Unit": { name: { type: () => String }, description: { nullable: true, type: () => String }, supervisor: { type: () => t["./modules/base/personnels/personnel.model"].Personnel }, company: { type: () => t["./modules/base/companies/company.model"].Company } } }]] } };
+};

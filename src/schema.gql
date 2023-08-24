@@ -1,0 +1,30 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Activity {
+  """"""
+  _id: ID
+  company: String!
+  description: String!
+  position: String!
+  title: String!
+  type: String!
+}
+
+input CreateActivityInput {
+  company: String!
+  description: String
+  job: String!
+  title: String!
+  type: String!
+}
+
+type Mutation {
+  createActivity(createActivityInput: CreateActivityInput!): Activity
+}
+
+type Query {
+  activities: [Activity!]!
+  activity(id: ID!): Activity!
+}
