@@ -6,21 +6,21 @@ import { CreateActivityInput } from './dto/create-activity.input';
 import { ActivityService } from './activity.service';
 
 @Auth(AuthType.None)
-@Resolver((of) => Activity)
+@Resolver(() => Activity)
 export class ActivityResolver {
   constructor(private readonly activityService: ActivityService) {}
 
-  @Query((returns) => [Activity], { name: 'activities' })
-  async findAll() {
+  @Query(() => [Activity], { name: 'activities', nullable: true })
+  async findAll(): Promise<Activity[]> {
     return this.activityService.findAll();
   }
 
-  @Query((returns) => Activity, { name: 'activity' })
-  async findOne(@Args('id', { type: () => ID }) id: string) {
+  @Query(() => Activity, { name: 'activity' })
+  async findOne(@Args('id', { type: () => ID }) id: string): Promise<Activity> {
     return this.activityService.findOne(id);
   }
 
-  @Mutation((returns) => Activity, { name: 'createActivity', nullable: true })
+  @Mutation(() => Activity, { name: 'createActivity' })
   async create(
     @Args('createActivityInput') createActivityInput: CreateActivityInput,
   ) {

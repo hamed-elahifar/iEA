@@ -1,12 +1,25 @@
-import { ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @ObjectType('Company')
 @Schema({ timestamps: true })
 export class Company extends Document {
+  @Field()
+  _id: string;
+
+  @Field()
   @Prop()
   name: string;
+
+  @Field(() => Date)
+  createAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @Field(() => Date)
+  deletedAt: Date;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

@@ -8,6 +8,7 @@ import { BaseModule } from './modules/base/base.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { DateScalar } from './modules/common/scalars/date.scalar';
 
 @Module({
   imports: [
@@ -31,7 +32,9 @@ import { join } from 'path';
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
       playground: true,
+      installSubscriptionHandlers: true,
       buildSchemaOptions: {
+        orphanedTypes: [],
         // numberScalarMode: 'integer',
       },
     }),
@@ -48,6 +51,6 @@ import { join } from 'path';
     BaseModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [DateScalar],
 })
 export class AppModule {}

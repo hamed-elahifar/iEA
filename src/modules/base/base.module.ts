@@ -7,6 +7,9 @@ import { Company, CompanySchema } from './companies/company.model';
 import { Position, PositionSchema } from './positions/position.model';
 import { Personnel, PersonnelSchema } from './personnels/personnel.model';
 import { Unit, UnitSchema } from './units/unit.model';
+import { CompanyResolver } from './companies/company.resolver';
+import { CompanyService } from './companies/company.service';
+import { ActivityCompanyResolver } from './activities/activity-company.resolver';
 
 @Module({
   imports: [
@@ -33,6 +36,12 @@ import { Unit, UnitSchema } from './units/unit.model';
       },
     ]),
   ],
-  providers: [ActivityResolver, ActivityService],
+  providers: [
+    ActivityResolver,
+    ActivityCompanyResolver,
+    ActivityService,
+    CompanyResolver,
+    CompanyService,
+  ],
 })
 export class BaseModule {}

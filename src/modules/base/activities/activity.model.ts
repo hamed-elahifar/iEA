@@ -29,21 +29,29 @@ export class Activity extends Document {
   @Prop({ type: String, enum: Type, required: true })
   type: Type;
 
-  @Field(() => String)
+  @Field(() => Position)
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Position.name,
-    required: true,
   })
-  position: Position;
+  position?: Position;
 
-  @Field(() => String)
+  @Field(() => Company)
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Company.name,
     required: true,
   })
   company: Company;
+
+  @Field(() => Date)
+  createAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @Field(() => Date)
+  deletedAt: Date;
 }
 
 export const ActivitySchema = SchemaFactory.createForClass(Activity);

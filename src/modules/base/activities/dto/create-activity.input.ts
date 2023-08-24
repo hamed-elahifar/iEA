@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { Type } from '../activity.model';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class CreateActivityInput {
@@ -17,8 +17,9 @@ export class CreateActivityInput {
   type: Type;
 
   @IsString()
+  @IsOptional()
   @Field()
-  job: string;
+  position: string;
 
   @IsString()
   @Field()

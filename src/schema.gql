@@ -5,26 +5,82 @@
 type Activity {
   """"""
   _id: ID
-  company: String!
+  company: Company!
+  createAt: Date!
+  deletedAt: Date!
   description: String!
-  position: String!
+  position: Position!
   title: String!
   type: String!
+  updatedAt: Date!
+}
+
+type Company {
+  _id: String!
+  createAt: Date!
+  deletedAt: Date!
+  name: String!
+  updatedAt: Date!
 }
 
 input CreateActivityInput {
   company: String!
   description: String
-  job: String!
+  position: String!
   title: String!
   type: String!
 }
 
+input CreateCompanyInput {
+  name: String!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
 type Mutation {
-  createActivity(createActivityInput: CreateActivityInput!): Activity
+  createActivity(createActivityInput: CreateActivityInput!): Activity!
+  createCompany(createCompanyInput: CreateCompanyInput!): Company
+}
+
+type Personnel {
+  _id: String!
+  code: String!
+  company: Company!
+  createAt: Date!
+  deletedAt: Date!
+  firstname: String!
+  lastname: String!
+  nationalNumber: String!
+  password: String!
+  position: String!
+  updatedAt: Date!
+}
+
+type Position {
+  company: Company!
+  createAt: Date!
+  deletedAt: Date!
+  supervisor: Personnel!
+  title: String!
+  unit: Unit!
+  updatedAt: Date!
 }
 
 type Query {
-  activities: [Activity!]!
+  activities: [Activity!]
   activity(id: ID!): Activity!
+  companies: [Company!]
+  company(id: ID!): Company
+}
+
+type Unit {
+  _id: String
+  company: Company!
+  createAt: Date!
+  deletedAt: Date
+  description: String
+  name: String!
+  supervisor: Personnel!
+  updatedAt: Date!
 }
