@@ -3,13 +3,9 @@ import mongoose, { Document } from 'mongoose';
 import { Position } from '../positions/position.model';
 import { Company } from '../companies/company.model';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { TypeEnum } from './enums/group-type.unum';
 
 export type ActivityDocument = Activity & Document;
-
-export enum Type {
-  Control = 'control',
-  Executive = 'executive',
-}
 
 @ObjectType('Activity')
 @Schema({ timestamps: true })
@@ -26,8 +22,8 @@ export class Activity extends Document {
   description?: string;
 
   @Field()
-  @Prop({ type: String, enum: Type, required: true })
-  type: Type;
+  @Prop({ type: String, enum: TypeEnum, required: true })
+  type: TypeEnum;
 
   @Field(() => Position)
   @Prop({

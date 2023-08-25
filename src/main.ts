@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 // import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
+import mongoose from 'mongoose';
 
 async function bootstrap() {
   const logger = new Logger('Main');
@@ -33,7 +34,11 @@ async function bootstrap() {
 
   // app.useStaticAssets(join(__dirname, '..', 'static'));
 
-  const port = configService.getOrThrow('PORT');
+  if (eval(configService.get('MONGO_DEBUG'))) {
+    mongoose.set('debug', true);
+  }
+
+  const port: number = +configService.getOrThrow<number>('PORT');
   await app.listen(port);
 }
 bootstrap();

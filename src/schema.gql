@@ -11,7 +11,7 @@ type Activity {
   description: String!
   position: Position!
   title: String!
-  type: String!
+  type: typeEnum!
   updatedAt: Date!
 }
 
@@ -83,4 +83,9 @@ type Unit {
   name: String!
   supervisor: Personnel!
   updatedAt: Date!
+}
+
+enum typeEnum {
+  CONTROL
+  EXECUTIVE
 }

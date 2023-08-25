@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, Mutation, Info } from '@nestjs/graphql';
 import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
 import { Auth } from '../../../modules/auth/decorators/auth.decorators';
 import { Company } from './company.model';
@@ -11,7 +11,11 @@ export class CompanyResolver {
   constructor(private readonly companyService: CompanyService) {}
 
   @Query((returns) => [Company], { name: 'companies', nullable: true })
-  async findAll() {
+  async findAll(@Info() info) {
+    const keys = info.fieldNodes[0].selectionSet.selections.map(
+      (item) => item.name.value,
+    );
+    console.log(keys);
     return this.companyService.findAll();
   }
 

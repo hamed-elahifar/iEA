@@ -9,6 +9,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { DateScalar } from './modules/common/scalars/date.scalar';
+import { PubSubModule } from './modules/pub-sub/pub-sub.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { DateScalar } from './modules/common/scalars/date.scalar';
     }),
     AuthModule,
     BaseModule,
+    PubSubModule,
   ],
   controllers: [],
   providers: [DateScalar],

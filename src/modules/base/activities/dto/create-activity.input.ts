@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { Type } from '../activity.model';
 import { IsOptional, IsString } from 'class-validator';
+import { TypeEnum } from '../enums/group-type.unum';
 
 @InputType()
 export class CreateActivityInput {
@@ -14,7 +14,7 @@ export class CreateActivityInput {
 
   @IsString()
   @Field(() => String)
-  type: Type;
+  type: TypeEnum;
 
   @IsString()
   @IsOptional()
