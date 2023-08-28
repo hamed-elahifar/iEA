@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Position } from '../positions/position.model';
 import { Company } from '../companies/company.model';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { TypeEnum } from './enums/group-type.unum';
+import { JobPosition } from '../job-positions/job-position.model';
 
 export type ActivityDocument = Activity & Document;
 
@@ -25,12 +25,12 @@ export class Activity extends Document {
   @Prop({ type: String, enum: TypeEnum, required: true })
   type: TypeEnum;
 
-  @Field(() => Position)
+  @Field(() => JobPosition)
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: Position.name,
+    ref: JobPosition.name,
   })
-  position?: Position;
+  jobPosition?: JobPosition;
 
   @Field(() => Company)
   @Prop({
@@ -51,4 +51,5 @@ export class Activity extends Document {
 }
 
 export const ActivitySchema = SchemaFactory.createForClass(Activity);
-// UserSchema.index({ phone: 1, name: -1 }); // 1 is ascending, -1 is descending
+ActivitySchema.index({ title: 1, company: 1 }, { unique: true });
+ActivitySchema.index({ jobPosition: 1 });

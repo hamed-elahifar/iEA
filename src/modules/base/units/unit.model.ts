@@ -18,12 +18,24 @@ export class Unit extends Document {
   @Prop()
   description?: string;
 
+  @Field(() => Unit)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Unit.name })
+  parent: Unit;
+
   @Field(() => Personnel)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Personnel.name })
   supervisor: Personnel;
 
+  @Field(() => Personnel)
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Personnel.name })
+  members: [Personnel];
+
   @Field(() => Company)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Company.name })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Company.name,
+    required: true,
+  })
   company: Company;
 
   @Field(() => Date)
@@ -37,4 +49,4 @@ export class Unit extends Document {
 }
 
 export const UnitSchema = SchemaFactory.createForClass(Unit);
-// UserSchema.index({ phone: 1, name: -1 }); // 1 is ascending, -1 is descending
+UnitSchema.index({ name: 1, company: 1 }, { unique: true });

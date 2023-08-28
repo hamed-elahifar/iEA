@@ -9,8 +9,16 @@ export class Company extends Document {
   _id: string;
 
   @Field()
-  @Prop()
+  @Prop({ unique: true })
   name: string;
+
+  @Field()
+  @Prop()
+  mission: string;
+
+  @Field()
+  @Prop()
+  vision: string;
 
   @Field(() => Date)
   createAt: Date;

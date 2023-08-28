@@ -4,11 +4,20 @@ import { Document } from 'mongoose';
 @Schema({ timestamps: true })
 export class User extends Document {
   @Prop()
+  username: string;
+
+  @Prop()
+  password: string;
+
+  @Prop()
   name: string;
 
-  @Prop({ index: true })
+  @Prop({ unique: true })
   phone: string;
+
+  @Prop({ unique: true })
+  email: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-// UserSchema.index({ phone: 1, name: -1 }); // 1 is ascending, -1 is descending
+// UserSchema.index({ phone: 1, name: 1 });

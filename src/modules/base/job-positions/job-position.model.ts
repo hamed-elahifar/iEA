@@ -2,28 +2,27 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Unit } from '../units/unit.model';
 import { Personnel } from '../personnels/personnel.model';
 
-export type PositionDocument = Position & Document;
+export type JobPositionDocument = JobPosition & Document;
 
-@ObjectType('Position')
+@ObjectType('JobPosition')
 @Schema({ timestamps: true })
-export class Position extends Document {
-  @Prop()
+export class JobPosition extends Document {
   @Field()
+  @Prop()
   title: string;
-
-  @Field(() => Unit)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Unit.name })
-  unit: Unit;
 
   @Field(() => Personnel)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Personnel.name })
-  supervisor: Personnel;
+  owner: Personnel;
 
   @Field(() => Company)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Company.name })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Company.name,
+    required: true,
+  })
   company: Company;
 
   @Field(() => Date)
@@ -36,5 +35,5 @@ export class Position extends Document {
   deletedAt: Date;
 }
 
-export const PositionSchema = SchemaFactory.createForClass(Position);
-// UserSchema.index({ phone: 1, name: -1 }); // 1 is ascending, -1 is descending
+export const JobPositionSchema = SchemaFactory.createForClass(JobPosition);
+JobPositionSchema.index({ title: 1, company: -1 }, { unique: true }); // 1 is ascending, -1 is descending

@@ -9,7 +9,7 @@ type Activity {
   createAt: Date!
   deletedAt: Date!
   description: String!
-  position: Position!
+  jobPosition: JobPosition!
   title: String!
   type: typeEnum!
   updatedAt: Date!
@@ -19,8 +19,10 @@ type Company {
   _id: String!
   createAt: Date!
   deletedAt: Date!
+  mission: String!
   name: String!
   updatedAt: Date!
+  vision: String!
 }
 
 input CreateActivityInput {
@@ -38,6 +40,15 @@ input CreateCompanyInput {
 """Date custom scalar type"""
 scalar Date
 
+type JobPosition {
+  company: Company!
+  createAt: Date!
+  deletedAt: Date!
+  owner: Personnel!
+  title: String!
+  updatedAt: Date!
+}
+
 type Mutation {
   createActivity(createActivityInput: CreateActivityInput!): Activity!
   createCompany(createCompanyInput: CreateCompanyInput!): Company
@@ -50,20 +61,10 @@ type Personnel {
   createAt: Date!
   deletedAt: Date!
   firstname: String!
+  jobPosition: String
   lastname: String!
   nationalNumber: String!
   password: String!
-  position: String!
-  updatedAt: Date!
-}
-
-type Position {
-  company: Company!
-  createAt: Date!
-  deletedAt: Date!
-  supervisor: Personnel!
-  title: String!
-  unit: Unit!
   updatedAt: Date!
 }
 
@@ -80,7 +81,9 @@ type Unit {
   createAt: Date!
   deletedAt: Date
   description: String
+  members: Personnel!
   name: String!
+  parent: Unit!
   supervisor: Personnel!
   updatedAt: Date!
 }

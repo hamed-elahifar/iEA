@@ -34,3 +34,11 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## TODO
+abstact class for MODELs
+abstact class for RESOLVERs
+abstact class for SERVICEs
+
+Decorator for KEYs
+Decorator for handle Companies

@@ -29,15 +29,19 @@ export class Personnel extends Document {
   @Prop()
   code: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Position' /* Position.name wont work */,
+    ref: 'JobPosition', // JobPosition.name won't work,
   })
-  position: string; // Position wont work
+  jobPosition: string; // JobPosition won't work
 
   @Field(() => Company)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Company.name })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Company.name,
+    required: true,
+  })
   company: Company;
 
   @Field(() => Date)
@@ -51,4 +55,5 @@ export class Personnel extends Document {
 }
 
 export const PersonnelSchema = SchemaFactory.createForClass(Personnel);
-// UserSchema.index({ phone: 1, name: -1 }); // 1 is ascending, -1 is descending
+PersonnelSchema.index({ phone: 1, company: 1 }, { unique: true }); // 1 is ascending, -1 is descending
+PersonnelSchema.index({ nationalNumber: 1, company: 1 }, { unique: true });
