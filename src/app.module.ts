@@ -10,12 +10,14 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { DateScalar } from './modules/common/scalars/date.scalar';
 import { PubSubModule } from './modules/pub-sub/pub-sub.module';
+import { validate } from './modules/common/validators/env.validation';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      validate,
       isGlobal: true,
-      envFilePath: ['.env'],
+      envFilePath: `.env.${process.env.NODE_ENV}`,
       cache: true,
     }),
     CacheModule.registerAsync({

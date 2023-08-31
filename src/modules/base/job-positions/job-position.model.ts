@@ -3,6 +3,7 @@ import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Personnel } from '../personnels/personnel.model';
+import { OrganizationLevelEnum } from './enums/organization-level.enum';
 
 export type JobPositionDocument = JobPosition & Document;
 
@@ -16,6 +17,10 @@ export class JobPosition extends Document {
   @Field(() => Personnel)
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Personnel.name })
   owner: Personnel;
+
+  @Field(() => OrganizationLevelEnum)
+  @Prop({ type: String, enum: OrganizationLevelEnum, required: true })
+  organizationLevel: OrganizationLevelEnum;
 
   @Field(() => Company)
   @Prop({
