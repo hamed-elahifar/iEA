@@ -44,6 +44,7 @@ type JobPosition {
   company: Company!
   createAt: Date!
   deletedAt: Date!
+  organizationLevel: OrganizationLevelEnum!
   owner: Personnel!
   title: String!
   updatedAt: Date!
@@ -52,6 +53,19 @@ type JobPosition {
 type Mutation {
   createActivity(createActivityInput: CreateActivityInput!): Activity!
   createCompany(createCompanyInput: CreateCompanyInput!): Company
+}
+
+"""Organization Level"""
+enum OrganizationLevelEnum {
+  ASSOCIATE
+  EMPLOYEE
+  EXPERT
+  MANAGEMENT
+  PRESIDENCY
+  RESPONSIBLE
+  SUPERIOR
+  TECHNICIAN
+  WORKER
 }
 
 type Personnel {

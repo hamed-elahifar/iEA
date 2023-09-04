@@ -6,18 +6,32 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import mongoose from 'mongoose';
+import compression from 'compression';
 
 async function bootstrap() {
   const logger = new Logger('Main');
 
-  process.on('uncaughtException', (uncaughtException) => {
-    logger.error('uncaughtException', uncaughtException);
-  });
-  process.on('unhandledRejection', (unhandledRejection) => {
-    logger.error('unhandledRejection', unhandledRejection);
-  });
+  process.on(
+    'uncaughtException',
+    (message: any, stack?: string, context?: string) => {
+      logger.error(message);
+      console.error(stack);
+      console.assert(!context, context);
+    },
+  );
+  process.on(
+    'unhandledRejection',
+    (message: any, stack?: string, context?: string) => {
+      logger.error(message);
+      console.error(stack);
+      console.assert(!context, context);
+    },
+  );
 
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    // logger: false,
+    // logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -37,6 +51,8 @@ async function bootstrap() {
   if (eval(configService.get('MONGO_DEBUG'))) {
     mongoose.set('debug', true);
   }
+
+  app.use(compression());
 
   const port: number = +configService.getOrThrow<number>('PORT');
   await app.listen(port);
