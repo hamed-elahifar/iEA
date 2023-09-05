@@ -12,11 +12,11 @@ export class Company extends Document {
   @Prop({ unique: true })
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   mission: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   vision: string;
 
@@ -26,7 +26,7 @@ export class Company extends Document {
   @Field(() => Date)
   updatedAt: Date;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   deletedAt: Date;
 }
 

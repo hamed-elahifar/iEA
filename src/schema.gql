@@ -18,11 +18,11 @@ type Activity {
 type Company {
   _id: String!
   createAt: Date!
-  deletedAt: Date!
-  mission: String!
+  deletedAt: Date
+  mission: String
   name: String!
   updatedAt: Date!
-  vision: String!
+  vision: String
 }
 
 input CreateActivityInput {
