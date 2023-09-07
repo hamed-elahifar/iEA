@@ -3,6 +3,7 @@
 
 const { exec } = require('child_process');
 const app = require('express')();
+let restartService = true;
 
 app.all('/updateBE', async (req, res) => {
   const updateApp = new Promise((resolve, reject) => {
@@ -17,6 +18,7 @@ app.all('/updateBE', async (req, res) => {
           console.log(stderr);
           reject(stderr);
         }
+        if (stdout == 'Already up to date.') restartService = false;
         res.send(stdout);
       },
     );
@@ -26,6 +28,7 @@ app.all('/updateBE', async (req, res) => {
   await updateApp;
 
   const restartPm2 = new Promise((resolve, reject) => {
+    if (!restartService) return;
     exec(`pm2 restart bpms`, (err, stdout, stderr) => {
       if (err) {
         console.log(err);
