@@ -23,11 +23,16 @@ export class CompanyService {
     );
   }
 
-  async findOne(id: string): Promise<Company> {
-    const company = await this.companyModel.findOne({ _id: id }).exec();
+  async findOne({ id, select }): Promise<Company> {
+    const company = await this.companyModel
+      .findOne({ _id: id })
+      .select(select)
+      .exec();
+
     if (!company) {
       throw new NotFoundException(`${Company.name} #${id} not found`);
     }
+
     return company;
   }
 

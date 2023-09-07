@@ -11,11 +11,12 @@ export class UnitService {
     private readonly unitModel: Model<Unit>,
   ) {}
 
-  findAll() {
+  findAll({ select }) {
     // const { limit, offset } = paginationQueryDto;
     return (
       this.unitModel
         .find()
+        .select(select)
         // .skip(offset)
         // .limit(limit)
         // .populate(['company'])
@@ -23,9 +24,10 @@ export class UnitService {
     );
   }
 
-  async findOne(id: string): Promise<Unit> {
+  async findOne({ id, select }): Promise<Unit> {
     const result = await this.unitModel
       .findOne({ _id: id })
+      .select(select)
       // .populate(['company'])
       .exec();
     if (!result) {

@@ -11,11 +11,12 @@ export class ActivityService {
     private readonly activityModel: Model<Activity>,
   ) {}
 
-  findAll() {
+  findAll({ select }) {
     // const { limit, offset } = paginationQueryDto;
     return (
       this.activityModel
         .find()
+        .select(select)
         // .skip(offset)
         // .limit(limit)
         // .populate(['company'])
@@ -23,9 +24,10 @@ export class ActivityService {
     );
   }
 
-  async findOne(id: string): Promise<Activity> {
+  async findOne({ id, select }): Promise<Activity> {
     const user = await this.activityModel
       .findOne({ _id: id })
+      .select(select)
       // .populate(['company'])
       .exec();
     if (!user) {

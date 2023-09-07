@@ -17,8 +17,11 @@ export class CompanyResolver {
   }
 
   @Query((returns) => Company, { name: 'company', nullable: true })
-  async findOne(@Args('id', { type: () => ID }) id: string) {
-    return this.companyService.findOne(id);
+  async findOne(
+    @Args('id', { type: () => ID }) id: string,
+    @Selected() select,
+  ) {
+    return this.companyService.findOne({ id, select });
   }
 
   @Mutation((returns) => Company, { name: 'createCompany', nullable: true })

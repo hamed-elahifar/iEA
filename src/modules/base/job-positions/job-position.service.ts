@@ -11,11 +11,12 @@ export class JobPositionService {
     private readonly jobPositionModel: Model<JobPosition>,
   ) {}
 
-  findAll() {
+  findAll({ select }) {
     // const { limit, offset } = paginationQueryDto;
     return (
       this.jobPositionModel
         .find()
+        .select(select)
         // .skip(offset)
         // .limit(limit)
         // .populate(['company'])
@@ -23,9 +24,10 @@ export class JobPositionService {
     );
   }
 
-  async findOne(id: string): Promise<JobPosition> {
+  async findOne({ id, select }): Promise<JobPosition> {
     const result = await this.jobPositionModel
       .findOne({ _id: id })
+      .select(select)
       // .populate(['company'])
       .exec();
     if (!result) {

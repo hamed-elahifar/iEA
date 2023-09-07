@@ -4,6 +4,7 @@ import { Auth } from '../../../modules/auth/decorators/auth.decorators';
 import { Unit } from './unit.model';
 import { UnitService } from './unit.service';
 import { CreateUnitInput } from './dto/create-unit.input';
+import { Selected } from '../../common/decorators/selected.decorator';
 
 @Auth(AuthType.None)
 @Resolver(() => Unit)
@@ -11,13 +12,16 @@ export class UnitResolver {
   constructor(private readonly unitService: UnitService) {}
 
   @Query(() => [Unit], { name: 'Units', nullable: true })
-  async findAll(): Promise<Unit[]> {
-    return this.unitService.findAll();
+  async findAll(@Selected() select): Promise<Unit[]> {
+    return this.unitService.findAll({ select });
   }
 
   @Query(() => Unit, { name: 'Unit' })
-  async findOne(@Args('id', { type: () => ID }) id: string): Promise<Unit> {
-    return this.unitService.findOne(id);
+  async findOne(
+    @Args('id', { type: () => ID }) id: string,
+    @Selected() select,
+  ): Promise<Unit> {
+    return this.unitService.findOne({ id, select });
   }
 
   @Mutation(() => Unit, { name: 'createUnit' })

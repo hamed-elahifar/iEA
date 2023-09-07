@@ -11,11 +11,12 @@ export class PersonnelService {
     private readonly personnelModel: Model<Personnel>,
   ) {}
 
-  findAll() {
+  findAll({ select }) {
     // const { limit, offset } = paginationQueryDto;
     return (
       this.personnelModel
         .find()
+        .select(select)
         // .skip(offset)
         // .limit(limit)
         // .populate(['company'])
@@ -23,9 +24,10 @@ export class PersonnelService {
     );
   }
 
-  async findOne(id: string): Promise<Personnel> {
+  async findOne({ id, select }): Promise<Personnel> {
     const user = await this.personnelModel
       .findOne({ _id: id })
+      .select(select)
       // .populate(['company'])
       .exec();
     if (!user) {
