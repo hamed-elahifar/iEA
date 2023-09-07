@@ -35,7 +35,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
-      playground: true,
+      playground: process.env.NODE_ENV === 'dev',
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
         orphanedTypes: [],

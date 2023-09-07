@@ -11,11 +11,12 @@ export class CompanyService {
     private readonly companyModel: Model<Company>,
   ) {}
 
-  findAll() {
+  findAll({ select }) {
     // const { limit, offset } = paginationQueryDto;
     return (
       this.companyModel
         .find()
+        .select(select)
         // .skip(offset)
         // .limit(limit)
         .exec()

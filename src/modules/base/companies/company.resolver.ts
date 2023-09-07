@@ -4,6 +4,7 @@ import { Auth } from '../../../modules/auth/decorators/auth.decorators';
 import { Company } from './company.model';
 import { CompanyService } from './company.service';
 import { CreateCompanyInput } from './dto/create-company.input';
+import { Selected } from '../../common/decorators/selected.decorator';
 
 @Auth(AuthType.None)
 @Resolver((of) => Company)
@@ -11,12 +12,8 @@ export class CompanyResolver {
   constructor(private readonly companyService: CompanyService) {}
 
   @Query((returns) => [Company], { name: 'companies', nullable: true })
-  async findAll(@Info() info) {
-    const keys = info.fieldNodes[0].selectionSet.selections.map(
-      (item) => item.name.value,
-    );
-    console.log(keys);
-    return this.companyService.findAll();
+  async findAll(@Selected() select) {
+    return this.companyService.findAll({ select });
   }
 
   @Query((returns) => Company, { name: 'company', nullable: true })
