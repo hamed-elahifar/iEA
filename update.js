@@ -3,6 +3,10 @@
 
 const { exec } = require('child_process');
 const app = require('express')();
+
+const projectName = require('./package.json').name;
+const port = 7777;
+
 let restartService = true;
 
 app.all('/updateBE', async (req, res) => {
@@ -29,7 +33,7 @@ app.all('/updateBE', async (req, res) => {
 
   const restartPm2 = new Promise((resolve, reject) => {
     if (!restartService) return;
-    exec(`pm2 restart bpms`, (err, stdout, stderr) => {
+    exec(`pm2 restart ${projectName}`, (err, stdout, stderr) => {
       if (err) {
         console.log(err);
         reject(err);
@@ -46,5 +50,6 @@ app.all('/updateBE', async (req, res) => {
   await restartPm2;
 });
 
-const port = 7777;
-app.listen(port, () => console.log(`update service is running on ${port}`));
+app.listen(port, () =>
+  console.log(`update service for project:${projectName} is running on ${port}`),
+);
