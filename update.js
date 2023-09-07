@@ -5,34 +5,42 @@ const { exec } = require('child_process');
 const app = require('express')();
 
 app.all('/updateBE', async (req, res) => {
-  await Promise.resolve(() => {
+  const updateApp = new Promise((resolve, reject) => {
     exec(
       `git --git-dir='${process.cwd()}/.git' --work-tree=${process.cwd()} pull`,
       (err, stdout, stderr) => {
         if (err) {
           console.log(err);
+          reject(err);
         }
         if (stderr) {
           console.log(stderr);
+          reject(stderr);
         }
         res.send(stdout);
       },
     );
+    resolve(stdout);
   });
-  await Promise.resolve(() => {
-    exec(
-      `pm2 restart bpms`,
-      (err, stdout, stderr) => {
-        if (err) {
-          console.log(err);
-        }
-        if (stderr) {
-          console.log(stderr);
-        }
-        res.send(stdout);
-      },
-    );
+
+  await updateApp;
+
+  const restartPm2 = new Promise((resolve, reject) => {
+    exec(`pm2 restart bpms`, (err, stdout, stderr) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      if (stderr) {
+        console.log(stderr);
+        reject(stderr);
+      }
+      res.send(stdout);
+      resolve(stdout);
+    });
   });
+
+  await restartPm2;
 });
 
 const port = 7777;
