@@ -4,9 +4,9 @@
 const { exec } = require('child_process');
 const app = require('express')();
 
-app.all('/update', (req, res) => {
+app.all('/updateBE', (req, res) => {
   exec(
-    "git --git-dir='/root/tickado/public/.git' --work-tree=/root/tickado/public/ pull",
+    `git --git-dir='${process.cwd()}/.git' --work-tree=${process.cwd()} pull`,
     (err, stdout, stderr) => {
       if (err) {
         console.log(err);

@@ -11,6 +11,7 @@ import { join } from 'path';
 import { DateScalar } from './modules/common/scalars/date.scalar';
 import { PubSubModule } from './modules/pub-sub/pub-sub.module';
 import { validate } from './modules/common/validators/env.validation';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -50,6 +51,23 @@ import { validate } from './modules/common/validators/env.validation';
         useUnifiedTopology: true,
       }),
     }),
+    ThrottlerModule.forRoot([
+      {
+        name: 'short',
+        ttl: 1000,
+        limit: 3,
+      },
+      {
+        name: 'medium',
+        ttl: 10000,
+        limit: 10,
+      },
+      {
+        name: 'long',
+        ttl: 60000,
+        limit: 30,
+      },
+    ]),
     AuthModule,
     BaseModule,
     PubSubModule,
