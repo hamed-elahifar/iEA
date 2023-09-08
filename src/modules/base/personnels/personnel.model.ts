@@ -27,7 +27,19 @@ export class Personnel extends Document {
 
   @Field()
   @Prop()
-  code: string;
+  personalID: string;
+
+  @Field()
+  @Prop()
+  username: string;
+
+  @Field()
+  @Prop()
+  phone: string;
+
+  @Field()
+  @Prop()
+  email: string;
 
   @Field({ nullable: true })
   @Prop({
@@ -57,3 +69,5 @@ export class Personnel extends Document {
 export const PersonnelSchema = SchemaFactory.createForClass(Personnel);
 PersonnelSchema.index({ phone: 1, company: 1 }, { unique: true }); // 1 is ascending, -1 is descending
 PersonnelSchema.index({ nationalNumber: 1, company: 1 }, { unique: true });
+PersonnelSchema.index({ username: 1, company: 1 }, { unique: true });
+PersonnelSchema.index({ email: 1, company: 1 }, { unique: true });

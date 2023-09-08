@@ -74,16 +74,19 @@ enum OrganizationLevelEnum {
 
 type Personnel {
   _id: String!
-  code: String!
   company: Company!
   createAt: Date!
   deletedAt: Date!
+  email: String!
   firstname: String!
   jobPosition: String
   lastname: String!
   nationalNumber: String!
   password: String!
+  personalID: String!
+  phone: String!
   updatedAt: Date!
+  username: String!
 }
 
 type Query {

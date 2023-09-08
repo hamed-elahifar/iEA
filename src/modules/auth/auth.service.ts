@@ -5,7 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from './models/user.model';
 import { Model } from 'mongoose';
 import { HashingSerivce } from './hashing.service';
 import { LoginUserDto } from './dto/login.dto';
@@ -14,11 +13,12 @@ import { JwtService } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { ActiveUserData } from './interfaces/active-user-data.interface';
+import { Personnel } from '../base/personnels/personnel.model';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<User>,
+    @InjectModel(Personnel.name) private readonly userModel: Model<Personnel>,
     private readonly hashingService: HashingSerivce,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
@@ -28,7 +28,7 @@ export class AuthService {
   async signUp(signUpUserDto: SignUpUserDto) {
     try {
       const user = new this.userModel(signUpUserDto);
-      return user.save();
+      return await user.save();
     } catch (error) {
       console.log(error);
       throw new ConflictException();

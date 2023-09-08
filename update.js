@@ -33,6 +33,7 @@ app.all('/updateBE', async (req, res) => {
 
   const restartPm2 = new Promise((resolve, reject) => {
     if (!restartService) return;
+
     exec(`pm2 restart ${projectName}`, (err, stdout, stderr) => {
       if (err) {
         console.log(err);
@@ -42,6 +43,7 @@ app.all('/updateBE', async (req, res) => {
         console.log(stderr);
         reject(stderr);
       }
+      console.log(`Project ${projectName} restarted`);
       res.send(stdout);
       resolve(stdout);
     });
@@ -51,5 +53,7 @@ app.all('/updateBE', async (req, res) => {
 });
 
 app.listen(port, () =>
-  console.log(`update service for project:${projectName} is running on ${port}`),
+  console.log(
+    `update service for project:${projectName} is running on ${port}`,
+  ),
 );
