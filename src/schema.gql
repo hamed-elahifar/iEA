@@ -34,7 +34,9 @@ input CreateActivityInput {
 }
 
 input CreateCompanyInput {
+  mission: String
   name: String!
+  vision: String
 }
 
 """Date custom scalar type"""
@@ -53,6 +55,8 @@ type JobPosition {
 type Mutation {
   createActivity(createActivityInput: CreateActivityInput!): Activity!
   createCompany(createCompanyInput: CreateCompanyInput!): Company
+  removeCompany(id: ID!): Company!
+  updateCompany(id: ID!, updateCompanyInput: UpdateCompanyInput!): Company!
 }
 
 """Organization Level"""
@@ -100,6 +104,12 @@ type Unit {
   parent: Unit!
   supervisor: Personnel!
   updatedAt: Date!
+}
+
+input UpdateCompanyInput {
+  mission: String
+  name: String
+  vision: String
 }
 
 enum typeEnum {

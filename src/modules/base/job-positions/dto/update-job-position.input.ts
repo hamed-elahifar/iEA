@@ -2,16 +2,16 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional, IsString } from 'class-validator';
 
 @InputType()
-export class CreateCompanyInput {
+export class UpdateJobPositionInput {
   @IsString()
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  title?: string;
 
   @IsOptional()
   @Field({ nullable: true })
-  mission?: string;
+  unit?: string;
 
   @IsOptional()
   @Field({ nullable: true })
-  vision?: string;
+  supervisor?: string;
 }

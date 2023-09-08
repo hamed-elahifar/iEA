@@ -12,6 +12,8 @@ import { DateScalar } from './modules/common/scalars/date.scalar';
 import { PubSubModule } from './modules/pub-sub/pub-sub.module';
 import { validate } from './modules/common/validators/env.validation';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { Environment } from './modules/common/enums/environments.enum';
 
 @Module({
   imports: [
@@ -35,12 +37,23 @@ import { ThrottlerModule } from '@nestjs/throttler';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
-      playground: process.env.NODE_ENV === 'dev',
+      playground: process.env.NODE_ENV === Environment.DEV,
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
         orphanedTypes: [],
         // numberScalarMode: 'integer',
       },
+      formatError:
+        process.env.NODE_ENV == Environment.PROD
+          ? (error: GraphQLError) => {
+              const graphQLFormattedError: GraphQLFormattedError = {
+                message:
+                  error?.extensions?.exception?.response?.message ||
+                  error?.message,
+              };
+              return graphQLFormattedError;
+            }
+          : (error: GraphQLError) => error,
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

@@ -1,0 +1,86 @@
+@baseUrl = http://127.0.0.1:3000/graphql
+
+# @name createCompany
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/json
+X-Request-Type: GraphQL
+
+mutation {
+  createCompany(createCompanyInput:{
+    name:"hamed"
+  }){
+    _id
+  }
+}
+
+###
+
+# @name getCompanies
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/json
+X-Request-Type: GraphQL
+
+query {
+    companies {
+        _id,
+        name
+    }
+}
+
+###
+
+# @name getCompany
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/json
+X-Request-Type: GraphQL
+
+query {
+    company(id:"64faf4418aa9d4cdff1f1653"){
+        _id,
+        name
+    }
+}
+
+### 
+
+# @name updateCompany
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/json
+X-Request-Type: GraphQL
+
+query {
+    company(id:"64faf4418aa9d4cdff1f1653",){
+        _id,
+        name
+    }
+}
+
+###
+
+# @name updateCompany
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/json
+X-Request-Type: GraphQL
+
+mutation {
+  updateCompany(id:"64faf4418aa9d4cdff1f1653",updateCompanyInput:{
+    name:"hamed2"
+  }){
+    _id,
+    name
+  }
+}
+
+### 
+
+# @name removeCompany
+POST {{baseUrl}}/api/login HTTP/1.1
+Content-Type: application/json
+X-Request-Type: GraphQL
+
+mutation {
+  removeCompany(id:"64fb03e8e5121db0c4208e1d"){
+    _id,
+    name
+  }
+}
