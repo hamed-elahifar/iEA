@@ -24,9 +24,9 @@ app.all('/updateBE', async (req, res) => {
         }
         if (stdout == 'Already up to date.') restartService = false;
         res.send(stdout);
+        resolve(stdout);
       },
     );
-    resolve(stdout);
   });
 
   await updateApp;
