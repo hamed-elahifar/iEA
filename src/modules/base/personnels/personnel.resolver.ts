@@ -5,8 +5,11 @@ import { Personnel } from './personnel.model';
 import { PersonnelService } from './personnel.service';
 import { CreatePersonnelInput } from './dto/create-personnel.input';
 import { Selected } from '../../common/decorators/selected.decorator';
+import { StaffDto } from './dto/staff.output';
+import { Serialize } from '../../common/interceptors/serialize.interceptor';
 
 @Auth(AuthType.None)
+@Serialize(StaffDto)
 @Resolver(() => Personnel)
 export class PersonnelResolver {
   constructor(private readonly personnelService: PersonnelService) {}
