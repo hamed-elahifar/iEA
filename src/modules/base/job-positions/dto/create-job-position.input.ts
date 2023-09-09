@@ -8,7 +8,7 @@ export class CreateJobPositionInput {
   title: string;
 
   @Field()
-  unit: string;
+  department: string;
 
   @Field()
   supervisor: string;

@@ -24,7 +24,7 @@ export class JobPositionResolver {
     return this.jobPositionService.findOne({ id, select });
   }
 
-  @Mutation(() => JobPosition, { name: 'createPersonnel' })
+  @Mutation(() => JobPosition, { name: 'createStaff' })
   async create(
     @Args('createJobPositionInput')
     createJobPositionInput: CreateJobPositionInput,

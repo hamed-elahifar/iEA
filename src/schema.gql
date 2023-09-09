@@ -3,7 +3,8 @@
 # ------------------------------------------------------
 
 type Activity {
-  """"""
+  """
+  """
   _id: ID
   company: Company!
   createAt: Date!
@@ -39,7 +40,9 @@ input CreateCompanyInput {
   vision: String
 }
 
-"""Date custom scalar type"""
+"""
+Date custom scalar type
+"""
 scalar Date
 
 type JobPosition {
@@ -47,7 +50,7 @@ type JobPosition {
   createAt: Date!
   deletedAt: Date!
   organizationLevel: OrganizationLevelEnum!
-  owner: Personnel!
+  owner: Staff!
   title: String!
   updatedAt: Date!
 }
@@ -59,7 +62,9 @@ type Mutation {
   updateCompany(id: ID!, updateCompanyInput: UpdateCompanyInput!): Company!
 }
 
-"""Organization Level"""
+"""
+Organization Level
+"""
 enum OrganizationLevelEnum {
   ASSOCIATE
   EMPLOYEE
@@ -72,7 +77,7 @@ enum OrganizationLevelEnum {
   WORKER
 }
 
-type Personnel {
+type Staff {
   _id: String!
   company: Company!
   createAt: Date!
@@ -96,16 +101,16 @@ type Query {
   company(id: ID!): Company
 }
 
-type Unit {
+type Department {
   _id: String
   company: Company!
   createAt: Date!
   deletedAt: Date
   description: String
-  members: Personnel!
+  members: Staff!
   name: String!
-  parent: Unit!
-  supervisor: Personnel!
+  parent: Department!
+  supervisor: Staff!
   updatedAt: Date!
 }
 

@@ -13,12 +13,12 @@ import { JwtService } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { ActiveUserData } from './interfaces/active-user-data.interface';
-import { Personnel } from '../base/personnels/personnel.model';
+import { Staff } from '../base/staffs/staff.model';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(Personnel.name) private readonly userModel: Model<Personnel>,
+    @InjectModel(Staff.name) private readonly userModel: Model<Staff>,
     private readonly hashingService: HashingSerivce,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)

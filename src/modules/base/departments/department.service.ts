@@ -1,20 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateUnitInput } from './dto/create-unit.input';
-import { Unit } from './unit.model';
+import { CreateDepartmentInput } from './dto/create-department.input';
+import { Department } from './department.model';
 
 @Injectable()
-export class UnitService {
+export class DepartmentService {
   constructor(
-    @InjectModel(Unit.name)
-    private readonly unitModel: Model<Unit>,
+    @InjectModel(Department.name)
+    private readonly departmentModel: Model<Department>,
   ) {}
 
   findAll({ select }) {
     // const { limit, offset } = paginationQueryDto;
     return (
-      this.unitModel
+      this.departmentModel
         .find()
         .select(select)
         // .skip(offset)
@@ -24,20 +24,20 @@ export class UnitService {
     );
   }
 
-  async findOne({ id, select }): Promise<Unit> {
-    const result = await this.unitModel
+  async findOne({ id, select }): Promise<Department> {
+    const result = await this.departmentModel
       .findOne({ _id: id })
       .select(select)
       // .populate(['company'])
       .exec();
     if (!result) {
-      throw new NotFoundException(`${Unit.name} #${id} not found`);
+      throw new NotFoundException(`${Department.name} #${id} not found`);
     }
     return result;
   }
 
-  async create(createUnitInput: CreateUnitInput) {
-    const result = new this.unitModel(createUnitInput);
+  async create(createDepartmentInput: CreateDepartmentInput) {
+    const result = new this.departmentModel(createDepartmentInput);
     return result.save();
   }
 }

@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Personnel } from '../personnels/personnel.model';
+import { Staff } from '../staffs/staff.model';
 import { OrganizationLevelEnum } from './enums/organization-level.enum';
 
 export type JobPositionDocument = JobPosition & Document;
@@ -14,9 +14,9 @@ export class JobPosition extends Document {
   @Prop()
   title: string;
 
-  @Field(() => Personnel)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Personnel.name })
-  owner: Personnel;
+  @Field(() => Staff)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Staff.name })
+  owner: Staff;
 
   @Field(() => OrganizationLevelEnum)
   @Prop({ type: String, enum: OrganizationLevelEnum, required: true })

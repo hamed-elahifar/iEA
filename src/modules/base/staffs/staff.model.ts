@@ -3,9 +3,9 @@ import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('Personnel')
+@ObjectType('Staff')
 @Schema({ timestamps: true })
-export class Personnel extends Document {
+export class Staff extends Document {
   @Field()
   _id?: string;
 
@@ -66,8 +66,8 @@ export class Personnel extends Document {
   deletedAt: Date;
 }
 
-export const PersonnelSchema = SchemaFactory.createForClass(Personnel);
-PersonnelSchema.index({ phone: 1, company: 1 }, { unique: true }); // 1 is ascending, -1 is descending
-PersonnelSchema.index({ nationalNumber: 1, company: 1 }, { unique: true });
-PersonnelSchema.index({ username: 1, company: 1 }, { unique: true });
-PersonnelSchema.index({ email: 1, company: 1 }, { unique: true });
+export const StaffSchema = SchemaFactory.createForClass(Staff);
+StaffSchema.index({ phone: 1, company: 1 }, { unique: true }); // 1 is ascending, -1 is descending
+StaffSchema.index({ nationalNumber: 1, company: 1 }, { unique: true });
+StaffSchema.index({ username: 1, company: 1 }, { unique: true });
+StaffSchema.index({ email: 1, company: 1 }, { unique: true });

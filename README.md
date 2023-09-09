@@ -1,4 +1,3 @@
-
 ## Description
 
 Software for managing small to large scale companies
@@ -25,7 +24,7 @@ $ npm run prod
 ## Test
 
 ```bash
-# unit tests
+# department tests
 $ npm run test
 
 # e2e tests
@@ -36,6 +35,7 @@ $ npm run test:cov
 ```
 
 ## TODO
+
 abstact class for MODELs
 abstact class for RESOLVERs
 abstact class for SERVICEs

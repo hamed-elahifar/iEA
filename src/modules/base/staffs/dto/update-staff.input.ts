@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsOptional, IsString } from 'class-validator';
 
 @InputType()
-export class UpdatePersonnelInput {
+export class UpdateStaffInput {
   @IsString()
   @IsOptional()
   @Field({ nullable: true })
@@ -26,7 +26,7 @@ export class UpdatePersonnelInput {
   @IsString()
   @IsOptional()
   @Field({ nullable: true })
-  personnelId?: string;
+  staffId?: string;
 
   @IsString()
   @IsOptional()

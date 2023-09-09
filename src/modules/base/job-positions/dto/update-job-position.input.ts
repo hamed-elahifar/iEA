@@ -9,7 +9,7 @@ export class UpdateJobPositionInput {
 
   @IsOptional()
   @Field({ nullable: true })
-  unit?: string;
+  department?: string;
 
   @IsOptional()
   @Field({ nullable: true })

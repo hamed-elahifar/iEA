@@ -4,8 +4,8 @@ import { ActivityService } from './activities/activity.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Activity, ActivitySchema } from './activities/activity.model';
 import { Company, CompanySchema } from './companies/company.model';
-import { Personnel, PersonnelSchema } from './personnels/personnel.model';
-import { Unit, UnitSchema } from './units/unit.model';
+import { Staff, StaffSchema } from './staffs/staff.model';
+import { Department, DepartmentSchema } from './departments/department.model';
 import { CompanyResolver } from './companies/company.resolver';
 import { CompanyService } from './companies/company.service';
 import { ActivityCompanyResolver } from './activities/activity-company.resolver';
@@ -30,12 +30,12 @@ import {
         schema: JobPositionSchema,
       },
       {
-        name: Personnel.name,
-        schema: PersonnelSchema,
+        name: Staff.name,
+        schema: StaffSchema,
       },
       {
-        name: Unit.name,
-        schema: UnitSchema,
+        name: Department.name,
+        schema: DepartmentSchema,
       },
     ]),
   ],

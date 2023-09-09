@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
-import { Personnel } from '../personnels/personnel.model';
+import { Staff } from '../staffs/staff.model';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('Unit')
+@ObjectType('Department')
 @Schema({ timestamps: true })
-export class Unit extends Document {
+export class Department extends Document {
   @Field({ nullable: true })
   _id?: string;
 
@@ -18,17 +18,17 @@ export class Unit extends Document {
   @Prop()
   description?: string;
 
-  @Field(() => Unit)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Unit.name })
-  parent: Unit;
+  @Field(() => Department)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Department.name })
+  parent: Department;
 
-  @Field(() => Personnel)
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Personnel.name })
-  supervisor: Personnel;
+  @Field(() => Staff)
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Staff.name })
+  supervisor: Staff;
 
-  @Field(() => Personnel)
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Personnel.name })
-  members: [Personnel];
+  @Field(() => Staff)
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Staff.name })
+  members: [Staff];
 
   @Field(() => Company)
   @Prop({
@@ -48,5 +48,5 @@ export class Unit extends Document {
   deletedAt: Date;
 }
 
-export const UnitSchema = SchemaFactory.createForClass(Unit);
-UnitSchema.index({ name: 1, company: 1 }, { unique: true });
+export const DepartmentSchema = SchemaFactory.createForClass(Department);
+DepartmentSchema.index({ name: 1, company: 1 }, { unique: true });
