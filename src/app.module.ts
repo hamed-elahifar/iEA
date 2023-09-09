@@ -48,6 +48,7 @@ import { Environment } from './modules/common/enums/environments.enum';
           ? (error: GraphQLError) => {
               const graphQLFormattedError: GraphQLFormattedError = {
                 message:
+                  // @ts-expect-error
                   error?.extensions?.exception?.response?.message ||
                   error?.message,
               };

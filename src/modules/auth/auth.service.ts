@@ -45,7 +45,8 @@ export class AuthService {
     const accessToken = await this.jwtService.signAsync(
       {
         sub: user.phone,
-        name: user.name,
+        name: user.firstname + ' ' + user.lastname,
+        company: user.company,
       } as ActiveUserData,
       {
         audience: this.jwtConfiguration.audience,
