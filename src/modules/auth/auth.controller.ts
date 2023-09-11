@@ -17,11 +17,11 @@ import { UserDto } from './dto/user.dto';
 
 @Auth(AuthType.None)
 @Controller('auth')
+@Serialize(UserDto)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-up')
-  @Serialize(UserDto)
   signUp(@Body() signUpUserDto: SignUpUserDto) {
     return this.authService.signUp(signUpUserDto);
   }
@@ -34,11 +34,13 @@ export class AuthController {
     loginUserDto: LoginUserDto,
   ) {
     const accessToken = await this.authService.login(loginUserDto);
+
     response.cookie('accessToken', accessToken, {
       secure: true,
       httpOnly: true,
       sameSite: true,
     });
+
     return accessToken;
   }
 }

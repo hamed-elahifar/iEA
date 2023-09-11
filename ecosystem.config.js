@@ -7,9 +7,5 @@ module.exports = {
         NODE_ENV: 'prod',
       },
     },
-    {
-      name: 'BPMS update service',
-      script: 'update.js',
-    },
   ],
 };

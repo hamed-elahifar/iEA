@@ -30,6 +30,7 @@ export class AuthService {
       const user = new this.userModel(signUpUserDto);
       return await user.save();
     } catch (error) {
+      console.log(error);
       throw new ConflictException();
     }
   }
@@ -56,5 +57,15 @@ export class AuthService {
     );
 
     return { accessToken };
+  }
+
+  async findByUsername(username) {
+    const user = await this.userModel.findOne({
+      username,
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User does not exists');
+    }
   }
 }

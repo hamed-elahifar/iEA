@@ -11,6 +11,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './guards/access-token.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
 import { User, UserSchema } from './models/user.model';
+import { CurrentUserInterceptor } from './decorators/interceptors/current-user.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -34,6 +36,10 @@ import { User, UserSchema } from './models/user.model';
     },
     AccessTokenGuard,
     AuthService,
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: CurrentUserInterceptor,
+    // },
   ],
   controllers: [AuthController],
 })
