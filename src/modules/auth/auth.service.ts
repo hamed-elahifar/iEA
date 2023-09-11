@@ -13,12 +13,12 @@ import { JwtService } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { ActiveUserData } from './interfaces/active-user-data.interface';
-import { Staff } from '../base/staffs/staff.model';
+import { User } from './models/user.model';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(Staff.name) private readonly userModel: Model<Staff>,
+    @InjectModel(User.name) private readonly userModel: Model<User>,
     private readonly hashingService: HashingSerivce,
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
@@ -30,13 +30,14 @@ export class AuthService {
       const user = new this.userModel(signUpUserDto);
       return await user.save();
     } catch (error) {
-      console.log(error);
       throw new ConflictException();
     }
   }
 
   async login(loginUserDto: LoginUserDto) {
-    const user = await this.userModel.findOne({ phone: loginUserDto.phone });
+    const user = await this.userModel.findOne({
+      username: loginUserDto.username,
+    });
 
     if (!user) {
       throw new UnauthorizedException('User does not exists');
@@ -44,9 +45,7 @@ export class AuthService {
 
     const accessToken = await this.jwtService.signAsync(
       {
-        sub: user.phone,
-        name: user.firstname + ' ' + user.lastname,
-        company: user.company,
+        sub: user.username,
       } as ActiveUserData,
       {
         audience: this.jwtConfiguration.audience,

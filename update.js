@@ -9,32 +9,10 @@ const port = 7777;
 
 let restartService = true;
 
-app.all('/updateBE', async (req, res) => {
-  const updateApp = new Promise((resolve, reject) => {
-    exec(
-      `git --git-dir='${process.cwd()}/.git' --work-tree=${process.cwd()} pull`,
-      (err, stdout, stderr) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        }
-        if (stderr) {
-          console.log(stderr);
-          reject(stderr);
-        }
-        if (stdout == 'Already up to date.') restartService = false;
-        res.send(stdout);
-        resolve(stdout);
-      },
-    );
-  });
-
-  await updateApp;
-
-  const restartPm2 = new Promise((resolve, reject) => {
-    if (!restartService) return;
-
-    exec(`pm2 restart ${projectName}`, (err, stdout, stderr) => {
+const updateApp = new Promise((resolve, reject) => {
+  exec(
+    `git --git-dir='${process.cwd()}/.git' --work-tree=${process.cwd()} pull`,
+    (err, stdout, stderr) => {
       if (err) {
         console.log(err);
         reject(err);
@@ -43,13 +21,35 @@ app.all('/updateBE', async (req, res) => {
         console.log(stderr);
         reject(stderr);
       }
-      console.log(`Project ${projectName} restarted`);
-      res.send(stdout);
+      if (stdout == 'Already up to date.') restartService = false;
       resolve(stdout);
-    });
-  });
+    },
+  );
+});
 
-  await restartPm2;
+const restartPm2 = new Promise((resolve, reject) => {
+  if (!restartService) return;
+
+  exec(`pm2 restart ${projectName}`, (err, stdout, stderr) => {
+    if (err) {
+      console.log(err);
+      reject(err);
+    }
+    if (stderr) {
+      console.log(stderr);
+      reject(stderr);
+    }
+    console.log(`Project ${projectName} restarted`);
+    resolve(stdout);
+  });
+});
+
+app.all('/updateBE', async (req, res) => {
+  const updateResult = await updateApp();
+  res.send(updateResult);
+
+  const restartResult = await restartPm2();
+  console.log(restartResult);
 });
 
 app.listen(port, () =>

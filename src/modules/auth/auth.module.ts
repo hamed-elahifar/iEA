@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './guards/access-token.guard';
 import { AuthenticationGuard } from './guards/authentication.guard';
-import { Staff, StaffSchema } from '../base/staffs/staff.model';
+import { User, UserSchema } from './models/user.model';
 
 @Module({
   imports: [
@@ -18,8 +18,8 @@ import { Staff, StaffSchema } from '../base/staffs/staff.model';
     ConfigModule.forFeature(jwtConfig),
     MongooseModule.forFeature([
       {
-        name: Staff.name,
-        schema: StaffSchema,
+        name: User.name,
+        schema: UserSchema,
       },
     ]),
   ],

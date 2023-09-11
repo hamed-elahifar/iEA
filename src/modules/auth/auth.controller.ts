@@ -12,6 +12,8 @@ import { LoginUserDto } from './dto/login.dto';
 import { Response } from 'express';
 import { AuthType } from './enums/auth-type.enum';
 import { Auth } from './decorators/auth.decorators';
+import { Serialize } from '../common/interceptors/serialize.interceptor';
+import { UserDto } from './dto/user.dto';
 
 @Auth(AuthType.None)
 @Controller('auth')
@@ -19,6 +21,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('sign-up')
+  @Serialize(UserDto)
   signUp(@Body() signUpUserDto: SignUpUserDto) {
     return this.authService.signUp(signUpUserDto);
   }
