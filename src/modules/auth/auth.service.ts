@@ -36,12 +36,23 @@ export class AuthService {
   }
 
   async login(loginUserDto: LoginUserDto) {
-    const user = await this.userModel.findOne({
-      username: loginUserDto.username,
-    });
+    const user = await this.userModel
+      .findOne({
+        username: loginUserDto.username,
+      })
+      .select('password');
 
     if (!user) {
-      throw new UnauthorizedException('User does not exists');
+      throw new UnauthorizedException('Unauthorized');
+    }
+
+    const isEqual = await this.hashingService.compare(
+      loginUserDto.password,
+      user.password,
+    );
+
+    if (!isEqual) {
+      throw new UnauthorizedException('Unauthorized');
     }
 
     const accessToken = await this.jwtService.signAsync(
@@ -65,7 +76,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('User does not exists');
+      throw new UnauthorizedException('Unauthorized');
     }
   }
 }

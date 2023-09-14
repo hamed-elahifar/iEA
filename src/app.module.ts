@@ -14,6 +14,8 @@ import { validate } from './modules/common/validators/env.validation';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { Environment } from './modules/common/enums/environments.enum';
+import { WinstonModule } from 'nest-winston';
+import winston from 'winston';
 
 @Module({
   imports: [
@@ -65,6 +67,37 @@ import { Environment } from './modules/common/enums/environments.enum';
         useUnifiedTopology: true,
       }),
     }),
+    WinstonModule.forRoot({
+      exitOnError: false,
+      format: winston.format.combine(
+        winston.format.timestamp(),
+        winston.format.simple(),
+      ),
+      rejectionHandlers: [
+        new winston.transports.File({
+          dirname: join(__dirname, '..', 'logs'),
+          filename: 'rejections.log',
+        }),
+      ],
+      exceptionHandlers: [
+        new winston.transports.File({
+          dirname: join(__dirname, '..', 'logs'),
+          filename: 'exceptions.log',
+        }),
+      ],
+      transports: [
+        new winston.transports.Console({
+          handleExceptions: true,
+        }),
+        new winston.transports.File({
+          dirname: join(__dirname, '..', 'logs'),
+          filename: 'combined.log',
+        }),
+      ],
+    }),
+    // ServeStaticModule.forRoot({
+    //   rootPath: join(__dirname, '..', 'static'),
+    // }),
     ThrottlerModule.forRoot([
       {
         name: 'short',

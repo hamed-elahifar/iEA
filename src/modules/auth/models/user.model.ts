@@ -7,7 +7,7 @@ export class User extends Document {
   @Prop()
   username: string;
 
-  @Prop()
+  @Prop({ select: false })
   password: string;
 
   @Prop()

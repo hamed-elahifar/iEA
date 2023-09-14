@@ -3,31 +3,30 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import mongoose from 'mongoose';
 import compression from 'compression';
 
 async function bootstrap() {
-  const logger = new Logger('Main');
-
-  process.on(
-    'uncaughtException',
-    (message: any, stack?: string, context?: string) => {
-      logger.error(message);
-      console.error(stack);
-      console.assert(!context, context);
-    },
-  );
-  process.on(
-    'unhandledRejection',
-    (message: any, stack?: string, context?: string) => {
-      logger.error(message);
-      console.error(stack);
-      console.assert(!context, context);
-    },
-  );
+  // process.on(
+  //   'uncaughtException',
+  //   (message: any, stack?: string, context?: string) => {
+  //     console.error(message);
+  //     console.error(stack);
+  //     console.assert(!context, context);
+  //   },
+  // );
+  // process.on(
+  //   'unhandledRejection',
+  //   (message: any, stack?: string, context?: string) => {
+  //     console.error(message);
+  //     console.error(stack);
+  //     console.assert(!context, context);
+  //   },
+  // );
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    // bufferLogs: true,
     // logger: false,
     // logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
