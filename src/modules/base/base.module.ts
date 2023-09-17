@@ -4,6 +4,7 @@ import { ActivityService } from './activities/activity.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Activity, ActivitySchema } from './activities/activity.model';
 import { Company, CompanySchema } from './companies/company.model';
+import { CompanyRepository } from './companies/company.repository';
 import { Staff, StaffSchema } from './staffs/staff.model';
 import { Department, DepartmentSchema } from './departments/department.model';
 import { CompanyResolver } from './companies/company.resolver';
@@ -45,6 +46,7 @@ import {
     ActivityService,
     CompanyResolver,
     CompanyService,
+    CompanyRepository,
   ],
 })
 export class BaseModule {}

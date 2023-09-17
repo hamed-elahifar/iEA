@@ -1,34 +1,52 @@
-// import { NotFoundException } from '@nestjs/common';
-// import { InjectModel } from '@nestjs/mongoose';
-// import { Model } from 'mongoose';
+import { Document, FilterQuery, Model } from 'mongoose';
 
-// export abstract class BaseRepository<T> {
-//   constructor(
-//     @InjectModel(T.name)
-//     private readonly model: Model<T>,
-//   ) {}
+export abstract class BaseRespository<T extends Document> {
+  constructor(protected readonly entityModel: Model<T>) {}
 
-//   findAll() {
-//     // const { limit, offset } = paginationQueryDto;
-//     return (
-//       this.model
-//         .find()
-//         // .skip(offset)
-//         // .limit(limit)
-//         .exec()
-//     );
-//   }
+  async findOne(
+    entityFilterQuery: FilterQuery<T>,
+    projection?: Record<string, unknown>,
+  ): Promise<T | null> {
+    return this.entityModel
+      .findOne(entityFilterQuery, {
+        __v: 0,
+        ...projection,
+      })
+      .exec();
+  }
 
-//   async findOne(id: string): Promise<T> {
-//     const result = await this.model.findOne({ _id: id }).exec();
-//     if (!result) {
-//       throw new NotFoundException(`${T.name} #${id} not found`);
-//     }
-//     return result;
-//   }
+  async find(
+    entityFilterQuery: FilterQuery<T>,
+    projection?: Record<string, unknown>,
+  ): Promise<T[] | null> {
+    return this.entityModel
+      .find(entityFilterQuery, {
+        __v: 0,
+        ...projection,
+      })
+      .exec();
+  }
 
-//   async create(createCompanyInput) {
-//     const company = new this.model(createCompanyInput);
-//     return company.save();
-//   }
-// }
+  async create(createEntityData: unknown): Promise<T> {
+    const entity = new this.entityModel(createEntityData) as T;
+    return entity.save();
+  }
+
+  async findOneAndUpdate(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: unknown,
+  ): Promise<T | null> {
+    return this.entityModel.findOneAndUpdate(
+      entityFilterQuery,
+      updateEntityData,
+      {
+        new: true,
+      },
+    );
+  }
+
+  async deleteMany(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+    const result = await this.entityModel.deleteMany(entityFilterQuery);
+    return result.deletedCount >= 1;
+  }
+}

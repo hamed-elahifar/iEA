@@ -14,8 +14,8 @@ import { validate } from './modules/common/validators/env.validation';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { Environment } from './modules/common/enums/environments.enum';
-import { WinstonModule } from 'nest-winston';
-import winston from 'winston';
+// import { WinstonModule } from 'nest-winston';
+// import * as winston from 'winston';
 
 @Module({
   imports: [
@@ -67,36 +67,42 @@ import winston from 'winston';
         useUnifiedTopology: true,
       }),
     }),
-    WinstonModule.forRoot({
-      exitOnError: false,
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.simple(),
-      ),
-      rejectionHandlers: [
-        new winston.transports.File({
-          dirname: join(__dirname, '..', 'logs'),
-          filename: 'rejections.log',
-        }),
-      ],
-      exceptionHandlers: [
-        new winston.transports.File({
-          dirname: join(__dirname, '..', 'logs'),
-          filename: 'exceptions.log',
-        }),
-      ],
-      transports: [
-        new winston.transports.Console({
-          handleExceptions: true,
-        }),
-        new winston.transports.File({
-          dirname: join(__dirname, '..', 'logs'),
-          filename: 'combined.log',
-        }),
-      ],
-    }),
+    // WinstonModule.forRoot({
+    //   exitOnError: false,
+    //   format: winston.format.combine(
+    //     winston.format.timestamp(),
+    //     winston.format.colorize(),
+    //     winston.format.simple(),
+    //   ),
+    //   rejectionHandlers: [
+    //     new winston.transports.File({
+    //       dirname: join(__dirname, '..', 'logs'),
+    //       filename: 'rejections.log',
+    //     }),
+    //   ],
+    //   exceptionHandlers: [
+    //     new winston.transports.File({
+    //       dirname: join(__dirname, '..', 'logs'),
+    //       filename: 'exceptions.log',
+    //     }),
+    //   ],
+    //   transports: [
+    //     new winston.transports.Console({
+    //       handleExceptions: true,
+    //       format: winston.format.combine(
+    //         winston.format.colorize(),
+    //         winston.format.simple(),
+    //       ),
+    //     }),
+    //     new winston.transports.File({
+    //       dirname: join(__dirname, '..', 'logs'),
+    //       filename: 'combined.log',
+    //     }),
+    //   ],
+    // }),
     // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'static'),
+    //   rootPath: join(__dirname, '..', '/static/'),
+    //   serveStaticOptions: { index: false },
     // }),
     ThrottlerModule.forRoot([
       {

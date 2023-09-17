@@ -7,18 +7,19 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Company } from './company.model';
 import { Model } from 'mongoose';
 import { CreateCompanyInput } from './dto/create-company.input';
+import { CompanyRepository } from './company.repository';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectModel(Company.name)
     private readonly companyModel: Model<Company>,
+    private readonly companyRepository: CompanyRepository,
   ) {}
 
   async create(createCompanyInput: CreateCompanyInput) {
     try {
-      const company = new this.companyModel(createCompanyInput);
-      return await company.save();
+      return this.companyRepository.create(createCompanyInput);
     } catch (error) {
       console.log(error);
       if ((error.code = 11000)) {
