@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import mongoose from 'mongoose';
 import compression from 'compression';
 
@@ -53,6 +53,18 @@ async function bootstrap() {
   app.use(compression());
 
   const port: number = +configService.getOrThrow<number>('PORT');
-  await app.listen(port);
+
+  await app.listen(port, () => {
+    Logger.log(`App Running On Port: ${port}`);
+    Logger.log(`
+
+    ██████╗ ██████╗ ███╗   ███╗███████╗
+    ██╔══██╗██╔══██╗████╗ ████║██╔════╝
+    ██████╔╝██████╔╝██╔████╔██║███████╗
+    ██╔══██╗██╔═══╝ ██║╚██╔╝██║╚════██║
+    ██████╔╝██║     ██║ ╚═╝ ██║███████║
+    ╚═════╝ ╚═╝     ╚═╝     ╚═╝╚══════╝
+                                       `);
+  });
 }
 bootstrap();
