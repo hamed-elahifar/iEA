@@ -13,7 +13,6 @@ import { CompanyRepository } from './company.repository';
 export class CompanyService {
   constructor(
     @InjectModel(Company.name)
-    private readonly companyModel: Model<Company>,
     private readonly companyRepository: CompanyRepository,
   ) {}
 
@@ -28,16 +27,8 @@ export class CompanyService {
     }
   }
 
-  findAll({ select }) {
-    // const { limit, offset } = paginationQueryDto;
-    return (
-      this.companyModel
-        .find()
-        .select(select)
-        // .skip(offset)
-        // .limit(limit)
-        .exec()
-    );
+  async findAll({ select }) {
+    return this.companyRepository.findAll({}, select);
   }
 
   async findOne({
@@ -47,22 +38,22 @@ export class CompanyService {
     id: string;
     select?: string[];
   }): Promise<Company> {
-    const company = await this.companyModel
-      .findOne({ _id: id })
-      .select(select)
-      .exec();
+    const company = await this.companyRepository.findOne({ _id: id }, select);
 
     if (!company) {
       throw new NotFoundException(`${Company.name} #${id} not found`);
     }
 
+    console.log(company);
+
     return company;
   }
 
   async update(id, attrs: Partial<Company>): Promise<Company> {
-    const result = await this.companyModel
-      .findOneAndUpdate({ _id: id }, { $set: attrs }, { new: true })
-      .exec();
+    const result = await this.companyRepository.findOneAndUpdate(
+      { _id: id },
+      { $set: attrs },
+    );
 
     if (!result) {
       throw new NotFoundException(`${id} not found`);

@@ -2,6 +2,8 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+export type CompanyDocument = Company & Document;
+
 @ObjectType('Company')
 @Schema({ timestamps: true })
 export class Company extends Document {

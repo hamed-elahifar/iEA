@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
 import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
 import { Auth } from '../../../modules/auth/decorators/auth.decorators';
 import { Company } from './company.model';
@@ -6,11 +6,15 @@ import { CompanyService } from './company.service';
 import { CreateCompanyInput } from './dto/create-company.input';
 import { UpdateCompanyInput } from './dto/update-company.input';
 import { Selected } from '../../common/decorators/selected.decorator';
+import { PaginationArgs } from '../../common/dto/pagination.input';
+import { BaseResolver } from '../../common/abstract/base-resolver';
 
 @Auth(AuthType.None)
 @Resolver((of) => Company)
-export class CompanyResolver {
-  constructor(private readonly companyService: CompanyService) {}
+export class CompanyResolver /*extends BaseResolver(Company)*/ {
+  constructor(private readonly companyService: CompanyService) {
+    // super(companyService);
+  }
   @Mutation((returns) => Company, { name: 'createCompany', nullable: true })
   async create(
     @Args('createCompanyInput') createCompanyInput: CreateCompanyInput,
@@ -18,12 +22,15 @@ export class CompanyResolver {
     return this.companyService.create(createCompanyInput);
   }
 
-  @Query((returns) => [Company], { name: 'companies', nullable: true })
-  async findAll(@Selected() select) {
+  @Query((returns) => [Company], { name: 'getCompanies', nullable: true })
+  async findAll(
+    @Args('PaginationArgs') paginationArgs: PaginationArgs,
+    @Selected() select,
+  ) {
     return this.companyService.findAll({ select });
   }
 
-  @Query((returns) => Company, { name: 'company', nullable: true })
+  @Query((returns) => Company, { name: 'getCompany', nullable: true })
   async findOne(
     @Args('id', { type: () => ID }) id: string,
     @Selected() select,

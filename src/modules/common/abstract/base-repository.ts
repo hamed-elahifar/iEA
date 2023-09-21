@@ -5,7 +5,7 @@ export abstract class BaseRespository<T extends Document> {
 
   async findOne(
     entityFilterQuery: FilterQuery<T>,
-    projection?: Record<string, unknown>,
+    projection?: string[],
   ): Promise<T | null> {
     return this.entityModel
       .findOne(entityFilterQuery, {
@@ -15,9 +15,9 @@ export abstract class BaseRespository<T extends Document> {
       .exec();
   }
 
-  async find(
+  async findAll(
     entityFilterQuery: FilterQuery<T>,
-    projection?: Record<string, unknown>,
+    projection?: string[],
   ): Promise<T[] | null> {
     return this.entityModel
       .find(entityFilterQuery, {

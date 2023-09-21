@@ -1,35 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { BaseRespository } from '../../common/abstract/base-repository';
 import { InjectModel } from '@nestjs/mongoose';
-import { Activity, ActivityDocument } from './activity.model';
-import { FilterQuery, Model } from 'mongoose';
+import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
+import { Activity } from './activity.model';
 
 @Injectable()
-export class UsersRepository {
-  constructor(
-    @InjectModel(Activity.name) private activityModel: Model<ActivityDocument>,
-  ) {}
-
-  async findOne(userFilterQuery: FilterQuery<Activity>): Promise<Activity> {
-    return this.activityModel.findOne(userFilterQuery);
-  }
-
-  async find(userFilterQuery: FilterQuery<Activity>): Promise<Activity[]> {
-    return this.activityModel.findOne(userFilterQuery);
-  }
-
-  async create(user: Activity): Promise<Activity> {
-    const newUser = new this.activityModel(user);
-    return newUser.save();
-  }
-
-  async findOneAndUpdate(
-    userFilterQuery: FilterQuery<Activity>,
-    user: Partial<Activity>,
-  ): Promise<Activity> {
-    return this.activityModel.findOneAndUpdate(userFilterQuery, user);
-  }
-
-  async delete(userFilterQuery: FilterQuery<Activity>): Promise<Activity> {
-    return this.activityModel.findOneAndRemove(userFilterQuery);
+export class ActivityRepository extends BaseRespository<Activity> {
+  constructor(@InjectModel(Activity.name) activityModel: Model<Activity>) {
+    super(activityModel);
   }
 }

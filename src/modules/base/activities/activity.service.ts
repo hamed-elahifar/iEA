@@ -3,33 +3,20 @@ import { CreateActivityInput } from './dto/create-activity.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { Activity } from './activity.model';
 import { Model } from 'mongoose';
+import { ActivityRepository } from './activity.repository';
 
 @Injectable()
 export class ActivityService {
-  constructor(
-    @InjectModel(Activity.name)
-    private readonly activityModel: Model<Activity>,
-  ) {}
+  constructor(private readonly activityRepository: ActivityRepository) {}
 
   findAll({ select }) {
     // const { limit, offset } = paginationQueryDto;
-    return (
-      this.activityModel
-        .find()
-        .select(select)
-        // .skip(offset)
-        // .limit(limit)
-        // .populate(['company'])
-        .exec()
-    );
+    return this.activityRepository.findAll({}, select);
   }
 
   async findOne({ id, select }): Promise<Activity> {
-    const user = await this.activityModel
-      .findOne({ _id: id })
-      .select(select)
-      // .populate(['company'])
-      .exec();
+    const user = await this.activityRepository.findOne({ _id: id });
+
     if (!user) {
       throw new NotFoundException(`${Activity.name} #${id} not found`);
     }
@@ -37,7 +24,6 @@ export class ActivityService {
   }
 
   async create(createActivityInput: CreateActivityInput) {
-    const activity = new this.activityModel(createActivityInput);
-    return activity.save();
+    return this.activityRepository.create(createActivityInput);
   }
 }

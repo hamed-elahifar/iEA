@@ -14,6 +14,7 @@ import {
   JobPosition,
   JobPositionSchema,
 } from './job-positions/job-position.model';
+import { ActivityRepository } from './activities/activity.repository';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import {
     ActivityResolver,
     ActivityCompanyResolver,
     ActivityService,
+    ActivityRepository,
     CompanyResolver,
     CompanyService,
     CompanyRepository,

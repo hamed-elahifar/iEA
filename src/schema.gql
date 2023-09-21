@@ -85,11 +85,16 @@ enum OrganizationLevelEnum {
   WORKER
 }
 
+input PaginationArgs {
+  limit: Int = 10
+  offset: Int = 0
+}
+
 type Query {
   activities: [Activity!]
   activity(id: ID!): Activity!
-  companies: [Company!]
-  company(id: ID!): Company
+  getCompanies(PaginationArgs: PaginationArgs!): [Company!]
+  getCompany(id: ID!): Company
 }
 
 type Staff {
