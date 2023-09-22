@@ -1,1 +1,3 @@
-export abstract class BaseService {}
+export abstract class BaseService {
+  constructor() {}
+}
