@@ -11,10 +11,7 @@ import { CompanyRepository } from './company.repository';
 
 @Injectable()
 export class CompanyService {
-  constructor(
-    @InjectModel(Company.name)
-    private readonly companyRepository: CompanyRepository,
-  ) {}
+  constructor(private readonly companyRepository: CompanyRepository) {}
 
   async create(createCompanyInput: CreateCompanyInput) {
     try {
@@ -25,10 +22,6 @@ export class CompanyService {
         throw new ConflictException('Already Exists');
       }
     }
-  }
-
-  async findAll({ select }) {
-    return this.companyRepository.findAll({}, select);
   }
 
   async findOne({
@@ -49,8 +42,12 @@ export class CompanyService {
     return company;
   }
 
+  async findAll({ select }) {
+    return this.companyRepository.findAll({}, select);
+  }
+
   async update(id, attrs: Partial<Company>): Promise<Company> {
-    const result = await this.companyRepository.findOneAndUpdate(
+    const result = await this.companyRepository.update(
       { _id: id },
       { $set: attrs },
     );

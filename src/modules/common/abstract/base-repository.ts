@@ -3,6 +3,11 @@ import { Document, FilterQuery, Model } from 'mongoose';
 export abstract class BaseRespository<T extends Document> {
   constructor(protected readonly entityModel: Model<T>) {}
 
+  async create(createEntityData: unknown): Promise<T> {
+    const entity = new this.entityModel(createEntityData) as T;
+    return entity.save();
+  }
+
   async findOne(
     entityFilterQuery: FilterQuery<T>,
     projection?: string[],
@@ -27,12 +32,7 @@ export abstract class BaseRespository<T extends Document> {
       .exec();
   }
 
-  async create(createEntityData: unknown): Promise<T> {
-    const entity = new this.entityModel(createEntityData) as T;
-    return entity.save();
-  }
-
-  async findOneAndUpdate(
+  async update(
     entityFilterQuery: FilterQuery<T>,
     updateEntityData: unknown,
   ): Promise<T | null> {
@@ -45,7 +45,7 @@ export abstract class BaseRespository<T extends Document> {
     );
   }
 
-  async deleteMany(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+  async remove(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
     const result = await this.entityModel.deleteMany(entityFilterQuery);
     return result.deletedCount >= 1;
   }
