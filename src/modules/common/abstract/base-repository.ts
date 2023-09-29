@@ -1,6 +1,6 @@
 import { Document, FilterQuery, Model } from 'mongoose';
 
-export abstract class BaseRespository<T extends Document> {
+export abstract class BaseRepository<T extends Document> {
   constructor(protected readonly entityModel: Model<T>) {}
 
   async create(createEntityData: unknown): Promise<T> {
@@ -45,7 +45,7 @@ export abstract class BaseRespository<T extends Document> {
     );
   }
 
-  async remove(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
+  async delete(entityFilterQuery: FilterQuery<T>): Promise<boolean> {
     const result = await this.entityModel.deleteMany(entityFilterQuery);
     return result.deletedCount >= 1;
   }

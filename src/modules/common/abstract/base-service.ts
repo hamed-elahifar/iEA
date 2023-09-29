@@ -1,23 +1,38 @@
-import { BaseRespository } from './base-repository';
+import { Injectable } from '@nestjs/common';
+import { IBaseService } from '../interfaces/base-service.interface';
+import { BaseRepository } from './base-repository';
+import { FilterQuery } from 'mongoose';
 
-export abstract class BaseService {
-  constructor(private readonly repository: BaseRespository<>) {
-    super(repository);
+@Injectable()
+export class BaseService<T> implements IBaseService<T> {
+  constructor(private readonly repository: BaseRepository<T>) {}
+
+  async create(createEntityData: T): Promise<T> {
+    return this.repository.create(createEntityData);
   }
 
-  async create() {
-    return this.repository.create();
+  async findOne(
+    entityFilterQuery: FilterQuery<T>,
+    projection?: string[],
+  ): Promise<T | null> {
+    return this.repository.findOne(entityFilterQuery, projection);
   }
-  async findOne() {
-    return this.repository.findOne();
+
+  async findAll(
+    entityFilterQuery: FilterQuery<T>,
+    projection?: string[],
+  ): Promise<T[] | null> {
+    return this.repository.findAll(entityFilterQuery, projection);
   }
-  async findAll() {
-    return this.repository.findAll();
+
+  async update(
+    entityFilterQuery: FilterQuery<T>,
+    updateEntityData: unknown,
+  ): Promise<T | null> {
+    return this.repository.update(entityFilterQuery, updateEntityData);
   }
-  async update() {
-    return this.repository.update();
-  }
-  async remove() {
-    return this.repository.remove();
+
+  async delete(entityFilterQuery: FilterQuery<T>): Promise<Boolean> {
+    return this.repository.delete(entityFilterQuery);
   }
 }
