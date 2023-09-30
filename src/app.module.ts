@@ -14,6 +14,8 @@ import { validate } from './modules/common/validators/env.validation';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { Environment } from './modules/common/enums/environments.enum';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+
 // import { WinstonModule } from 'nest-winston';
 // import * as winston from 'winston';
 
@@ -40,6 +42,7 @@ import { Environment } from './modules/common/enums/environments.enum';
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
       playground: process.env.NODE_ENV === Environment.DEV,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
         orphanedTypes: [],
