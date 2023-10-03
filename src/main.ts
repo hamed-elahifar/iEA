@@ -1,4 +1,3 @@
-console.clear();
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -8,6 +7,8 @@ import mongoose from 'mongoose';
 import compression from 'compression';
 
 async function bootstrap() {
+  const logger = new Logger('Main');
+
   // process.on(
   //   'uncaughtException',
   //   (message: any, stack?: string, context?: string) => {
@@ -55,8 +56,8 @@ async function bootstrap() {
   const port: number = +configService.getOrThrow<number>('PORT');
 
   await app.listen(port, async () => {
-    Logger.log(`App Running On Port: ${await app.getUrl()}`);
-    Logger.log(`
+    logger.log(`App Running On Port: ${await app.getUrl()}`);
+    logger.log(`
 
     ██████╗ ██████╗ ███╗   ███╗███████╗
     ██╔══██╗██╔══██╗████╗ ████║██╔════╝

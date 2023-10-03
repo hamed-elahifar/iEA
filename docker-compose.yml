@@ -5,9 +5,12 @@ services:
       dockerfile: Dockerfile
       context: .
     ports:
-      - 3000:3000
+      - ${PORT}:${PORT}
       - 9229:9229
     command: npm run start:debug
     volumes:
       - /app/node_modules
       - ./src:/app/src
+    env_file:
+      - .env.dev
+      - .env.prod
