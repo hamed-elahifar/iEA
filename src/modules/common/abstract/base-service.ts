@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { IBaseService } from '../interfaces/base-service.interface';
 import { BaseRepository } from './base-repository';
-import { FilterQuery } from 'mongoose';
+import { Document, FilterQuery } from 'mongoose';
 
 @Injectable()
-export class BaseService<T> implements IBaseService<T> {
+export class BaseService<T extends Document> implements IBaseService<T> {
   constructor(private readonly repository: BaseRepository<T>) {}
 
   async create(createEntityData: T): Promise<T> {

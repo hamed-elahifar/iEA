@@ -1,6 +1,6 @@
-import { FilterQuery } from 'mongoose';
+import { Document, FilterQuery } from 'mongoose';
 
-export interface IBaseService<T> {
+export interface IBaseService<T extends Document> {
   create(entity: T): Promise<T>;
 
   findOne(entityFilterQuery: FilterQuery<T>, projection?: string[]): Promise<T>;

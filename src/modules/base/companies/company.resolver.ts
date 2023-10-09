@@ -1,7 +1,7 @@
 import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
 import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
 import { Auth } from '../../../modules/auth/decorators/auth.decorators';
-import { Company } from './company.model';
+import { Company, CompanyDocument } from './company.model';
 import { CompanyService } from './company.service';
 import { CreateCompanyInput } from './dto/create-company.input';
 import { UpdateCompanyInput } from './dto/update-company.input';
@@ -11,7 +11,7 @@ import { BaseResolver } from '../../common/abstract/base-resolver';
 
 @Auth(AuthType.None)
 @Resolver((of) => Company)
-export class CompanyResolver extends BaseResolver(Company) {
+export class CompanyResolver extends BaseResolver<Company> {
   constructor(private readonly companyService: CompanyService) {
     super(companyService);
   }
