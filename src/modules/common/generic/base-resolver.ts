@@ -5,23 +5,23 @@ import { BaseService } from './base-service';
 import { PaginationArgs } from '../dto/pagination.input';
 import { Document } from 'mongoose';
 
-// Type<unknown>
-
-export function BaseResolver<T extends Document>(classRef: T): any {
+export function BaseResolver<T extends Document & { name: string }>(
+  classRef: T,
+): any {
   @Resolver({ isAbstract: true })
   abstract class BaseResolverClass {
     constructor(private readonly service: BaseService<T>) {}
 
     @Mutation((returns) => classRef, {
-      name: `createTEST`,
+      name: `create${classRef.name}`,
       nullable: true,
     })
-    async create(@Args(`createTESTInput`) createInput): Promise<T> {
+    async create(@Args(`create${classRef.name}Input`) createInput): Promise<T> {
       return this.service.create(createInput);
     }
 
     @Query((returns) => classRef, {
-      name: `getTEST`,
+      name: `get${classRef.name}`,
       nullable: true,
     })
     async findOne(
@@ -32,7 +32,7 @@ export function BaseResolver<T extends Document>(classRef: T): any {
     }
 
     @Query((returns) => [classRef], {
-      name: `getAllTEST`,
+      name: `getAll${classRef.name}`,
       nullable: true,
     })
     async findAll(
@@ -42,15 +42,15 @@ export function BaseResolver<T extends Document>(classRef: T): any {
       return this.service.findAll({ select });
     }
 
-    @Mutation((returns) => classRef, { name: `updateTEST` })
+    @Mutation((returns) => classRef, { name: `update${classRef.name}` })
     async update(
       @Args('id', { type: () => ID }) id: string,
-      @Args(`updateTESTInput`) updateInput,
+      @Args(`update${classRef.name}Input`) updateInput,
     ): Promise<T | null> {
       return this.service.update({ id }, updateInput);
     }
 
-    @Mutation((returns) => classRef, { name: `deleteTEST` })
+    @Mutation((returns) => classRef, { name: `delete${classRef.name}` })
     async delete(@Args('id', { type: () => ID }) id: string): Promise<Boolean> {
       return this.service.delete({ id });
     }

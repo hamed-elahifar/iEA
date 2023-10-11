@@ -7,11 +7,11 @@ import { CreateCompanyInput } from './dto/create-company.input';
 import { UpdateCompanyInput } from './dto/update-company.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
-import { BaseResolver } from '../../common/abstract/base-resolver';
+import { BaseResolver } from '../../common/generic/base-resolver';
 
 @Auth(AuthType.None)
 @Resolver((of) => Company)
-export class CompanyResolver extends BaseResolver<Company> {
+export class CompanyResolver extends BaseResolver(Company) {
   constructor(private readonly companyService: CompanyService) {
     super(companyService);
   }

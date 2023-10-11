@@ -6,7 +6,7 @@ import {
 import { Company } from './company.model';
 import { CreateCompanyInput } from './dto/create-company.input';
 import { CompanyRepository } from './company.repository';
-import { BaseService } from '../../common/abstract/base-service';
+import { BaseService } from '../../common/generic/base-service';
 
 @Injectable()
 export class CompanyService extends BaseService<Company> {
