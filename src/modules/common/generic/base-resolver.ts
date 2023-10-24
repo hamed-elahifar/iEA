@@ -5,11 +5,9 @@ import { BaseService } from './base-service';
 import { PaginationArgs } from '../dto/pagination.input';
 import { Document } from 'mongoose';
 
-export function BaseResolver<T extends Document & { name: string }>(
-  classRef: T,
-): any {
+export function BaseResolver<T extends Type<unknown>>(classRef: T): any {
   @Resolver({ isAbstract: true })
-  abstract class BaseResolverClass {
+  abstract class BaseResolverHost {
     constructor(private readonly service: BaseService<T>) {}
 
     @Mutation((returns) => classRef, {
@@ -55,6 +53,17 @@ export function BaseResolver<T extends Document & { name: string }>(
       return this.service.delete({ id });
     }
   }
-
-  return BaseResolverClass;
+  return BaseResolverHost;
 }
+
+// export function BaseResolver<T extends Document & { name: string }>(
+// function BaseResolver<T extends Type<unknown>>(classRef: T): any {
+//   classRef: T,
+// ): any {
+//   @Resolver({ isAbstract: true })
+//   abstract class BaseResolverClass {
+
+//   }
+
+//   return BaseResolverClass;
+// }

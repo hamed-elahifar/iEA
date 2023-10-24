@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class CompanyRepository extends BaseRepository<Company> {
+export class CompanyRepository extends BaseRepository<CompanyDocument> {
   constructor(@InjectModel(Company.name) companyModel: Model<CompanyDocument>) {
     super(companyModel);
   }

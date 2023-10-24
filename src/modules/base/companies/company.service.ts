@@ -3,15 +3,15 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Company } from './company.model';
+import { Company, CompanyDocument } from './company.model';
 import { CreateCompanyInput } from './dto/create-company.input';
 import { CompanyRepository } from './company.repository';
 import { BaseService } from '../../common/generic/base-service';
 
 @Injectable()
-export class CompanyService extends BaseService<Company> {
+export class CompanyService extends BaseService<CompanyDocument> {
   constructor(private readonly companyRepository: CompanyRepository) {
-    super(companyRepository);
+    super(Company);
   }
 }
 

@@ -6,7 +6,7 @@ export type CompanyDocument = Company & Document;
 
 @ObjectType('Company')
 @Schema({ timestamps: true })
-export class Company extends Document {
+export class Company  {
   @Field()
   _id: string;
 

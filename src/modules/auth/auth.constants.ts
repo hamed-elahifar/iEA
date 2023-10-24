@@ -1,1 +1,1 @@
-export const REQUEST_USER_KEY = 'username';
+export const REQUEST_USER_KEY = 'jwt';
