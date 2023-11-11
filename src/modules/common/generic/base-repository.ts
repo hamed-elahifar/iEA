@@ -13,10 +13,8 @@ export abstract class BaseRepository<T extends Document> {
     projection?: string[],
   ): Promise<T | null> {
     return this.entityModel
-      .findOne(entityFilterQuery, {
-        __v: 0,
-        ...projection,
-      })
+      .findOne(entityFilterQuery)
+      .select(projection)
       .exec();
   }
 
@@ -24,12 +22,7 @@ export abstract class BaseRepository<T extends Document> {
     entityFilterQuery: FilterQuery<T>,
     projection?: string[],
   ): Promise<T[] | null> {
-    return this.entityModel
-      .find(entityFilterQuery, {
-        __v: 0,
-        ...projection,
-      })
-      .exec();
+    return this.entityModel.find(entityFilterQuery).select(projection).exec();
   }
 
   async update(

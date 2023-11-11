@@ -93,8 +93,8 @@ input PaginationArgs {
 type Query {
   activities: [Activity!]
   activity(id: ID!): Activity!
-  getCompanies(PaginationArgs: PaginationArgs!): [Company!]
-  getCompany(id: ID!): Company
+  findAllCompany(PaginationArgs: PaginationArgs!): [Company!]
+  findOneCompany(id: ID!): Company
 }
 
 type Staff {

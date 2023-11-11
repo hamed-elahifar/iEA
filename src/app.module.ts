@@ -41,7 +41,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
-      playground: process.env.NODE_ENV === Environment.DEV,
+      playground: false, //process.env.NODE_ENV === Environment.DEV,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
