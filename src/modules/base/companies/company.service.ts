@@ -3,24 +3,26 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Company, CompanyDocument } from './company.model';
-import { CreateCompanyInput } from './dto/create-company.input';
+import {
+  Company as Entity,
+  CompanyDocument as EntityDocument,
+} from './company.model';
+import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
 import { CompanyRepository } from './company.repository';
+import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
 
 @Injectable()
 export class CompanyService {
   constructor(private readonly companyRepository: CompanyRepository) {}
 
-  async create(
-    createCompanyInput: CreateCompanyInput,
-  ): Promise<CompanyDocument> {
+  async create(createInput: CreateInput): Promise<EntityDocument> {
     try {
-      return this.companyRepository.create(createCompanyInput);
+      return this.companyRepository.create(createInput);
     } catch (error) {
-      console.log(error);
       if ((error.code = 11000)) {
         throw new ConflictException('Already Exists');
       }
+      throw error;
     }
   }
 
@@ -30,26 +32,21 @@ export class CompanyService {
   }: {
     id: string;
     select?: string[];
-  }): Promise<CompanyDocument> {
-    const company = await this.companyRepository.findOne({ _id: id }, select);
+  }): Promise<EntityDocument> {
+    const entity = await this.companyRepository.findOne({ _id: id }, select);
 
-    if (!company) {
-      throw new NotFoundException(`${Company.name} #${id} not found`);
+    if (!entity) {
+      throw new NotFoundException(`${Entity.name} #${id} not found`);
     }
 
-    console.log(company);
-
-    return company;
+    return entity;
   }
 
-  async findAll({ select }): Promise<CompanyDocument[]> {
+  async findAll({ select }): Promise<EntityDocument[]> {
     return this.companyRepository.findAll({}, select);
   }
 
-  async update(
-    id,
-    attrs: Partial<CreateCompanyInput>,
-  ): Promise<CompanyDocument> {
+  async update(id, attrs: UpdateInput): Promise<EntityDocument> {
     const result = await this.companyRepository.update(
       { _id: id },
       { $set: attrs },

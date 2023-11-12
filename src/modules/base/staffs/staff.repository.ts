@@ -1,12 +1,12 @@
 import { BaseRepository } from '../../common/generic/base-repository';
-import { Company, CompanyDocument as EntityDocument } from './company.model';
+import { Staff, StaffDocument as EntityDocument } from './staff.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class CompanyRepository extends BaseRepository<EntityDocument> {
-  constructor(@InjectModel(Company.name) companyModel: Model<EntityDocument>) {
+export class StaffRepository extends BaseRepository<EntityDocument> {
+  constructor(@InjectModel(Staff.name) companyModel: Model<EntityDocument>) {
     super(companyModel);
   }
 }

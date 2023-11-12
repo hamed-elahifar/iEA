@@ -3,6 +3,8 @@ import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ObjectType } from '@nestjs/graphql';
 
+export type StaffDocument = Staff & Document;
+
 @ObjectType('Staff')
 @Schema({ timestamps: true })
 export class Staff extends Document {
