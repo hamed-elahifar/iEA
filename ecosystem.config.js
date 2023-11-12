@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'BPMS',
+      name: 'iEA',
       script: 'npm run prod',
       env: {
         NODE_ENV: 'prod',
