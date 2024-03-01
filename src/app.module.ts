@@ -14,13 +14,16 @@ import { validate } from './modules/common/validators/env.validation';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { Environment } from './modules/common/enums/environments.enum';
-import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+// import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 // import { WinstonModule } from 'nest-winston';
 // import * as winston from 'winston';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static'),
+    }),
     ConfigModule.forRoot({
       validate,
       isGlobal: true,
