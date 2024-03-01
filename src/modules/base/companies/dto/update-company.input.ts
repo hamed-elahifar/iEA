@@ -17,4 +17,9 @@ export class UpdateCompanyInput {
   @IsString()
   @Field({ nullable: true })
   vision: string;
+
+  @IsOptional()
+  @IsString()
+  @Field({ nullable: true })
+  holding?: string;
 }

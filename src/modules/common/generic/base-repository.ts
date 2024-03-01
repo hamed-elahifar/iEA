@@ -1,4 +1,10 @@
-import { Document, FilterQuery, Model } from 'mongoose';
+import {
+  Document,
+  FilterQuery,
+  Model,
+  PopulateOptions,
+  UpdateQuery,
+} from 'mongoose';
 
 export abstract class BaseRepository<T extends Document> {
   constructor(protected readonly entityModel: Model<T>) {}
@@ -11,23 +17,39 @@ export abstract class BaseRepository<T extends Document> {
   async findOne(
     entityFilterQuery: FilterQuery<T>,
     projection?: string[],
+    populateOptions?: PopulateOptions,
   ): Promise<T | null> {
-    return this.entityModel
-      .findOne(entityFilterQuery)
-      .select(projection)
-      .exec();
+    let query = this.entityModel.findOne(entityFilterQuery);
+
+    if (projection) {
+      query = query.select(projection);
+    }
+
+    if (populateOptions) {
+      query = query.populate(populateOptions);
+    }
+
+    return query.exec();
   }
 
   async findAll(
     entityFilterQuery: FilterQuery<T>,
     projection?: string[],
+    populateOptions?: string | PopulateOptions | (string | PopulateOptions)[],
   ): Promise<T[] | null> {
-    return this.entityModel.find(entityFilterQuery).select(projection).exec();
+    if (populateOptions) {
+      return await this.entityModel
+        .find(entityFilterQuery, projection)
+        .populate(populateOptions)
+        .exec();
+    } else {
+      return await this.entityModel.find(entityFilterQuery, projection).exec();
+    }
   }
 
   async update(
     entityFilterQuery: FilterQuery<T>,
-    updateEntityData: unknown,
+    updateEntityData: UpdateQuery<T>,
   ): Promise<T | null> {
     return this.entityModel.findOneAndUpdate(
       entityFilterQuery,

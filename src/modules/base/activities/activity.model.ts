@@ -4,12 +4,13 @@ import { Company } from '../companies/company.model';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { TypeEnum } from './enums/group-type.unum';
 import { JobPosition } from '../job-positions/job-position.model';
+import autopopulate from 'mongoose-autopopulate';
 
 export type ActivityDocument = Activity & Document;
 
 @ObjectType('Activity')
 @Schema({ timestamps: true })
-export class Activity extends Document {
+export class Activity {
   @Field(() => ID, { nullable: true, description: '' })
   _id: string;
 
@@ -29,6 +30,7 @@ export class Activity extends Document {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: JobPosition.name,
+    autopopulate: true,
   })
   jobPosition?: JobPosition;
 
@@ -37,6 +39,7 @@ export class Activity extends Document {
     type: mongoose.Schema.Types.ObjectId,
     ref: Company.name,
     required: true,
+    autopopulate: true,
   })
   company: Company;
 
@@ -51,5 +54,7 @@ export class Activity extends Document {
 }
 
 export const ActivitySchema = SchemaFactory.createForClass(Activity);
+ActivitySchema.plugin(autopopulate);
+
 ActivitySchema.index({ title: 1, company: 1 }, { unique: true });
 ActivitySchema.index({ jobPosition: 1 });

@@ -19,6 +19,7 @@ type Company {
   _id: String!
   createAt: Date!
   deletedAt: Date
+  holding: Holding
   mission: String
   name: String!
   updatedAt: Date!
@@ -34,9 +35,14 @@ input CreateActivityInput {
 }
 
 input CreateCompanyInput {
+  holding: String
   mission: String
   name: String!
   vision: String
+}
+
+input CreateHoldingInput {
+  name: String!
 }
 
 """Date custom scalar type"""
@@ -55,6 +61,14 @@ type Department {
   updatedAt: Date!
 }
 
+type Holding {
+  _id: String!
+  createAt: Date!
+  deletedAt: Date
+  name: String!
+  updatedAt: Date!
+}
+
 type JobPosition {
   company: Company!
   createAt: Date!
@@ -66,10 +80,15 @@ type JobPosition {
 }
 
 type Mutation {
-  createActivity(createActivityInput: CreateActivityInput!): Activity!
+  createActivity(createActivityInput: CreateActivityInput!): Activity
   createCompany(createCompanyInput: CreateCompanyInput!): Company
+  createHolding(createHoldingInput: CreateHoldingInput!): Holding
+  removeActivity(id: ID!): Activity!
   removeCompany(id: ID!): Company!
+  removeHolding(id: ID!): Holding!
+  updateActivity(id: ID!, updateActivityInput: UpdateActivityInput!): Activity!
   updateCompany(id: ID!, updateCompanyInput: UpdateCompanyInput!): Company!
+  updateHolding(id: ID!, updateHoldingInput: UpdateHoldingInput!): Holding!
 }
 
 """Organization Level"""
@@ -91,10 +110,12 @@ input PaginationArgs {
 }
 
 type Query {
-  activities: [Activity!]
-  activity(id: ID!): Activity!
+  findAllActivity(PaginationArgs: PaginationArgs!): [Activity!]
   findAllCompany(PaginationArgs: PaginationArgs!): [Company!]
+  findAllHolding(PaginationArgs: PaginationArgs!): [Holding!]
+  findOneActivity(id: ID!): Activity
   findOneCompany(id: ID!): Company
+  findOneHolding(id: ID!): Holding
 }
 
 type Staff {
@@ -114,10 +135,22 @@ type Staff {
   username: String!
 }
 
+input UpdateActivityInput {
+  description: String
+  position: String
+  title: String
+  type: String
+}
+
 input UpdateCompanyInput {
+  holding: String
   mission: String
   name: String
   vision: String
+}
+
+input UpdateHoldingInput {
+  name: String
 }
 
 enum typeEnum {

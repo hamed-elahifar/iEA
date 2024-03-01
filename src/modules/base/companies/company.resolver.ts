@@ -1,10 +1,7 @@
 import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
 import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
 import { Auth } from '../../../modules/auth/decorators/auth.decorators';
-import {
-  Company as Entity,
-  CompanyDocument as EntityDocument,
-} from './company.model';
+import { Company as Entity } from './company.model';
 import { CompanyService } from './company.service';
 import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
 import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
@@ -14,13 +11,13 @@ import { PaginationArgs } from '../../common/dto/pagination.input';
 @Auth(AuthType.None)
 @Resolver((of) => Entity)
 export class CompanyResolver {
-  constructor(private readonly companyService: CompanyService) {}
+  constructor(private readonly service: CompanyService) {}
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,
     nullable: true,
   })
   async create(@Args(`create${Entity.name}Input`) createInput: CreateInput) {
-    return this.companyService.create(createInput);
+    return this.service.create(createInput);
   }
 
   @Query((returns) => [Entity], {
@@ -31,7 +28,7 @@ export class CompanyResolver {
     @Args('PaginationArgs') paginationArgs: PaginationArgs,
     @Selected() select,
   ) {
-    return this.companyService.findAll({ select });
+    return this.service.findAll({ select });
   }
 
   @Query((returns) => Entity, {
@@ -42,7 +39,7 @@ export class CompanyResolver {
     @Args('id', { type: () => ID }) id: string,
     @Selected() select,
   ) {
-    return this.companyService.findOne({ id, select });
+    return this.service.findOne({ id, select });
   }
 
   @Mutation((returns) => Entity, { name: `update${Entity.name}` })
@@ -50,11 +47,11 @@ export class CompanyResolver {
     @Args('id', { type: () => ID }) id: string,
     @Args(`update${Entity.name}Input`) updateInput: UpdateInput,
   ) {
-    return this.companyService.update(id, updateInput);
+    return this.service.update(id, updateInput);
   }
 
   @Mutation((returns) => Entity, { name: `remove${Entity.name}` })
   async remove(@Args('id', { type: () => ID }) id: string) {
-    return this.companyService.delete(id);
+    return this.service.delete(id);
   }
 }

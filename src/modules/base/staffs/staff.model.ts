@@ -2,12 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ObjectType } from '@nestjs/graphql';
+import autopopulate from 'mongoose-autopopulate';
 
 export type StaffDocument = Staff & Document;
 
 @ObjectType('Staff')
 @Schema({ timestamps: true })
-export class Staff extends Document {
+export class Staff {
   @Field()
   _id?: string;
 
@@ -47,6 +48,7 @@ export class Staff extends Document {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'JobPosition', // JobPosition.name won't work,
+    autopopulate: true,
   })
   jobPosition: string; // JobPosition won't work
 
@@ -55,6 +57,7 @@ export class Staff extends Document {
     type: mongoose.Schema.Types.ObjectId,
     ref: Company.name,
     required: true,
+    autopopulate: true,
   })
   company: Company;
 
@@ -69,6 +72,8 @@ export class Staff extends Document {
 }
 
 export const StaffSchema = SchemaFactory.createForClass(Staff);
+StaffSchema.plugin(autopopulate);
+
 StaffSchema.index({ phone: 1, company: 1 }, { unique: true }); // 1 is ascending, -1 is descending
 StaffSchema.index({ nationalNumber: 1, company: 1 }, { unique: true });
 StaffSchema.index({ username: 1, company: 1 }, { unique: true });

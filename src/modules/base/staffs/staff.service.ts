@@ -18,12 +18,12 @@ export class StaffService {
   constructor(
     @InjectModel(Entity.name)
     private readonly staffModel: Model<Entity>,
-    private readonly staffRepository: StaffRepository,
+    private readonly repository: StaffRepository,
   ) {}
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     try {
-      return this.staffRepository.create(createInput);
+      return this.repository.create(createInput);
     } catch (error) {
       if ((error.code = 11000)) {
         throw new ConflictException('Already Exists');
@@ -39,7 +39,7 @@ export class StaffService {
     id: string;
     select?: string[];
   }): Promise<EntityDocument> {
-    const entity = await this.staffRepository.findOne({ _id: id }, select);
+    const entity = await this.repository.findOne({ _id: id }, select);
 
     if (!entity) {
       throw new NotFoundException(`${Entity.name} #${id} not found`);
@@ -49,14 +49,11 @@ export class StaffService {
   }
 
   async findAll({ select }): Promise<EntityDocument[]> {
-    return this.staffRepository.findAll({}, select);
+    return this.repository.findAll({}, select);
   }
 
   async update(id, attrs: UpdateInput): Promise<EntityDocument> {
-    const result = await this.staffRepository.update(
-      { _id: id },
-      { $set: attrs },
-    );
+    const result = await this.repository.update({ _id: id }, { $set: attrs });
 
     if (!result) {
       throw new NotFoundException(`${id} not found`);
@@ -66,7 +63,6 @@ export class StaffService {
   }
 
   async delete(id: string) {
-    const result = await this.findOne({ id });
-    return result.deleteOne();
+    return this.repository.delete({ id });
   }
 }

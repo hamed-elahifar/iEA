@@ -14,4 +14,8 @@ export class CreateCompanyInput {
   @IsOptional()
   @Field({ nullable: true })
   vision?: string;
+
+  @IsOptional()
+  @Field({ nullable: true })
+  holding?: string;
 }

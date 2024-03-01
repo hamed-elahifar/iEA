@@ -1,12 +1,14 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Holding } from '../holding/holding.model';
+import autopopulate from 'mongoose-autopopulate';
 
 export type CompanyDocument = Company & Document;
 
 @ObjectType('Company')
 @Schema({ timestamps: true })
-export class Company  {
+export class Company {
   @Field()
   _id: string;
 
@@ -22,6 +24,14 @@ export class Company  {
   @Prop()
   vision: string;
 
+  @Field(() => Holding, { nullable: true })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: Holding.name,
+    autopopulate: true,
+  })
+  holding: Holding | null;
+
   @Field(() => Date)
   createAt: Date;
 
@@ -33,4 +43,4 @@ export class Company  {
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
-// UserSchema.index({ phone: 1, name: -1 }); // 1 is ascending, -1 is descending
+CompanySchema.plugin(autopopulate);

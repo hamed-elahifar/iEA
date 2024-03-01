@@ -4,16 +4,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import {
-  Company as Entity,
-  CompanyDocument as EntityDocument,
-} from './company.model';
-import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
-import { CompanyRepository } from './company.repository';
-import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
+  Holding as Entity,
+  HoldingDocument as EntityDocument,
+} from './holding.model';
+import { CreateHoldingInput as CreateInput } from './dto/create-holding.input';
+import { HoldingRepository } from './holding.repository';
+import { UpdateHoldingInput as UpdateInput } from './dto/update-holding.input';
 
 @Injectable()
-export class CompanyService {
-  constructor(private readonly repository: CompanyRepository) {}
+export class HoldingService {
+  constructor(private readonly repository: HoldingRepository) {}
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     try {
@@ -43,8 +43,7 @@ export class CompanyService {
   }
 
   async findAll({ select }): Promise<EntityDocument[]> {
-    const populateOptions = [{ path: 'holings', select: 'name' }];
-    return this.repository.findAll({}, select, populateOptions);
+    return this.repository.findAll({}, select);
   }
 
   async update(id, attrs: UpdateInput): Promise<EntityDocument> {

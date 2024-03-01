@@ -1,17 +1,17 @@
-import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
 import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
 import { Auth } from '../../../modules/auth/decorators/auth.decorators';
-import { Staff as Entity } from './staff.model';
-import { CreateStaffInput as CreateInput } from './dto/create-staff.input';
-import { UpdateStaffInput as UpdateInput } from './dto/update-staff.input';
+import { Holding as Entity } from './holding.model';
+import { HoldingService } from './holding.service';
+import { CreateHoldingInput as CreateInput } from './dto/create-holding.input';
+import { UpdateHoldingInput as UpdateInput } from './dto/update-holding.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
-import { StaffService } from './staff.service';
 
 @Auth(AuthType.None)
 @Resolver((of) => Entity)
-export class StaffResolver {
-  constructor(private readonly service: StaffService) {}
+export class HoldingResolver {
+  constructor(private readonly service: HoldingService) {}
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,
     nullable: true,

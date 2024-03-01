@@ -1,33 +1,57 @@
-import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
-import { Activity } from './activity.model';
+import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
 import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
 import { Auth } from '../../../modules/auth/decorators/auth.decorators';
-import { CreateActivityInput } from './dto/create-activity.input';
+import { Activity as Entity } from './activity.model';
 import { ActivityService } from './activity.service';
+import { CreateActivityInput as CreateInput } from './dto/create-activity.input';
+import { UpdateActivityInput as UpdateInput } from './dto/update-activity.input';
 import { Selected } from '../../common/decorators/selected.decorator';
+import { PaginationArgs } from '../../common/dto/pagination.input';
 
 @Auth(AuthType.None)
-@Resolver(() => Activity)
+@Resolver((of) => Entity)
 export class ActivityResolver {
-  constructor(private readonly activityService: ActivityService) {}
-
-  @Query(() => [Activity], { name: 'activities', nullable: true })
-  async findAll(@Selected() select): Promise<Activity[]> {
-    return this.activityService.findAll({ select });
+  constructor(private readonly service: ActivityService) {}
+  @Mutation((returns) => Entity, {
+    name: `create${Entity.name}`,
+    nullable: true,
+  })
+  async create(@Args(`create${Entity.name}Input`) createInput: CreateInput) {
+    return this.service.create(createInput);
   }
 
-  @Query(() => Activity, { name: 'activity' })
+  @Query((returns) => [Entity], {
+    name: `findAll${Entity.name}`,
+    nullable: true,
+  })
+  async findAll(
+    @Args('PaginationArgs') paginationArgs: PaginationArgs,
+    @Selected() select,
+  ) {
+    return this.service.findAll({ select });
+  }
+
+  @Query((returns) => Entity, {
+    name: `findOne${Entity.name}`,
+    nullable: true,
+  })
   async findOne(
     @Args('id', { type: () => ID }) id: string,
     @Selected() select,
-  ): Promise<Activity> {
-    return this.activityService.findOne({ id, select });
+  ) {
+    return this.service.findOne({ id, select });
   }
 
-  @Mutation(() => Activity, { name: 'createActivity' })
-  async create(
-    @Args('createActivityInput') createActivityInput: CreateActivityInput,
+  @Mutation((returns) => Entity, { name: `update${Entity.name}` })
+  async update(
+    @Args('id', { type: () => ID }) id: string,
+    @Args(`update${Entity.name}Input`) updateInput: UpdateInput,
   ) {
-    return this.activityService.create(createActivityInput);
+    return this.service.update(id, updateInput);
+  }
+
+  @Mutation((returns) => Entity, { name: `remove${Entity.name}` })
+  async remove(@Args('id', { type: () => ID }) id: string) {
+    return this.service.delete(id);
   }
 }
