@@ -1,14 +1,13 @@
-import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
-import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
-import { Auth } from '../../../modules/auth/decorators/auth.decorators';
+import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
 import { Staff as Entity } from './staff.model';
 import { CreateStaffInput as CreateInput } from './dto/create-staff.input';
 import { UpdateStaffInput as UpdateInput } from './dto/update-staff.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 import { StaffService } from './staff.service';
+import { Public } from 'src/modules/common/decorators';
 
-@Auth(AuthType.None)
+@Public()
 @Resolver((of) => Entity)
 export class StaffResolver {
   constructor(private readonly service: StaffService) {}

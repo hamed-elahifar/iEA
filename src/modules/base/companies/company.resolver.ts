@@ -1,6 +1,4 @@
-import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
-import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
-import { Auth } from '../../../modules/auth/decorators/auth.decorators';
+import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
 import { Company as Entity } from './company.model';
 import { CompanyService } from './company.service';
 import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
@@ -8,10 +6,10 @@ import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 
-@Auth(AuthType.None)
 @Resolver((of) => Entity)
 export class CompanyResolver {
   constructor(private readonly service: CompanyService) {}
+
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,
     nullable: true,

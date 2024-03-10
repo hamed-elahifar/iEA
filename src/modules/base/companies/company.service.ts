@@ -43,8 +43,7 @@ export class CompanyService {
   }
 
   async findAll({ select }): Promise<EntityDocument[]> {
-    const populateOptions = [{ path: 'holings', select: 'name' }];
-    return this.repository.findAll({}, select, populateOptions);
+    return this.repository.findAll({}, select);
   }
 
   async update(id, attrs: UpdateInput): Promise<EntityDocument> {

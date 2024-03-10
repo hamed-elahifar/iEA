@@ -19,9 +19,18 @@ import { ActivityCompanyResolver } from './activities/activity-company.resolver'
 import { ActivityRepository } from './activities/activity.repository';
 import { HoldingService } from './holding/holding.service';
 import { HoldingResolver } from './holding/holding.resolver';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthModule } from '../auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import jwtConfig from '../auth/config/jwt.config';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuardGraphQL } from '../common/guards/access-token-graphql.guard';
 
 @Module({
   imports: [
+    AuthModule,
+    ConfigModule,
+    JwtModule.registerAsync(jwtConfig.asProvider()),
     MongooseModule.forFeature([
       {
         name: Activity.name,

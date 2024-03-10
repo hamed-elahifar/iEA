@@ -1,46 +1,25 @@
-import {
-  Controller,
-  Post,
-  Body,
-  HttpCode,
-  HttpStatus,
-  Res,
-} from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { SignUpUserDto } from './dto/sign-up.dto';
-import { LoginUserDto } from './dto/login.dto';
-import { Response } from 'express';
-import { AuthType } from './enums/auth-type.enum';
-import { Auth } from './decorators/auth.decorators';
-import { Serialize } from '../common/interceptors/serialize.interceptor';
-import { UserDto } from './dto/user.dto';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Public } from '../common/decorators';
 
-@Auth(AuthType.None)
+import { AuthService } from './auth.service';
+import { AuthDto } from './dto';
+import { Tokens } from './types';
+
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
+  @Public()
   @Post('sign-up')
-  @Serialize(UserDto)
-  signUp(@Body() signUpUserDto: SignUpUserDto) {
-    return this.authService.signUp(signUpUserDto);
+  @HttpCode(HttpStatus.CREATED)
+  signup(@Body() dto: AuthDto): Promise<Tokens> {
+    return this.authService.signup(dto);
   }
 
-  @HttpCode(HttpStatus.OK)
+  @Public()
   @Post('login')
-  async login(
-    @Res({ passthrough: true }) response: Response,
-    @Body()
-    loginUserDto: LoginUserDto,
-  ) {
-    const accessToken = await this.authService.login(loginUserDto);
-
-    response.cookie('accessToken', accessToken, {
-      secure: true,
-      httpOnly: true,
-      sameSite: true,
-    });
-
-    return accessToken;
+  @HttpCode(HttpStatus.OK)
+  login(@Body() dto: AuthDto): Promise<Tokens> {
+    return this.authService.login(dto);
   }
 }

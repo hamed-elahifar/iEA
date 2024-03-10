@@ -1,17 +1,18 @@
 import { Resolver, Query, Args, ID, Mutation, Int } from '@nestjs/graphql';
-import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
-import { Auth } from '../../../modules/auth/decorators/auth.decorators';
 import { Activity as Entity } from './activity.model';
 import { ActivityService } from './activity.service';
 import { CreateActivityInput as CreateInput } from './dto/create-activity.input';
 import { UpdateActivityInput as UpdateInput } from './dto/update-activity.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
+import { UseGuards } from '@nestjs/common';
+// import { AccessTokenGuardGraphQL } from '../../auth/guards/access-token-graphql.guard'; //'../modules/auth/guards/access-token-graphql.guard';
 
-@Auth(AuthType.None)
+// @UseGuards(AccessTokenGuardGraphQL)
 @Resolver((of) => Entity)
 export class ActivityResolver {
   constructor(private readonly service: ActivityService) {}
+
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,
     nullable: true,

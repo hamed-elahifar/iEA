@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { hash } from 'bcrypt';
 import { Document } from 'mongoose';
+import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
 
 @Schema({ timestamps: true })
 export class User extends Document {
-  @Prop()
+  @Prop({ unique: true })
   username: string;
 
   @Prop({ select: false })
@@ -13,15 +14,21 @@ export class User extends Document {
   @Prop()
   name: string;
 
-  @Prop({ unique: true })
+  @Prop()
   phone: string;
 
-  @Prop({ unique: true })
+  @Prop()
   email: string;
+
+  @Prop({ enum: Object.values(UserRoleEnum) })
+  role: string;
+
+  @Prop({})
+  company: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
-// UserSchema.index({ phone: 1, name: 1 });
+UserSchema.index({ company: 1, email: 1 });
 
 UserSchema.pre('save', async function (next: any) {
   if (!this.isModified('password')) return next();

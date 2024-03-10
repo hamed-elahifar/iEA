@@ -1,53 +1,59 @@
 import {
   ConflictException,
-  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+
+import { AuthDto } from './dto';
+import { JwtPayload, Tokens } from './types';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { HashingSerivce } from './hashing.service';
-import { LoginUserDto } from './dto/login.dto';
-import { SignUpUserDto } from './dto/sign-up.dto';
-import { JwtService } from '@nestjs/jwt';
-import jwtConfig from './config/jwt.config';
-import { ConfigType } from '@nestjs/config';
-import { ActiveUserData } from './interfaces/active-user-data.interface';
 import { User } from './models/user.model';
+import { HashingSerivce } from './hashing.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<User>,
+    private jwtService: JwtService,
+    private config: ConfigService,
     private readonly hashingService: HashingSerivce,
-    private readonly jwtService: JwtService,
-    @Inject(jwtConfig.KEY)
-    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
 
-  async signUp(signUpUserDto: SignUpUserDto) {
+  async signup(dto: AuthDto): Promise<Tokens> {
+    let token;
     try {
-      const user = new this.userModel(signUpUserDto);
-      return await user.save();
+      const user = new this.userModel(dto);
+      await user.save();
+      token = await this.generateToken({
+        id: user.id,
+        username: user.username,
+        company: user.company,
+      });
     } catch (error) {
-      console.log(error);
       throw new ConflictException();
     }
+
+    return token;
   }
 
-  async login(loginUserDto: LoginUserDto) {
+  async login(dto: AuthDto): Promise<Tokens> {
     const user = await this.userModel
       .findOne({
-        username: loginUserDto.username,
+        username: dto.username,
       })
-      .select('password');
+      .select('username password email company');
 
     if (!user) {
       throw new UnauthorizedException('Unauthorized');
     }
 
+    console.log(user);
+
     const isEqual = await this.hashingService.compare(
-      loginUserDto.password,
+      dto.password,
       user.password,
     );
 
@@ -55,28 +61,21 @@ export class AuthService {
       throw new UnauthorizedException('Unauthorized');
     }
 
-    const accessToken = await this.jwtService.signAsync(
-      {
-        sub: user.username,
-      } as ActiveUserData,
-      {
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-        secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.ttl,
-      },
-    );
-
-    return { accessToken };
-  }
-
-  async findByUsername(username) {
-    const user = await this.userModel.findOne({
-      username,
+    const token = await this.generateToken({
+      id: user.id,
+      username: user.username,
+      company: user.company,
     });
 
-    if (!user) {
-      throw new UnauthorizedException('Unauthorized');
-    }
+    return token;
+  }
+
+  async generateToken(payload: JwtPayload): Promise<Tokens> {
+    const accessToken = await this.jwtService.signAsync(payload, {
+      secret: this.config.get<string>('JWT_SECRET'),
+      expiresIn: '30d',
+    });
+
+    return { accessToken };
   }
 }

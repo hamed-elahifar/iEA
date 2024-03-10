@@ -1,6 +1,4 @@
 import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
-import { AuthType } from '../../../modules/auth/enums/auth-type.enum';
-import { Auth } from '../../../modules/auth/decorators/auth.decorators';
 import { Holding as Entity } from './holding.model';
 import { HoldingService } from './holding.service';
 import { CreateHoldingInput as CreateInput } from './dto/create-holding.input';
@@ -8,7 +6,6 @@ import { UpdateHoldingInput as UpdateInput } from './dto/update-holding.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 
-@Auth(AuthType.None)
 @Resolver((of) => Entity)
 export class HoldingResolver {
   constructor(private readonly service: HoldingService) {}

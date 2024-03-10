@@ -43,7 +43,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\":\"hamed\",\n    \"password\":\"12345\"\n}",
+							"raw": "{\n    \"username\":\"hamed\",\n    \"password\":\"123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +204,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query {\n    findAllCompany(PaginationArgs:{}){\n        _id,name\n    }\n}\n",
+										"query": "query {\n    findAllHolding(PaginationArgs:{}){\n        _id,name\n    }\n}\n",
 										"variables": ""
 									}
 								},
@@ -252,7 +252,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "query {\n    findOneCompany(id:\"654f6acdbc7df5b3fc4f5dfd\"){\n        _id,\n        name\n    }\n}\n",
+										"query": "query {\n    findOneHolding(id:\"654f6acdbc7df5b3fc4f5dfd\"){\n        _id,\n        name\n    }\n}\n",
 										"variables": ""
 									}
 								},
@@ -276,7 +276,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation {\n    updateCompany(id:\"654f6acdbc7df5b3fc4f5dfd\",updateCompanyInput:{\n        name:\"comp33\"\n    }){\n        _id,name\n    }\n}",
+										"query": "mutation {\n    updateHolding(id:\"654f6acdbc7df5b3fc4f5dfd\",updateCompanyInput:{\n        name:\"comp33\"\n    }){\n        _id,name\n    }\n}",
 										"variables": ""
 									}
 								},
@@ -300,7 +300,7 @@
 								"body": {
 									"mode": "graphql",
 									"graphql": {
-										"query": "mutation {\n    removeCompany(id:\"654f6acdbc7df5b3fc4f5dfd\"){\n        _id,name\n    }\n}",
+										"query": "mutation {\n    removeHolding(id:\"654f6acdbc7df5b3fc4f5dfd\"){\n        _id,name\n    }\n}",
 										"variables": ""
 									}
 								},

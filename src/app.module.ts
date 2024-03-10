@@ -15,6 +15,9 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { Environment } from './modules/common/enums/environments.enum';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './modules/common/guards/roles.guard';
+import { AccessTokenGuardGraphQL } from './modules/common/guards/access-token-graphql.guard';
 // import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 // import { WinstonModule } from 'nest-winston';
 // import * as winston from 'winston';
@@ -46,6 +49,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       sortSchema: true,
       playground: true, //process.env.NODE_ENV === Environment.DEV,
       // plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      context: ({ req, res }) => ({ req, res }),
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
         orphanedTypes: [],
@@ -69,8 +73,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         uri: config.getOrThrow('MONGO_URL'),
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
       }),
     }),
     // WinstonModule.forRoot({
@@ -132,6 +134,16 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     PubSubModule,
   ],
   controllers: [],
-  providers: [DateScalar],
+  providers: [
+    DateScalar,
+    {
+      provide: APP_GUARD,
+      useClass: AccessTokenGuardGraphQL,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

@@ -1,12 +1,11 @@
 import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
-import { AuthType } from '../../auth/enums/auth-type.enum';
-import { Auth } from '../../auth/decorators/auth.decorators';
 import { JobPosition } from './job-position.model';
 import { JobPositionService } from './job-position.service';
 import { CreateJobPositionInput } from './dto/create-job-position.input';
 import { Selected } from 'src/modules/common/decorators/selected.decorator';
+import { Public } from 'src/modules/common/decorators';
 
-@Auth(AuthType.None)
+@Public()
 @Resolver(() => JobPosition)
 export class JobPositionResolver {
   constructor(private readonly jobPositionService: JobPositionService) {}

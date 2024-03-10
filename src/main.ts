@@ -27,6 +27,7 @@ async function bootstrap() {
   // );
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    cors: false,
     // bufferLogs: true,
     // logger: false,
     // logger: ['log', 'error', 'warn', 'debug', 'verbose'],

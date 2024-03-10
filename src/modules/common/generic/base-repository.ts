@@ -19,7 +19,9 @@ export abstract class BaseRepository<T extends Document> {
     projection?: string[],
     populateOptions?: PopulateOptions,
   ): Promise<T | null> {
-    let query = this.entityModel.findOne(entityFilterQuery);
+    let query;
+
+    query = this.entityModel.findOne(entityFilterQuery);
 
     if (projection) {
       query = query.select(projection);
@@ -37,14 +39,19 @@ export abstract class BaseRepository<T extends Document> {
     projection?: string[],
     populateOptions?: string | PopulateOptions | (string | PopulateOptions)[],
   ): Promise<T[] | null> {
-    if (populateOptions) {
-      return await this.entityModel
-        .find(entityFilterQuery, projection)
-        .populate(populateOptions)
-        .exec();
-    } else {
-      return await this.entityModel.find(entityFilterQuery, projection).exec();
+    let query;
+
+    query = this.entityModel.find(entityFilterQuery);
+
+    if (projection) {
+      query = query.select(projection);
     }
+
+    if (populateOptions) {
+      query = query.populate(populateOptions);
+    }
+
+    return query.exec();
   }
 
   async update(

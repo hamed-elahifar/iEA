@@ -1,23 +1,20 @@
 import { Module } from '@nestjs/common';
-import { BcryptSerive } from './bcrypt.service';
-import { HashingSerivce } from './hashing.service';
-import { AuthController } from './auth.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import jwtConfig from './config/jwt.config';
-import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
-import { AccessTokenGuard } from './guards/access-token.guard';
-import { AuthenticationGuard } from './guards/authentication.guard';
+
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { AccessTokenStrategy, jwtConstants } from './strategies';
+import { HashingSerivce } from './hashing.service';
+import { BcryptSerive } from './bcrypt.service';
+import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './models/user.model';
-import { CurrentUserInterceptor } from './decorators/interceptors/current-user.interceptor';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
-    JwtModule.registerAsync(jwtConfig.asProvider()),
-    ConfigModule.forFeature(jwtConfig),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '30d' },
+    }),
     MongooseModule.forFeature([
       {
         name: User.name,
@@ -25,22 +22,14 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       },
     ]),
   ],
+  controllers: [AuthController],
   providers: [
+    AuthService,
+    AccessTokenStrategy,
     {
       provide: HashingSerivce,
       useClass: BcryptSerive,
     },
-    {
-      provide: APP_GUARD,
-      useClass: AuthenticationGuard,
-    },
-    AccessTokenGuard,
-    AuthService,
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: CurrentUserInterceptor,
-    // },
   ],
-  controllers: [AuthController],
 })
 export class AuthModule {}
