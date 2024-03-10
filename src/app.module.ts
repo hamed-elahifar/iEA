@@ -17,7 +17,7 @@ import { Environment } from './modules/common/enums/environments.enum';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/common/guards/roles.guard';
-import { AccessTokenGuardGraphQL } from './modules/common/guards/access-token-graphql.guard';
+import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
 // import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 // import { WinstonModule } from 'nest-winston';
 // import * as winston from 'winston';
@@ -138,8 +138,9 @@ import { AccessTokenGuardGraphQL } from './modules/common/guards/access-token-gr
     DateScalar,
     {
       provide: APP_GUARD,
-      useClass: AccessTokenGuardGraphQL,
+      useClass: AccessTokenGuard,
     },
+
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

@@ -5,6 +5,8 @@ import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
 import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
+import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
+import { Roles } from 'src/modules/common/decorators/roles.decorator';
 
 @Resolver((of) => Entity)
 export class CompanyResolver {
@@ -18,6 +20,7 @@ export class CompanyResolver {
     return this.service.create(createInput);
   }
 
+  @Roles(UserRoleEnum.ADMIN)
   @Query((returns) => [Entity], {
     name: `findAll${Entity.name}`,
     nullable: true,

@@ -20,8 +20,8 @@ export class User extends Document {
   @Prop()
   email: string;
 
-  @Prop({ enum: Object.values(UserRoleEnum) })
-  role: string;
+  @Prop({ type: [String, [String]], enum: Object.values(UserRoleEnum) })
+  roles: string | string[];
 
   @Prop({})
   company: string;

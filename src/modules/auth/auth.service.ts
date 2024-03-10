@@ -44,13 +44,11 @@ export class AuthService {
       .findOne({
         username: dto.username,
       })
-      .select('username password email company');
+      .select('username password email company roles');
 
     if (!user) {
       throw new UnauthorizedException('Unauthorized');
     }
-
-    console.log(user);
 
     const isEqual = await this.hashingService.compare(
       dto.password,
@@ -65,6 +63,7 @@ export class AuthService {
       id: user.id,
       username: user.username,
       company: user.company,
+      roles: user.roles,
     });
 
     return token;
