@@ -27,7 +27,6 @@ async function bootstrap() {
   // );
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    cors: false,
     // bufferLogs: true,
     // logger: false,
     // logger: ['log', 'error', 'warn', 'debug', 'verbose'],
@@ -43,10 +42,10 @@ async function bootstrap() {
   //   next();
   // });
 
-  // app.enableCors({
-  //   allowedHeaders: '*',
-  //   origin: '*',
-  // });
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: ['http://localhost:8000/', 'http://127.0.0.1:8000/'],
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
