@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CompanyRepository extends BaseRepository<EntityDocument> {
-  constructor(@InjectModel(Company.name) companyModel: Model<EntityDocument>) {
-    super(companyModel);
+  constructor(@InjectModel(Company.name) model: Model<EntityDocument>) {
+    super(model);
   }
 }

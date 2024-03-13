@@ -23,6 +23,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import jwtConfig from '../auth/config/jwt.config';
+import { DepartmentResolver } from './departments/department.resolver';
+import { DepartmentService } from './departments/department.service';
+import { DepartmentRepository } from './departments/department.repository';
 
 @Module({
   imports: [
@@ -67,6 +70,9 @@ import jwtConfig from '../auth/config/jwt.config';
     HoldingRepository,
     HoldingService,
     HoldingResolver,
+    DepartmentResolver,
+    DepartmentService,
+    DepartmentRepository,
   ],
 })
 export class BaseModule {}

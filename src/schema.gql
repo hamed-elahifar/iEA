@@ -41,6 +41,13 @@ input CreateCompanyInput {
   vision: String
 }
 
+input CreateDepartmentInput {
+  company: String!
+  description: String
+  name: String!
+  supervisor: String!
+}
+
 input CreateHoldingInput {
   name: String!
 }
@@ -82,12 +89,15 @@ type JobPosition {
 type Mutation {
   createActivity(createActivityInput: CreateActivityInput!): Activity
   createCompany(createCompanyInput: CreateCompanyInput!): Company
+  createDepartment(createDepartmentInput: CreateDepartmentInput!): Department
   createHolding(createHoldingInput: CreateHoldingInput!): Holding
   removeActivity(id: ID!): Activity!
   removeCompany(id: ID!): Company!
+  removeDepartment(id: ID!): Department!
   removeHolding(id: ID!): Holding!
   updateActivity(id: ID!, updateActivityInput: UpdateActivityInput!): Activity!
   updateCompany(id: ID!, updateCompanyInput: UpdateCompanyInput!): Company!
+  updateDepartment(id: ID!, updateDepartmentInput: UpdateDepartmentInput!): Department!
   updateHolding(id: ID!, updateHoldingInput: UpdateHoldingInput!): Holding!
 }
 
@@ -112,9 +122,11 @@ input PaginationArgs {
 type Query {
   findAllActivity(PaginationArgs: PaginationArgs!): [Activity!]
   findAllCompany(PaginationArgs: PaginationArgs!): [Company!]
+  findAllDepartment(PaginationArgs: PaginationArgs!): [Department!]
   findAllHolding(PaginationArgs: PaginationArgs!): [Holding!]
   findOneActivity(id: ID!): Activity
   findOneCompany(id: ID!): Company
+  findOneDepartment(id: ID!): Department
   findOneHolding(id: ID!): Holding
 }
 
@@ -147,6 +159,12 @@ input UpdateCompanyInput {
   mission: String
   name: String
   vision: String
+}
+
+input UpdateDepartmentInput {
+  description: String
+  name: String
+  supervisor: String
 }
 
 input UpdateHoldingInput {
