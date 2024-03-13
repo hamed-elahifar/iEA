@@ -58,7 +58,7 @@ async function bootstrap() {
     mongoose.set('debug', true);
   }
 
-  // app.use(compression());
+  app.use(compression());
 
   const port: number = +configService.getOrThrow<number>('PORT');
 

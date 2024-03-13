@@ -24,9 +24,6 @@ import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'static'),
-    }),
     ConfigModule.forRoot({
       validate,
       isGlobal: true,
@@ -132,6 +129,9 @@ import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
     AuthModule,
     BaseModule,
     PubSubModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static'),
+    }),
   ],
   controllers: [],
   providers: [
