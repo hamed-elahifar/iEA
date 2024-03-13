@@ -53,7 +53,7 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  app.useStaticAssets(join(__dirname, '..', 'static'));
+  // app.useStaticAssets(join(__dirname, '..', 'static'));
 
   if (eval(configService.get('MONGO_DEBUG'))) {
     mongoose.set('debug', true);

@@ -125,10 +125,10 @@ import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
     AuthModule,
     BaseModule,
     PubSubModule,
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', '/static/'),
-    //   serveStaticOptions: { index: false },
-    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '/static/'),
+      serveStaticOptions: { index: false },
+    }),
   ],
   controllers: [],
   providers: [
