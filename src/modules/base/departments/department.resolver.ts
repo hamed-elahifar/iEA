@@ -20,7 +20,6 @@ export class DepartmentResolver {
     return this.service.create(createInput);
   }
 
-  @Roles(UserRoleEnum.ADMIN)
   @Query((returns) => [Entity], {
     name: `findAll${Entity.name}`,
     nullable: true,

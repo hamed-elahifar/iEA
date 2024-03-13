@@ -6,9 +6,7 @@ import { UpdateActivityInput as UpdateInput } from './dto/update-activity.input'
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 import { UseGuards } from '@nestjs/common';
-// import { AccessTokenGuardGraphQL } from '../../auth/guards/access-token-graphql.guard'; //'../modules/auth/guards/access-token-graphql.guard';
 
-// @UseGuards(AccessTokenGuardGraphQL)
 @Resolver((of) => Entity)
 export class ActivityResolver {
   constructor(private readonly service: ActivityService) {}

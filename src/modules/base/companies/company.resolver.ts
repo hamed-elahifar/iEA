@@ -20,7 +20,6 @@ export class CompanyResolver {
     return this.service.create(createInput);
   }
 
-  @Roles(UserRoleEnum.ADMIN)
   @Query((returns) => [Entity], {
     name: `findAll${Entity.name}`,
     nullable: true,
@@ -51,6 +50,7 @@ export class CompanyResolver {
     return this.service.update(id, updateInput);
   }
 
+  @Roles(UserRoleEnum.ADMIN)
   @Mutation((returns) => Entity, { name: `remove${Entity.name}` })
   async remove(@Args('id', { type: () => ID }) id: string) {
     return this.service.delete(id);
