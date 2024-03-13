@@ -10,7 +10,7 @@ import { Roles } from 'src/modules/common/decorators/roles.decorator';
 
 @Resolver((of) => Entity)
 export class DepartmentResolver {
-  constructor(private readonly departmentService: DepartmentService) {}
+  constructor(private readonly service: DepartmentService) {}
 
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,

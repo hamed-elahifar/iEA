@@ -27,24 +27,16 @@ async function bootstrap() {
   // );
 
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    cors: true,
+    // logger: ['error', 'warn', 'log', 'debug','verbose'],
     // bufferLogs: true,
     // logger: false,
     // logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
 
-  // app.use((req, res, next) => {
-  //   res.header('Access-Control-Allow-Origin', '*');
-  //   res.header(
-  //     'Access-Control-Allow-Methods',
-  //     'GET,POST,PUT,PATCH,DELETE,OPTIONS',
-  //   );
-  //   res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
-  //   next();
-  // });
-
   app.enableCors({
     allowedHeaders: '*',
-    origin: ['http://localhost:8000/', 'http://127.0.0.1:8000/'],
+    origin: true,
   });
 
   app.useGlobalPipes(
@@ -66,7 +58,7 @@ async function bootstrap() {
     mongoose.set('debug', true);
   }
 
-  app.use(compression());
+  // app.use(compression());
 
   const port: number = +configService.getOrThrow<number>('PORT');
 
@@ -74,13 +66,14 @@ async function bootstrap() {
     logger.log(`App Running On Port: ${await app.getUrl()}`);
     logger.log(`
 
-    ██████╗ ██████╗ ███╗   ███╗███████╗
-    ██╔══██╗██╔══██╗████╗ ████║██╔════╝
-    ██████╔╝██████╔╝██╔████╔██║███████╗
-    ██╔══██╗██╔═══╝ ██║╚██╔╝██║╚════██║
-    ██████╔╝██║     ██║ ╚═╝ ██║███████║
-    ╚═════╝ ╚═╝     ╚═╝     ╚═╝╚══════╝
-                                       `);
+░▒▓█▓▒░▒▓████████▓▒░░▒▓██████▓▒░  
+░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░▒▓██████▓▒░ ░▒▓████████▓▒░ 
+░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░░▒▓█▓▒░ 
+░▒▓█▓▒░▒▓████████▓▒░▒▓█▓▒░░▒▓█▓▒░ 
+`);
   });
 }
 bootstrap();
