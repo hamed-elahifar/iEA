@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import mongoose from 'mongoose';
 import compression from 'compression';
+import { join } from 'path';
 
 async function bootstrap() {
   const logger = new Logger('Main');
@@ -52,7 +53,7 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  // app.useStaticAssets(join(__dirname, '..', 'static'));
+  app.useStaticAssets(join(__dirname, '..', 'static'));
 
   if (eval(configService.get('MONGO_DEBUG'))) {
     mongoose.set('debug', true);

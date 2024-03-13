@@ -105,10 +105,6 @@ import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
     //     }),
     //   ],
     // }),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', '/static/'),
-    //   serveStaticOptions: { index: false },
-    // }),
     ThrottlerModule.forRoot([
       {
         name: 'short',
@@ -130,7 +126,8 @@ import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
     BaseModule,
     PubSubModule,
     // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'static'),
+    //   rootPath: join(__dirname, '..', '/static/'),
+    //   serveStaticOptions: { index: false },
     // }),
   ],
   controllers: [],
