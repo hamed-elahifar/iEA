@@ -45,11 +45,32 @@ input CreateDepartmentInput {
   company: String!
   description: String
   name: String!
-  supervisor: String!
+  parent: String
+  supervisor: String
 }
 
 input CreateHoldingInput {
   name: String!
+}
+
+input CreateJobPositionInput {
+  company: String!
+  department: String!
+  supervisor: String!
+  title: String!
+}
+
+input CreateStaffInput {
+  company: String!
+  email: String
+  firstname: String
+  lastname: String
+  nationalNumber: String
+  password: String
+  phone: String
+  position: String
+  staffId: String
+  username: String!
 }
 
 """Date custom scalar type"""
@@ -91,14 +112,20 @@ type Mutation {
   createCompany(createCompanyInput: CreateCompanyInput!): Company
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department
   createHolding(createHoldingInput: CreateHoldingInput!): Holding
+  createJobPosition(createJobPositionInput: CreateJobPositionInput!): JobPosition
+  createStaff(createStaffInput: CreateStaffInput!): Staff
   removeActivity(id: ID!): Activity!
   removeCompany(id: ID!): Company!
   removeDepartment(id: ID!): Department!
   removeHolding(id: ID!): Holding!
+  removeJobPosition(id: ID!): JobPosition!
+  removeStaff(id: ID!): Staff!
   updateActivity(id: ID!, updateActivityInput: UpdateActivityInput!): Activity!
   updateCompany(id: ID!, updateCompanyInput: UpdateCompanyInput!): Company!
   updateDepartment(id: ID!, updateDepartmentInput: UpdateDepartmentInput!): Department!
   updateHolding(id: ID!, updateHoldingInput: UpdateHoldingInput!): Holding!
+  updateJobPosition(id: ID!, updateJobPositionInput: UpdateJobPositionInput!): JobPosition!
+  updateStaff(id: ID!, updateStaffInput: UpdateStaffInput!): Staff!
 }
 
 """Organization Level"""
@@ -124,25 +151,29 @@ type Query {
   findAllCompany(PaginationArgs: PaginationArgs!): [Company!]
   findAllDepartment(PaginationArgs: PaginationArgs!): [Department!]
   findAllHolding(PaginationArgs: PaginationArgs!): [Holding!]
+  findAllJobPosition(PaginationArgs: PaginationArgs!): [JobPosition!]
+  findAllStaff(PaginationArgs: PaginationArgs!): [Staff!]
   findOneActivity(id: ID!): Activity
   findOneCompany(id: ID!): Company
   findOneDepartment(id: ID!): Department
   findOneHolding(id: ID!): Holding
+  findOneJobPosition(id: ID!): JobPosition
+  findOneStaff(id: ID!): Staff
 }
 
 type Staff {
   _id: String!
   company: Company!
   createAt: Date!
-  deletedAt: Date!
-  email: String!
-  firstname: String!
+  deletedAt: Date
+  email: String
+  firstname: String
   jobPosition: String
-  lastname: String!
-  nationalNumber: String!
-  password: String!
-  personalID: String!
-  phone: String!
+  lastname: String
+  nationalNumber: String
+  password: String
+  personalID: String
+  phone: String
   updatedAt: Date!
   username: String!
 }
@@ -169,6 +200,21 @@ input UpdateDepartmentInput {
 
 input UpdateHoldingInput {
   name: String
+}
+
+input UpdateJobPositionInput {
+  department: String
+  supervisor: String
+  title: String
+}
+
+input UpdateStaffInput {
+  firstname: String
+  lastname: String
+  nationalNumber: String
+  password: String
+  position: String
+  staffId: String
 }
 
 enum typeEnum {

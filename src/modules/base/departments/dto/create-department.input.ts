@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class CreateDepartmentInput {
@@ -9,11 +9,18 @@ export class CreateDepartmentInput {
 
   @Field({ nullable: true })
   @IsString()
+  @IsOptional()
   description?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @IsString()
+  @IsOptional()
   supervisor: string;
+
+  @Field({ nullable: true })
+  @IsString()
+  @IsOptional()
+  parent?: string;
 
   @Field()
   @IsString()

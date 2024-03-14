@@ -133,15 +133,14 @@ import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
   controllers: [],
   providers: [
     DateScalar,
-    {
-      provide: APP_GUARD,
-      useClass: AccessTokenGuard,
-    },
-
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AccessTokenGuard,
+    // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
   ],
 })
 export class AppModule {}

@@ -13,36 +13,36 @@ export class Staff {
   _id?: string;
 
   @Field()
-  @Prop()
-  firstname: string;
-
-  @Field()
-  @Prop()
-  lastname: string;
-
-  @Field()
-  @Prop()
-  password: string;
-
-  @Field()
-  @Prop()
-  nationalNumber: string;
-
-  @Field()
-  @Prop()
-  personalID: string;
-
-  @Field()
-  @Prop()
+  @Prop({ required: false })
   username: string;
 
-  @Field()
-  @Prop()
-  phone: string;
+  @Field({ nullable: true })
+  @Prop({ required: false })
+  firstname?: string;
 
-  @Field()
-  @Prop()
-  email: string;
+  @Field({ nullable: true })
+  @Prop({ required: false })
+  lastname?: string;
+
+  @Field({ nullable: true })
+  @Prop({ select: false, required: false })
+  password?: string;
+
+  @Field({ nullable: true })
+  @Prop({ required: false })
+  email?: string;
+
+  @Field({ nullable: true })
+  @Prop({ required: false })
+  nationalNumber?: string;
+
+  @Field({ nullable: true })
+  @Prop({ required: false })
+  personalID?: string;
+
+  @Field({ nullable: true })
+  @Prop({ required: false })
+  phone?: string;
 
   @Field({ nullable: true })
   @Prop({
@@ -67,7 +67,7 @@ export class Staff {
   @Field(() => Date)
   updatedAt: Date;
 
-  @Field(() => Date)
+  @Field(() => Date, { nullable: true })
   deletedAt: Date;
 }
 

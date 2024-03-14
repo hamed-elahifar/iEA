@@ -1,32 +1,53 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class CreateStaffInput {
   @IsString()
   @Field()
-  firstname: string;
+  username: string;
 
   @IsString()
-  @Field()
-  lastname: string;
+  @IsOptional()
+  @Field({ nullable: true })
+  firstname?: string;
 
   @IsString()
-  @Field()
-  password: string;
+  @IsOptional()
+  @Field({ nullable: true })
+  lastname?: string;
 
   @IsString()
-  @Field()
-  nationalNumber: string;
+  @IsOptional()
+  @Field({ nullable: true })
+  password?: string;
+
+  @IsEmail()
+  @IsOptional()
+  @Field({ nullable: true })
+  email?: string;
+
+  @IsNumber()
+  @IsOptional()
+  @Field({ nullable: true })
+  phone?: string;
 
   @IsString()
-  @Field()
-  staffId: string;
+  @IsOptional()
+  @Field({ nullable: true })
+  nationalNumber?: string;
 
   @IsString()
-  @Field()
-  position: string;
+  @IsOptional()
+  @Field({ nullable: true })
+  staffId?: string;
 
+  @IsString()
+  @IsOptional()
+  @Field({ nullable: true })
+  position?: string;
+
+  @IsString()
   @Field()
   company: string;
 }
