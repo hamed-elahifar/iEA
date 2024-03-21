@@ -42,6 +42,7 @@
     "graphql": "^16.8.0",
     "graphql-subscriptions": "^2.0.0",
     "graphql-tools": "^9.0.0",
+    "helmet": "^7.1.0",
     "mongoose": "^8.2.0",
     "mongoose-autopopulate": "^1.1.0",
     "nest-winston": "^1.9.4",

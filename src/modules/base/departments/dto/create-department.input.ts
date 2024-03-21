@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsOptional, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class CreateDepartmentInput {
@@ -21,6 +21,11 @@ export class CreateDepartmentInput {
   @IsString()
   @IsOptional()
   parent?: string;
+
+  @Field((type) => CreateDepartmentInput, { nullable: true })
+  @IsArray()
+  @IsOptional()
+  children?: CreateDepartmentInput[];
 
   @Field()
   @IsString()

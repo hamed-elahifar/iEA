@@ -42,6 +42,7 @@ input CreateCompanyInput {
 }
 
 input CreateDepartmentInput {
+  children: CreateDepartmentInput
   company: String!
   description: String
   name: String!
@@ -78,13 +79,13 @@ scalar Date
 
 type Department {
   _id: String
+  children: [Department!]!
   company: Company!
   createAt: Date!
   deletedAt: Date
   description: String
   members: Staff!
   name: String!
-  parent: Department!
   supervisor: Staff!
   updatedAt: Date!
 }

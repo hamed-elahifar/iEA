@@ -7,7 +7,7 @@ import { AccessTokenStrategy, jwtConstants } from './strategies';
 import { HashingSerivce } from './hashing.service';
 import { BcryptSerive } from './bcrypt.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './models/user.model';
+import { User, UserSchema } from './user.model';
 
 @Module({
   imports: [

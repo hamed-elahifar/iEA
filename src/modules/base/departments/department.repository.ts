@@ -1,6 +1,6 @@
 import { BaseRepository } from '../../common/generic/base-repository';
 import {
-  Department,
+  Department as Entity,
   DepartmentDocument as EntityDocument,
 } from './department.model';
 import { InjectModel } from '@nestjs/mongoose';
@@ -9,7 +9,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class DepartmentRepository extends BaseRepository<EntityDocument> {
-  constructor(@InjectModel(Department.name) model: Model<EntityDocument>) {
+  constructor(@InjectModel(Entity.name) model: Model<EntityDocument>) {
     super(model);
   }
 }

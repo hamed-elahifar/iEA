@@ -6,6 +6,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import mongoose from 'mongoose';
 import compression from 'compression';
 import { join } from 'path';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const logger = new Logger('Main');
@@ -39,6 +40,27 @@ async function bootstrap() {
     allowedHeaders: '*',
     origin: true,
   });
+
+  app.use(
+    helmet({
+      crossOriginEmbedderPolicy: false,
+      contentSecurityPolicy: {
+        directives: {
+          imgSrc: [
+            `'self'`,
+            'data:',
+            'apollo-server-landing-page.cdn.apollographql.com',
+          ],
+          scriptSrc: [`'self'`, `https: 'unsafe-inline'`],
+          manifestSrc: [
+            `'self'`,
+            'apollo-server-landing-page.cdn.apollographql.com',
+          ],
+          frameSrc: [`'self'`, 'sandbox.embed.apollographql.com'],
+        },
+      },
+    }),
+  );
 
   app.useGlobalPipes(
     new ValidationPipe({

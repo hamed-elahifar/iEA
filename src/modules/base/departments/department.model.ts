@@ -21,13 +21,12 @@ export class Department {
   @Prop()
   description?: string;
 
-  @Field(() => Department)
+  @Field(() => [Department])
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Department.name,
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: Department.name }],
     autopopulate: true,
   })
-  parent: Department;
+  children: Department[];
 
   @Field(() => Staff)
   @Prop({

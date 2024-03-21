@@ -18,7 +18,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './modules/common/guards/roles.guard';
 import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
-// import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginInlineTrace,
+} from 'apollo-server-core';
 // import { WinstonModule } from 'nest-winston';
 // import * as winston from 'winston';
 
@@ -44,8 +47,11 @@ import { AccessTokenGuard } from './modules/common/guards/access-token.guard';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
-      playground: true, //process.env.NODE_ENV === Environment.DEV,
-      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      playground: false, //process.env.NODE_ENV === Environment.DEV,
+      plugins: [
+        ApolloServerPluginLandingPageLocalDefault(),
+        ApolloServerPluginInlineTrace(),
+      ],
       context: ({ req, res }) => ({ req, res }),
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
