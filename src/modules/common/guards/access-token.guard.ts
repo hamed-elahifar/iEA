@@ -17,7 +17,7 @@ export class AccessTokenGuard extends AuthGuard('jwt') {
   }
 
   canActivate(context: ExecutionContext): boolean {
-    const ctx = GqlExecutionContext.create(context);
+    const ctx = this.getRequest(context);
     const isPublic = this.reflector.getAllAndOverride('isPublic', [
       ctx.getHandler(),
       ctx.getClass(),

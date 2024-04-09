@@ -49,8 +49,8 @@ import {
       sortSchema: true,
       playground: false, //process.env.NODE_ENV === Environment.DEV,
       plugins: [
-        ApolloServerPluginLandingPageLocalDefault(),
-        ApolloServerPluginInlineTrace(),
+        // ApolloServerPluginLandingPageLocalDefault(),
+        // ApolloServerPluginInlineTrace(),
       ],
       context: ({ req, res }) => ({ req, res }),
       installSubscriptionHandlers: true,
