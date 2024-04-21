@@ -43,7 +43,7 @@ import {
         ttl: config.getOrThrow('CACHE_TTL'),
       }),
     }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
@@ -53,6 +53,10 @@ import {
         // ApolloServerPluginInlineTrace(),
       ],
       context: ({ req, res }) => ({ req, res }),
+      cors: {
+        credentials: true,
+        origin: true,
+      },
       installSubscriptionHandlers: true,
       buildSchemaOptions: {
         orphanedTypes: [],
