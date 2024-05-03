@@ -16,6 +16,6 @@ export class CreateCompanyInput {
   vision?: string;
 
   @IsOptional()
-  @Field({ nullable: true })
-  holding?: string;
+  @Field(() => [String], { nullable: true })
+  children?: string[];
 }

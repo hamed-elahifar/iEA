@@ -19,7 +19,6 @@ export class UpdateCompanyInput {
   vision: string;
 
   @IsOptional()
-  @IsString()
-  @Field({ nullable: true })
-  holding?: string;
+  @Field(() => [String], { nullable: true })
+  children?: string[];
 }

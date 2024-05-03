@@ -8,13 +8,6 @@ import {
   CompanyService,
 } from './companies';
 import { ActivityRepository } from './activities/activity.repository';
-import {
-  Holding,
-  HoldingSchema,
-  HoldingRepository,
-  HoldingService,
-  HoldingResolver,
-} from './holding';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
@@ -63,10 +56,6 @@ import {
         schema: CompanySchema,
       },
       {
-        name: Holding.name,
-        schema: HoldingSchema,
-      },
-      {
         name: JobPosition.name,
         schema: JobPositionSchema,
       },
@@ -88,9 +77,6 @@ import {
     CompanyResolver,
     CompanyService,
     CompanyRepository,
-    HoldingRepository,
-    HoldingService,
-    HoldingResolver,
     DepartmentResolver,
     DepartmentService,
     DepartmentRepository,

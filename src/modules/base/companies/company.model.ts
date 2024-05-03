@@ -1,7 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Holding } from '../holding/holding.model';
 import autopopulate from 'mongoose-autopopulate';
 
 export type CompanyDocument = Company & Document;
@@ -24,13 +23,13 @@ export class Company {
   @Prop()
   vision: string;
 
-  @Field(() => Holding, { nullable: true })
+  @Field(() => [Company], { nullable: true })
   @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Holding.name,
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: Company.name,
     autopopulate: true,
   })
-  holding: Holding | null;
+  children: Company[] | null;
 
   @Field(() => Date)
   createAt: Date;
