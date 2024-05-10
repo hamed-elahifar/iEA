@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import mongoose from 'mongoose';
 import compression from 'compression';
-import { join } from 'path';
 import helmet from 'helmet';
 import { altairExpress } from 'altair-express-middleware';
 
@@ -40,8 +39,8 @@ async function bootstrap() {
   app.enableCors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: '*',
-    credentials: true,
-    origin: true,
+    // credentials: true,
+    origin: '*',
   });
 
   app.use(
