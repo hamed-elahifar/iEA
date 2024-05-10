@@ -10,6 +10,7 @@ import {
 import { CreateActivityInput as CreateInput } from './dto/create-activity.input';
 import { UpdateActivityInput as UpdateInput } from './dto/update-activity.input';
 import { ActivityRepository } from './activity.repository';
+import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class ActivityService {
@@ -26,27 +27,22 @@ export class ActivityService {
     }
   }
 
-  async findOne({
-    id,
-    select,
-  }: {
-    id: string;
-    select?: string[];
-  }): Promise<EntityDocument> {
-    const entity = await this.repository.findOne({ _id: id }, select);
-
-    if (!entity) {
-      throw new NotFoundException(`${Entity.name} #${id} not found`);
-    }
-
-    return entity;
+  async findOne(
+    entityFilterQuery: FilterQuery<Entity>,
+    projection: string[],
+  ): Promise<EntityDocument> {
+    return this.repository.findOne(entityFilterQuery, projection);
   }
 
-  async findAll({ select }): Promise<EntityDocument[]> {
-    return this.repository.findAll({}, select);
+  async findAll(
+    entityFilterQuery: FilterQuery<Entity>,
+    projection: string[],
+  ): Promise<EntityDocument[]> {
+    return this.repository.findAll(entityFilterQuery, projection);
   }
 
   async update(id, attrs: UpdateInput): Promise<EntityDocument> {
+    // @TODO may be we should find it first
     const result = await this.repository.update({ _id: id }, { $set: attrs });
 
     if (!result) {
@@ -57,6 +53,7 @@ export class ActivityService {
   }
 
   async delete(id: string) {
+    // @TODO may be we should find it first
     return this.repository.delete({ id });
   }
 }

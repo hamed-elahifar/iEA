@@ -30,7 +30,7 @@ import {
     ConfigModule.forRoot({
       validate,
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: `.env`,
       cache: true,
     }),
     CacheModule.registerAsync({
@@ -47,7 +47,7 @@ import {
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src', 'schema.gql'),
       sortSchema: true,
-      playground: false, //process.env.NODE_ENV === Environment.DEV,
+      playground: true, //process.env.NODE_ENV === Environment.DEV,
       plugins: [
         // ApolloServerPluginLandingPageLocalDefault(),
         // ApolloServerPluginInlineTrace(),

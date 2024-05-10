@@ -10,40 +10,39 @@ import {
 import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
 import { CompanyRepository } from './company.repository';
 import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
+import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class CompanyService {
   constructor(private readonly repository: CompanyRepository) {}
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
-    try {
-      return this.repository.create(createInput);
-    } catch (error) {
-      if (error.code == 11000) {
-        throw new ConflictException('Already Exists');
-      }
-      throw error;
-    }
-  }
+    const exist = await this.findOne({
+      entityFilterQuery: { name: createInput.name },
+    });
 
-  async findOne({
-    id,
-    select,
-  }: {
-    id: string;
-    select?: string[];
-  }): Promise<EntityDocument> {
-    const entity = await this.repository.findOne({ _id: id }, select);
-
-    if (!entity) {
-      throw new NotFoundException(`${Entity.name} #${id} not found`);
+    if (exist) {
+      throw new ConflictException(`${Entity.name} aleady exist`);
     }
 
-    return entity;
+    // @TODO
+    // loop all childeren ID and check if they are exist
+
+    return this.repository.create(createInput);
   }
 
-  async findAll({ select }): Promise<EntityDocument[]> {
-    return this.repository.findAll({}, select);
+  async findOne(
+    entityFilterQuery: FilterQuery<Entity>,
+    projection?: string[],
+  ): Promise<EntityDocument> {
+    return this.repository.findOne(entityFilterQuery, projection);
+  }
+
+  async findAll(
+    entityFilterQuery: FilterQuery<Entity> = {},
+    projection?: string[],
+  ): Promise<EntityDocument[]> {
+    return this.repository.findAll(entityFilterQuery, projection);
   }
 
   async update(id, attrs: UpdateInput): Promise<EntityDocument> {

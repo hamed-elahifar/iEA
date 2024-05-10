@@ -28,7 +28,7 @@ export class CompanyResolver {
     @Args('PaginationArgs') paginationArgs: PaginationArgs,
     @Selected() select,
   ) {
-    return this.service.findAll({ select });
+    return this.service.findAll({}, select);
   }
 
   @Query((returns) => Entity, {
@@ -39,7 +39,7 @@ export class CompanyResolver {
     @Args('id', { type: () => ID }) id: string,
     @Selected() select,
   ) {
-    return this.service.findOne({ id, select });
+    return this.service.findOne({ _id: id }, select);
   }
 
   @Mutation((returns) => Entity, { name: `update${Entity.name}` })

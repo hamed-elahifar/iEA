@@ -17,9 +17,9 @@ type Activity {
 
 type Company {
   _id: String!
+  children: [Company!]
   createAt: Date!
   deletedAt: Date
-  holding: Holding
   mission: String
   name: String!
   updatedAt: Date!
@@ -35,7 +35,7 @@ input CreateActivityInput {
 }
 
 input CreateCompanyInput {
-  holding: String
+  children: [String!]
   mission: String
   name: String!
   vision: String
@@ -48,10 +48,6 @@ input CreateDepartmentInput {
   name: String!
   parent: String
   supervisor: String
-}
-
-input CreateHoldingInput {
-  name: String!
 }
 
 input CreateJobPositionInput {
@@ -90,14 +86,6 @@ type Department {
   updatedAt: Date!
 }
 
-type Holding {
-  _id: String!
-  createAt: Date!
-  deletedAt: Date
-  name: String!
-  updatedAt: Date!
-}
-
 type JobPosition {
   company: Company!
   createAt: Date!
@@ -112,19 +100,16 @@ type Mutation {
   createActivity(createActivityInput: CreateActivityInput!): Activity
   createCompany(createCompanyInput: CreateCompanyInput!): Company
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department
-  createHolding(createHoldingInput: CreateHoldingInput!): Holding
   createJobPosition(createJobPositionInput: CreateJobPositionInput!): JobPosition
   createStaff(createStaffInput: CreateStaffInput!): Staff
   removeActivity(id: ID!): Activity!
   removeCompany(id: ID!): Company!
   removeDepartment(id: ID!): Department!
-  removeHolding(id: ID!): Holding!
   removeJobPosition(id: ID!): JobPosition!
   removeStaff(id: ID!): Staff!
   updateActivity(id: ID!, updateActivityInput: UpdateActivityInput!): Activity!
   updateCompany(id: ID!, updateCompanyInput: UpdateCompanyInput!): Company!
   updateDepartment(id: ID!, updateDepartmentInput: UpdateDepartmentInput!): Department!
-  updateHolding(id: ID!, updateHoldingInput: UpdateHoldingInput!): Holding!
   updateJobPosition(id: ID!, updateJobPositionInput: UpdateJobPositionInput!): JobPosition!
   updateStaff(id: ID!, updateStaffInput: UpdateStaffInput!): Staff!
 }
@@ -151,13 +136,11 @@ type Query {
   findAllActivity(PaginationArgs: PaginationArgs!): [Activity!]
   findAllCompany(PaginationArgs: PaginationArgs!): [Company!]
   findAllDepartment(PaginationArgs: PaginationArgs!): [Department!]
-  findAllHolding(PaginationArgs: PaginationArgs!): [Holding!]
   findAllJobPosition(PaginationArgs: PaginationArgs!): [JobPosition!]
   findAllStaff(PaginationArgs: PaginationArgs!): [Staff!]
   findOneActivity(id: ID!): Activity
   findOneCompany(id: ID!): Company
   findOneDepartment(id: ID!): Department
-  findOneHolding(id: ID!): Holding
   findOneJobPosition(id: ID!): JobPosition
   findOneStaff(id: ID!): Staff
 }
@@ -187,7 +170,7 @@ input UpdateActivityInput {
 }
 
 input UpdateCompanyInput {
-  holding: String
+  children: [String!]
   mission: String
   name: String
   vision: String
@@ -197,10 +180,6 @@ input UpdateDepartmentInput {
   description: String
   name: String
   supervisor: String
-}
-
-input UpdateHoldingInput {
-  name: String
 }
 
 input UpdateJobPositionInput {
