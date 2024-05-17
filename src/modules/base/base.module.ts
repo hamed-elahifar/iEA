@@ -33,13 +33,7 @@ import {
   ActivitySchema,
   ActivityService,
 } from './activities';
-import {
-  JobPosition,
-  JobPositionSchema,
-  JobPositionRepository,
-  JobPositionResolver,
-  JobPositionService,
-} from './job-positions';
+import { Job, JobSchema, JobRepository, JobResolver, JobService } from './job';
 
 @Module({
   imports: [
@@ -56,8 +50,8 @@ import {
         schema: CompanySchema,
       },
       {
-        name: JobPosition.name,
-        schema: JobPositionSchema,
+        name: Job.name,
+        schema: JobSchema,
       },
       {
         name: Staff.name,
@@ -83,9 +77,9 @@ import {
     StaffResolver,
     StaffService,
     StaffRepository,
-    JobPositionResolver,
-    JobPositionService,
-    JobPositionRepository,
+    JobResolver,
+    JobService,
+    JobRepository,
   ],
 })
 export class BaseModule {}

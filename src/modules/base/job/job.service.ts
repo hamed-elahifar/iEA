@@ -3,17 +3,14 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  JobPosition as Entity,
-  JobPositionDocument as EntityDocument,
-} from './job-position.model';
-import { CreateJobPositionInput as CreateInput } from './dto/create-job-position.input';
-import { JobPositionRepository } from './job-position.repository';
-import { UpdateJobPositionInput as UpdateInput } from './dto/update-job-position.input';
+import { Job as Entity, JobDocument as EntityDocument } from './job.model';
+import { CreateJobInput as CreateInput } from './dto/create-job.input';
+import { JobRepository } from './job.repository';
+import { UpdateJobInput as UpdateInput } from './dto/update-job.input';
 
 @Injectable()
-export class JobPositionService {
-  constructor(private readonly repository: JobPositionRepository) {}
+export class JobService {
+  constructor(private readonly repository: JobRepository) {}
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     try {

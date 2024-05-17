@@ -1,16 +1,16 @@
 import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
-import { JobPosition as Entity } from './job-position.model';
-import { JobPositionService } from './job-position.service';
-import { CreateJobPositionInput as CreateInput } from './dto/create-job-position.input';
-import { UpdateJobPositionInput as UpdateInput } from './dto/update-job-position.input';
+import { Job as Entity } from './job.model';
+import { JobService } from './job.service';
+import { CreateJobInput as CreateInput } from './dto/create-job.input';
+import { UpdateJobInput as UpdateInput } from './dto/update-job.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
 import { Roles } from 'src/modules/common/decorators/roles.decorator';
 
 @Resolver((of) => Entity)
-export class JobPositionResolver {
-  constructor(private readonly service: JobPositionService) {}
+export class JobResolver {
+  constructor(private readonly service: JobService) {}
 
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,

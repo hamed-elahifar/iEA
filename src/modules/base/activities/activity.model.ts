@@ -3,7 +3,7 @@ import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 import { TypeEnum } from './enums/group-type.unum';
-import { JobPosition } from '../job-positions/job-position.model';
+import { Job } from '../job/job.model';
 import autopopulate from 'mongoose-autopopulate';
 
 export type ActivityDocument = Activity & Document;
@@ -26,13 +26,13 @@ export class Activity {
   @Prop({ type: String, enum: TypeEnum, required: true })
   type: TypeEnum;
 
-  @Field(() => JobPosition)
+  @Field(() => Job)
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: JobPosition.name,
+    ref: Job.name,
     autopopulate: true,
   })
-  jobPosition?: JobPosition;
+  job?: Job;
 
   @Field(() => Company)
   @Prop({
@@ -57,4 +57,4 @@ export const ActivitySchema = SchemaFactory.createForClass(Activity);
 ActivitySchema.plugin(autopopulate);
 
 ActivitySchema.index({ title: 1, company: 1 }, { unique: true });
-ActivitySchema.index({ jobPosition: 1 });
+ActivitySchema.index({ job: 1 });

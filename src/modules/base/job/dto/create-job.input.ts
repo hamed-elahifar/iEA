@@ -2,7 +2,7 @@ import { Field, InputType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
 
 @InputType()
-export class CreateJobPositionInput {
+export class CreateJobInput {
   @IsString()
   @Field()
   title: string;

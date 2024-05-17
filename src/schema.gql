@@ -9,7 +9,7 @@ type Activity {
   createAt: Date!
   deletedAt: Date!
   description: String!
-  jobPosition: JobPosition!
+  job: Job!
   title: String!
   type: typeEnum!
   updatedAt: Date!
@@ -50,7 +50,7 @@ input CreateDepartmentInput {
   supervisor: String
 }
 
-input CreateJobPositionInput {
+input CreateJobInput {
   company: String!
   department: String!
   supervisor: String!
@@ -86,7 +86,7 @@ type Department {
   updatedAt: Date!
 }
 
-type JobPosition {
+type Job {
   company: Company!
   createAt: Date!
   deletedAt: Date!
@@ -100,17 +100,17 @@ type Mutation {
   createActivity(createActivityInput: CreateActivityInput!): Activity
   createCompany(createCompanyInput: CreateCompanyInput!): Company
   createDepartment(createDepartmentInput: CreateDepartmentInput!): Department
-  createJobPosition(createJobPositionInput: CreateJobPositionInput!): JobPosition
+  createJob(createJobInput: CreateJobInput!): Job
   createStaff(createStaffInput: CreateStaffInput!): Staff
   removeActivity(id: ID!): Activity!
   removeCompany(id: ID!): Company!
   removeDepartment(id: ID!): Department!
-  removeJobPosition(id: ID!): JobPosition!
+  removeJob(id: ID!): Job!
   removeStaff(id: ID!): Staff!
   updateActivity(id: ID!, updateActivityInput: UpdateActivityInput!): Activity!
   updateCompany(id: ID!, updateCompanyInput: UpdateCompanyInput!): Company!
   updateDepartment(id: ID!, updateDepartmentInput: UpdateDepartmentInput!): Department!
-  updateJobPosition(id: ID!, updateJobPositionInput: UpdateJobPositionInput!): JobPosition!
+  updateJob(id: ID!, updateJobInput: UpdateJobInput!): Job!
   updateStaff(id: ID!, updateStaffInput: UpdateStaffInput!): Staff!
 }
 
@@ -136,12 +136,12 @@ type Query {
   findAllActivity(PaginationArgs: PaginationArgs!): [Activity!]
   findAllCompany(PaginationArgs: PaginationArgs!): [Company!]
   findAllDepartment(PaginationArgs: PaginationArgs!): [Department!]
-  findAllJobPosition(PaginationArgs: PaginationArgs!): [JobPosition!]
+  findAllJob(PaginationArgs: PaginationArgs!): [Job!]
   findAllStaff(PaginationArgs: PaginationArgs!): [Staff!]
   findOneActivity(id: ID!): Activity
   findOneCompany(id: ID!): Company
   findOneDepartment(id: ID!): Department
-  findOneJobPosition(id: ID!): JobPosition
+  findOneJob(id: ID!): Job
   findOneStaff(id: ID!): Staff
 }
 
@@ -152,7 +152,7 @@ type Staff {
   deletedAt: Date
   email: String
   firstname: String
-  jobPosition: String
+  job: String
   lastname: String
   nationalNumber: String
   password: String
@@ -182,7 +182,7 @@ input UpdateDepartmentInput {
   supervisor: String
 }
 
-input UpdateJobPositionInput {
+input UpdateJobInput {
   department: String
   supervisor: String
   title: String

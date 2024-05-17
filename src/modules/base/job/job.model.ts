@@ -6,11 +6,11 @@ import { Staff } from '../staffs/staff.model';
 import { OrganizationLevelEnum } from './enums/organization-level.enum';
 import autopopulate from 'mongoose-autopopulate';
 
-export type JobPositionDocument = JobPosition & Document;
+export type JobDocument = Job & Document;
 
-@ObjectType('JobPosition')
+@ObjectType('Job')
 @Schema({ timestamps: true })
-export class JobPosition {
+export class Job {
   @Field()
   @Prop()
   title: string;
@@ -46,7 +46,7 @@ export class JobPosition {
   deletedAt: Date;
 }
 
-export const JobPositionSchema = SchemaFactory.createForClass(JobPosition);
-JobPositionSchema.plugin(autopopulate);
+export const JobSchema = SchemaFactory.createForClass(Job);
+JobSchema.plugin(autopopulate);
 
-JobPositionSchema.index({ title: 1, company: -1 }, { unique: true }); // 1 is ascending, -1 is descending
+JobSchema.index({ title: 1, company: -1 }, { unique: true }); // 1 is ascending, -1 is descending

@@ -47,10 +47,10 @@ export class Staff {
   @Field({ nullable: true })
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'JobPosition', // JobPosition.name won't work,
+    ref: 'Job', // Job.name won't work,
     autopopulate: true,
   })
-  jobPosition: string; // JobPosition won't work
+  job: string; // Job won't work
 
   @Field(() => Company)
   @Prop({
