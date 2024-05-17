@@ -34,6 +34,7 @@ import {
   ActivityService,
 } from './activities';
 import { Job, JobSchema, JobRepository, JobResolver, JobService } from './job';
+import { Post, PostSchema } from './job/post.model';
 
 @Module({
   imports: [
@@ -52,6 +53,10 @@ import { Job, JobSchema, JobRepository, JobResolver, JobService } from './job';
       {
         name: Job.name,
         schema: JobSchema,
+      },
+      {
+        name: Post.name,
+        schema: PostSchema,
       },
       {
         name: Staff.name,

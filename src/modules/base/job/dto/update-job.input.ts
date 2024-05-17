@@ -13,5 +13,5 @@ export class UpdateJobInput {
 
   @IsOptional()
   @Field({ nullable: true })
-  supervisor?: string;
+  grading?: string;
 }

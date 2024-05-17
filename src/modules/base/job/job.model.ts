@@ -2,9 +2,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Company } from '../companies/company.model';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Staff } from '../staffs/staff.model';
 import { OrganizationLevelEnum } from './enums/organization-level.enum';
 import autopopulate from 'mongoose-autopopulate';
+import { Post } from './post.model';
 
 export type JobDocument = Job & Document;
 
@@ -12,20 +12,29 @@ export type JobDocument = Job & Document;
 @Schema({ timestamps: true })
 export class Job {
   @Field()
-  @Prop()
+  @Prop({ type: String })
   title: string;
-
-  @Field(() => Staff)
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Staff.name,
-    autopopulate: true,
-  })
-  owner: Staff;
 
   @Field(() => OrganizationLevelEnum)
   @Prop({ type: String, enum: OrganizationLevelEnum, required: true })
   organizationLevel: OrganizationLevelEnum;
+
+  @Field()
+  @Prop({ type: String })
+  grading: string;
+
+  @Field(() => Post)
+  @Prop({
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: Post.name,
+        autopopulate: true,
+      },
+    ],
+    required: true,
+  })
+  posts: Post[];
 
   @Field(() => Company)
   @Prop({

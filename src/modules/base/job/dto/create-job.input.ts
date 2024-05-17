@@ -11,7 +11,7 @@ export class CreateJobInput {
   department: string;
 
   @Field()
-  supervisor: string;
+  grading: string;
 
   @Field()
   company: string;

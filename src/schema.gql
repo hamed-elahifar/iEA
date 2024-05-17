@@ -53,7 +53,7 @@ input CreateDepartmentInput {
 input CreateJobInput {
   company: String!
   department: String!
-  supervisor: String!
+  grading: String!
   title: String!
 }
 
@@ -90,8 +90,9 @@ type Job {
   company: Company!
   createAt: Date!
   deletedAt: Date!
+  grading: String!
   organizationLevel: OrganizationLevelEnum!
-  owner: Staff!
+  posts: Post!
   title: String!
   updatedAt: Date!
 }
@@ -130,6 +131,15 @@ enum OrganizationLevelEnum {
 input PaginationArgs {
   limit: Int = 10
   offset: Int = 0
+}
+
+type Post {
+  company: Company!
+  createAt: Date!
+  deletedAt: Date!
+  owner: Staff!
+  title: String!
+  updatedAt: Date!
 }
 
 type Query {
@@ -184,7 +194,7 @@ input UpdateDepartmentInput {
 
 input UpdateJobInput {
   department: String
-  supervisor: String
+  grading: String
   title: String
 }
 
