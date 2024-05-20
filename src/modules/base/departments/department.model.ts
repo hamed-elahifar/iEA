@@ -54,7 +54,7 @@ export class Department {
   company: Company;
 
   @Field(() => Date)
-  createAt: Date;
+  createdAt: Date;
 
   @Field(() => Date)
   updatedAt: Date;

@@ -32,7 +32,7 @@ export class Company {
   children: Company[] | null;
 
   @Field(() => Date)
-  createAt: Date;
+  createdAt: Date;
 
   @Field(() => Date)
   updatedAt: Date;

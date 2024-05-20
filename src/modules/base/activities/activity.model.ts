@@ -44,7 +44,7 @@ export class Activity {
   company: Company;
 
   @Field(() => Date)
-  createAt: Date;
+  createdAt: Date;
 
   @Field(() => Date)
   updatedAt: Date;

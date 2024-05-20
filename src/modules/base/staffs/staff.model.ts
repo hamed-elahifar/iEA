@@ -62,7 +62,7 @@ export class Staff {
   company: Company;
 
   @Field(() => Date)
-  createAt: Date;
+  createdAt: Date;
 
   @Field(() => Date)
   updatedAt: Date;
