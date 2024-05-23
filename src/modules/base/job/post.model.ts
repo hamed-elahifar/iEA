@@ -11,6 +11,9 @@ export type PostDocument = Post & Document;
 @Schema({ timestamps: true })
 export class Post {
   @Field()
+  _id: string;
+
+  @Field()
   @Prop()
   title: string;
 

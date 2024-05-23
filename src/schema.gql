@@ -87,6 +87,7 @@ type Department {
 }
 
 type Job {
+  _id: String!
   company: Company!
   createdAt: Date!
   deletedAt: Date!
@@ -134,6 +135,7 @@ input PaginationArgs {
 }
 
 type Post {
+  _id: String!
   company: Company!
   createdAt: Date!
   deletedAt: Date!

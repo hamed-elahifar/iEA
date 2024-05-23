@@ -12,6 +12,9 @@ export type JobDocument = Job & Document;
 @Schema({ timestamps: true })
 export class Job {
   @Field()
+  _id: string;
+
+  @Field()
   @Prop({ type: String })
   title: string;
 
