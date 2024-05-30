@@ -61,4 +61,4 @@ export class Job {
 export const JobSchema = SchemaFactory.createForClass(Job);
 JobSchema.plugin(autopopulate);
 
-JobSchema.index({ title: 1, company: -1 }, { unique: true });
+JobSchema.index({ title: 1 }, { unique: true });

@@ -15,7 +15,7 @@ export class Department {
 
   @Field()
   @Prop({ required: true })
-  name: string;
+  title: string;
 
   @Field({ nullable: true })
   @Prop()
@@ -66,4 +66,4 @@ export class Department {
 export const DepartmentSchema = SchemaFactory.createForClass(Department);
 DepartmentSchema.plugin(autopopulate);
 
-DepartmentSchema.index({ name: 1, company: 1 }, { unique: true });
+DepartmentSchema.index({ title: 1 }, { unique: true });

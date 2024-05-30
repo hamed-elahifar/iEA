@@ -45,9 +45,9 @@ input CreateDepartmentInput {
   children: CreateDepartmentInput
   company: String!
   description: String
-  name: String!
   parent: String
   supervisor: String
+  title: String!
 }
 
 input CreateJobInput {
@@ -81,8 +81,8 @@ type Department {
   deletedAt: Date
   description: String
   members: Staff!
-  name: String!
   supervisor: Staff!
+  title: String!
   updatedAt: Date!
 }
 
@@ -190,8 +190,8 @@ input UpdateCompanyInput {
 
 input UpdateDepartmentInput {
   description: String
-  name: String
   supervisor: String
+  title: String
 }
 
 input UpdateJobInput {

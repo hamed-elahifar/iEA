@@ -5,7 +5,7 @@ import { IsArray, IsOptional, IsString } from 'class-validator';
 export class CreateDepartmentInput {
   @Field()
   @IsString()
-  name: string;
+  title: string;
 
   @Field({ nullable: true })
   @IsString()

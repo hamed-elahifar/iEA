@@ -53,4 +53,4 @@ PostSchema.virtual('occupied').get(function () {
 
 PostSchema.plugin(autopopulate);
 
-PostSchema.index({ title: 1, company: -1 }, { unique: true });
+PostSchema.index({ title: 1 }, { unique: true });

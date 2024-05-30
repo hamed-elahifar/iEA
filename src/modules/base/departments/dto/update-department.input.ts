@@ -6,7 +6,7 @@ export class UpdateDepartmentInput {
   @Field({ nullable: true })
   @IsString()
   @IsOptional()
-  name?: string;
+  title?: string;
 
   @Field({ nullable: true })
   @IsString()

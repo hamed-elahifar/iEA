@@ -56,5 +56,4 @@ export class Activity {
 export const ActivitySchema = SchemaFactory.createForClass(Activity);
 ActivitySchema.plugin(autopopulate);
 
-ActivitySchema.index({ title: 1, company: 1 }, { unique: true });
-ActivitySchema.index({ job: 1 });
+ActivitySchema.index({ title: 1 }, { unique: true });

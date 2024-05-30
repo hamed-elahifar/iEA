@@ -74,7 +74,7 @@ export class Staff {
 export const StaffSchema = SchemaFactory.createForClass(Staff);
 StaffSchema.plugin(autopopulate);
 
-StaffSchema.index({ phone: 1, company: 1 }, { unique: true }); // 1 is ascending, -1 is descending
-StaffSchema.index({ nationalNumber: 1, company: 1 }, { unique: true });
-StaffSchema.index({ username: 1, company: 1 }, { unique: true });
-StaffSchema.index({ email: 1, company: 1 }, { unique: true });
+// StaffSchema.index({ phone: 1 }, { unique: true });
+// StaffSchema.index({ nationalNumber: 1 }, { unique: true });
+// StaffSchema.index({ username: 1 }, { unique: true });
+// StaffSchema.index({ email: 1 }, { unique: true });
