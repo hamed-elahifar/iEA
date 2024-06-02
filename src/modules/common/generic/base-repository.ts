@@ -35,8 +35,9 @@ export abstract class BaseRepository<T extends Document> {
   }
 
   async findAll(
-    entityFilterQuery: FilterQuery<T>,
+    entityFilterQuery: FilterQuery<T> = {},
     projection?: string[],
+    pagination?: { limit?: number; offset?: number },
     populateOptions?: string | PopulateOptions | (string | PopulateOptions)[],
   ): Promise<T[] | null> {
     let query;
@@ -49,6 +50,14 @@ export abstract class BaseRepository<T extends Document> {
 
     if (populateOptions) {
       query = query.populate(populateOptions);
+    }
+
+    if (pagination.limit) {
+      query = query.limit(pagination.limit);
+    }
+
+    if (pagination.offset) {
+      query = query.offset(pagination.offset);
     }
 
     return query.exec();

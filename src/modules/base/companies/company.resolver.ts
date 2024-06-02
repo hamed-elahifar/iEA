@@ -7,6 +7,7 @@ import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
 import { Roles } from 'src/modules/common/decorators/roles.decorator';
+import { WhereCondition } from '../../common/dto/where-condition.input';
 
 @Resolver((of) => Entity)
 export class CompanyResolver {
@@ -25,10 +26,12 @@ export class CompanyResolver {
     nullable: true,
   })
   async findAll(
-    @Args('PaginationArgs') paginationArgs: PaginationArgs,
     @Selected() select,
+    @Args('WhereCondition', { nullable: true }) where?: WhereCondition,
+    @Args('PaginationArgs', { nullable: true }) pagination?: PaginationArgs,
   ) {
-    return this.service.findAll({}, select);
+    const { where: query } = where;
+    return this.service.findAll({ select, where: query, pagination });
   }
 
   @Query((returns) => Entity, {
@@ -36,8 +39,8 @@ export class CompanyResolver {
     nullable: true,
   })
   async findOne(
-    @Args('id', { type: () => ID }) id: string,
     @Selected() select,
+    @Args('id', { type: () => ID }) id: string,
   ) {
     return this.service.findOne({ _id: id }, select);
   }

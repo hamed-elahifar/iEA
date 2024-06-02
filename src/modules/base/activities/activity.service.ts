@@ -34,11 +34,8 @@ export class ActivityService {
     return this.repository.findOne(entityFilterQuery, projection);
   }
 
-  async findAll(
-    entityFilterQuery: FilterQuery<Entity>,
-    projection: string[],
-  ): Promise<EntityDocument[]> {
-    return this.repository.findAll(entityFilterQuery, projection);
+  async findAll({ select, where, pagination }): Promise<EntityDocument[]> {
+    return this.repository.findAll(where, select, pagination);
   }
 
   async update(id, attrs: UpdateInput): Promise<EntityDocument> {

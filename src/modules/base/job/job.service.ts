@@ -39,8 +39,8 @@ export class JobService {
     return entity;
   }
 
-  async findAll({ select }): Promise<EntityDocument[]> {
-    return this.repository.findAll({}, select);
+  async findAll({ select, where, pagination }): Promise<EntityDocument[]> {
+    return this.repository.findAll(where, select, pagination);
   }
 
   async update(id, attrs: UpdateInput): Promise<EntityDocument> {
