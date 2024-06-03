@@ -5,8 +5,8 @@ import { CreateJobInput as CreateInput } from './dto/create-job.input';
 import { UpdateJobInput as UpdateInput } from './dto/update-job.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
-import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
-import { Roles } from 'src/modules/common/decorators/roles.decorator';
+import { UserRoleEnum } from '../../common/enums/user-role.enum';
+import { Roles } from '../../common/decorators/roles.decorator';
 import { WhereCondition } from '../../common/dto/where-condition.input';
 
 @Resolver((of) => Entity)

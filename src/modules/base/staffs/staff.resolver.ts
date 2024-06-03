@@ -5,7 +5,7 @@ import { UpdateStaffInput as UpdateInput } from './dto/update-staff.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 import { StaffService } from './staff.service';
-import { Public } from 'src/modules/common/decorators';
+import { Public } from '../../common/decorators';
 import { WhereCondition } from '../../common/dto/where-condition.input';
 
 @Public()
