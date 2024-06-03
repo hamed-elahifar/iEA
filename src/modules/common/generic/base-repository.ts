@@ -57,7 +57,7 @@ export abstract class BaseRepository<T extends Document> {
     }
 
     if (pagination.offset) {
-      query = query.offset(pagination.offset);
+      query = query.skip(pagination.offset);
     }
 
     return query.exec();
