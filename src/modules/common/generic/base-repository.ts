@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import {
   Document,
   FilterQuery,
@@ -5,11 +6,24 @@ import {
   PopulateOptions,
   UpdateQuery,
 } from 'mongoose';
+import { Company } from 'src/modules/base/companies';
 
 export abstract class BaseRepository<T extends Document> {
-  constructor(protected readonly entityModel: Model<T>) {}
+  constructor(
+    protected readonly entityModel: Model<T>,
+    protected readonly companyModel: Model<Company>,
+  ) {}
 
-  async create(createEntityData: unknown): Promise<T> {
+  async create(createEntityData: unknown & { company?: string }): Promise<T> {
+    if (createEntityData.company) {
+      const company = await this.companyModel.findOne({
+        _id: createEntityData.company,
+      });
+      if (!company) {
+        throw new NotFoundException(`${Company.name} not found`);
+      }
+    }
+
     const entity = new this.entityModel(createEntityData) as T;
     return entity.save();
   }

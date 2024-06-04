@@ -18,4 +18,11 @@ export class CreateCompanyInput {
   @IsOptional()
   @Field(() => [String], { nullable: true })
   children?: string[];
+
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+    description: 'this field should be empty',
+  })
+  company?: string;
 }

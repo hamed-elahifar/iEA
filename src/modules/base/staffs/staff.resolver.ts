@@ -1,4 +1,13 @@
-import { Resolver, Query, Args, ID, Mutation } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  ID,
+  Mutation,
+  Context,
+  GraphQLExecutionContext,
+  GqlExecutionContext,
+} from '@nestjs/graphql';
 import { Staff as Entity } from './staff.model';
 import { CreateStaffInput as CreateInput } from './dto/create-staff.input';
 import { UpdateStaffInput as UpdateInput } from './dto/update-staff.input';
@@ -7,6 +16,7 @@ import { PaginationArgs } from '../../common/dto/pagination.input';
 import { StaffService } from './staff.service';
 import { Public } from '../../common/decorators';
 import { WhereCondition } from '../../common/dto/where-condition.input';
+import { GetRequestHeaders } from 'src/modules/common/decorators';
 
 @Public()
 @Resolver((of) => Entity)
@@ -26,11 +36,17 @@ export class StaffResolver {
   })
   async findAll(
     @Selected() select,
-    @Args('WhereCondition', { nullable: true }) where?: WhereCondition,
+    @GetRequestHeaders('companyid') companyID,
+    @Args('WhereCondition', { nullable: true }) whereCondition?: WhereCondition,
     @Args('PaginationArgs', { nullable: true }) pagination?: PaginationArgs,
   ) {
-    const { where: query } = where;
-    return this.service.findAll({ select, where: query, pagination });
+    const { where = {} } = whereCondition;
+
+    if (companyID) {
+      Object.assign(where, { company: companyID });
+    }
+
+    return this.service.findAll({ select, where, pagination });
   }
 
   @Query((returns) => Entity, {

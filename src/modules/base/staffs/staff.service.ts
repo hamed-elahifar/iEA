@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+// import { InjectModel } from '@nestjs/mongoose';
+// import { Model } from 'mongoose';
 import {
   Staff as Entity,
   StaffDocument as EntityDocument,
@@ -12,16 +12,25 @@ import {
 import { CreateStaffInput as CreateInput } from './dto/create-staff.input';
 import { UpdateStaffInput as UpdateInput } from './dto/update-staff.input';
 import { StaffRepository } from './staff.repository';
+// import { Company } from '../companies';
 
 @Injectable()
 export class StaffService {
   constructor(
-    @InjectModel(Entity.name)
-    private readonly staffModel: Model<Entity>,
+    // @InjectModel(Company.name)
+    // private readonly companyModel: Model<Company>,
     private readonly repository: StaffRepository,
   ) {}
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
+    // const company = await this.companyModel.findOne({
+    //   _id: createInput.company,
+    // });
+
+    // if (!company) {
+    //   throw new NotFoundException(`${Company.name} not found`);
+    // }
+
     try {
       return this.repository.create(createInput);
     } catch (error) {

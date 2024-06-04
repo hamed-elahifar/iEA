@@ -36,6 +36,9 @@ input CreateActivityInput {
 
 input CreateCompanyInput {
   children: [String!]
+
+  """this field should be empty"""
+  company: String
   mission: String
   name: String!
   vision: String

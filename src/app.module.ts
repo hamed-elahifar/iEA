@@ -52,7 +52,19 @@ import {
         // ApolloServerPluginLandingPageLocalDefault(),
         // ApolloServerPluginInlineTrace(),
       ],
-      context: ({ req, res }) => ({ req, res }),
+      // context: ({ req, res }) => ({ req, res }),
+      context: ({ req, connection }) =>
+        connection
+          ? {
+              connection: {
+                headers: {
+                  authorization: connection.context['Authorization']
+                    ? connection.context['Authorization']
+                    : connection.context['authorization'],
+                },
+              },
+            }
+          : { req },
       cors: {
         credentials: true,
         origin: true,
@@ -75,6 +87,7 @@ import {
             }
           : (error: GraphQLError) => error,
     }),
+
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
