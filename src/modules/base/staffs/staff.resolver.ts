@@ -16,7 +16,7 @@ import { PaginationArgs } from '../../common/dto/pagination.input';
 import { StaffService } from './staff.service';
 import { Public } from '../../common/decorators';
 import { WhereCondition } from '../../common/dto/where-condition.input';
-import { GetRequestHeaders } from 'src/modules/common/decorators';
+import { GetRequestHeaders } from '../../common/decorators';
 
 @Public()
 @Resolver((of) => Entity)

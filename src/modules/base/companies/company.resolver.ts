@@ -8,7 +8,7 @@ import { PaginationArgs } from '../../common/dto/pagination.input';
 import { UserRoleEnum } from '../../common/enums/user-role.enum';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { WhereCondition } from '../../common/dto/where-condition.input';
-import { GetRequestHeaders } from 'src/modules/common/decorators';
+import { GetRequestHeaders } from '../../common/decorators';
 
 @Resolver((of) => Entity)
 export class CompanyResolver {

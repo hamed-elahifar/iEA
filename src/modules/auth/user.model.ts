@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { hash } from 'bcrypt';
 import { Document } from 'mongoose';
-import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
+import { UserRoleEnum } from '../common/enums/user-role.enum'; 
 
 @Schema({ timestamps: true })
 export class User extends Document {

@@ -7,7 +7,7 @@ import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
 import { UseGuards } from '@nestjs/common';
 import { WhereCondition } from '../../common/dto/where-condition.input';
-import { GetRequestHeaders } from 'src/modules/common/decorators';
+import { GetRequestHeaders } from '../../common/decorators';
 
 @Resolver((of) => Entity)
 export class ActivityResolver {

@@ -6,7 +6,7 @@ import {
   PopulateOptions,
   UpdateQuery,
 } from 'mongoose';
-import { Company } from 'src/modules/base/companies';
+import { Company } from '../../base/companies';
 
 export abstract class BaseRepository<T extends Document> {
   constructor(

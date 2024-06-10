@@ -17,7 +17,7 @@ export class DepartmentService {
   constructor(
     private readonly companyRepository: CompanyRepository,
     private readonly repository: DepartmentRepository,
-  ) {}
+  ) { }
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     const company = await this.companyRepository.findOne({
@@ -28,14 +28,14 @@ export class DepartmentService {
       throw new NotFoundException(`${Company.name} not found`);
     }
 
-    try {
-      return this.repository.create(createInput);
-    } catch (error) {
-      if ((error.code = 11000)) {
-        throw new ConflictException('Already Exists');
-      }
-      throw error;
+    const exist = await this.repository.findOne({ title: createInput.title, company: createInput.company })
+
+    if (exist) {
+      throw new ConflictException(`${Entity.name} aleady exist`)
     }
+
+    return this.repository.create(createInput);
+
   }
 
   async findOne({

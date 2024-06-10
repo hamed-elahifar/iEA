@@ -66,4 +66,4 @@ export class Department {
 export const DepartmentSchema = SchemaFactory.createForClass(Department);
 DepartmentSchema.plugin(autopopulate);
 
-DepartmentSchema.index({ title: 1 }, { unique: true });
+DepartmentSchema.index({ title: 1, company: 1 }, { unique: true });
