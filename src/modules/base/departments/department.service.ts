@@ -10,16 +10,28 @@ import {
 import { DepartmentRepository } from './department.repository';
 import { CreateDepartmentInput as CreateInput } from './dto/create-department.input';
 import { UpdateDepartmentInput as UpdateInput } from './dto/update-department.input';
+import { Company, CompanyRepository } from '../companies';
 
 @Injectable()
 export class DepartmentService {
-  constructor(private readonly repository: DepartmentRepository) {}
+  constructor(
+    private readonly companyRepository: CompanyRepository,
+    private readonly repository: DepartmentRepository,
+  ) {}
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
+    const company = await this.companyRepository.findOne({
+      _id: createInput.company,
+    });
+
+    if (!company) {
+      throw new NotFoundException(`${Company.name} not found`);
+    }
+
     try {
       return this.repository.create(createInput);
     } catch (error) {
-      if (error.code == 11000) {
+      if ((error.code = 11000)) {
         throw new ConflictException('Already Exists');
       }
       throw error;

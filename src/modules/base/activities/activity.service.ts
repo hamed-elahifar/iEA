@@ -11,16 +11,28 @@ import { CreateActivityInput as CreateInput } from './dto/create-activity.input'
 import { UpdateActivityInput as UpdateInput } from './dto/update-activity.input';
 import { ActivityRepository } from './activity.repository';
 import { FilterQuery } from 'mongoose';
+import { Company, CompanyRepository } from '../companies';
 
 @Injectable()
 export class ActivityService {
-  constructor(private readonly repository: ActivityRepository) {}
+  constructor(
+    private readonly companyRepository: CompanyRepository,
+    private readonly repository: ActivityRepository,
+  ) {}
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
+    const company = await this.companyRepository.findOne({
+      _id: createInput.company,
+    });
+
+    if (!company) {
+      throw new NotFoundException(`${Company.name} not found`);
+    }
+
     try {
       return this.repository.create(createInput);
     } catch (error) {
-      if (error.code == 11000) {
+      if ((error.code = 11000)) {
         throw new ConflictException('Already Exists');
       }
       throw error;
