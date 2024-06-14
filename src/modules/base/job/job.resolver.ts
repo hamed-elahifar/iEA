@@ -9,7 +9,10 @@ import { UserRoleEnum } from '../../common/enums/user-role.enum';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { WhereCondition } from '../../common/dto/where-condition.input';
 import { GetRequestHeaders } from '../../common/decorators';
+import { UseGuards } from '@nestjs/common';
+import { AccessTokenGuard } from '../../common/guards';
 
+@UseGuards(AccessTokenGuard)
 @Resolver((of) => Entity)
 export class JobResolver {
   constructor(private readonly service: JobService) {}

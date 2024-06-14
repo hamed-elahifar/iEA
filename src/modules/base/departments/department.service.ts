@@ -11,12 +11,14 @@ import { DepartmentRepository } from './department.repository';
 import { CreateDepartmentInput as CreateInput } from './dto/create-department.input';
 import { UpdateDepartmentInput as UpdateInput } from './dto/update-department.input';
 import { Company, CompanyRepository } from '../companies';
+import { StaffRepository } from '../staffs';
 
 @Injectable()
 export class DepartmentService {
   constructor(
     private readonly companyRepository: CompanyRepository,
     private readonly repository: DepartmentRepository,
+    private readonly staffRepository: StaffRepository,
   ) { }
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
@@ -29,13 +31,16 @@ export class DepartmentService {
     }
 
     const exist = await this.repository.findOne({ title: createInput.title, company: createInput.company })
-
     if (exist) {
       throw new ConflictException(`${Entity.name} aleady exist`)
     }
 
-    return this.repository.create(createInput);
+    const supervisor = await this.staffRepository.findOne({ _id: createInput.supervisor })
+    if (!supervisor) {
+      throw new NotFoundException(`supervisor not found`);
+    }
 
+    return this.repository.create(createInput);
   }
 
   async findOne({

@@ -5,11 +5,14 @@ import { CreateDepartmentInput as CreateInput } from './dto/create-department.in
 import { UpdateDepartmentInput as UpdateInput } from './dto/update-department.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
-import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
-import { Roles } from 'src/modules/common/decorators/roles.decorator';
+// import { UserRoleEnum } from 'src/modules/common/enums/user-role.enum';
+// import { Roles } from 'src/modules/common/decorators/roles.decorator';
 import { WhereCondition } from '../../common/dto/where-condition.input';
 import { GetRequestHeaders } from '../../common/decorators';
+import { UseGuards } from '@nestjs/common';
+import { AccessTokenGuard } from '../../common/guards';
 
+@UseGuards(AccessTokenGuard)
 @Resolver((of) => Entity)
 export class DepartmentResolver {
   constructor(private readonly service: DepartmentService) {}

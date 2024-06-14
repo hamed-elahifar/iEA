@@ -4,9 +4,9 @@ import {
   Args,
   ID,
   Mutation,
-  Context,
-  GraphQLExecutionContext,
-  GqlExecutionContext,
+  // Context,
+  // GraphQLExecutionContext,
+  // GqlExecutionContext,
 } from '@nestjs/graphql';
 import { Staff as Entity } from './staff.model';
 import { CreateStaffInput as CreateInput } from './dto/create-staff.input';
@@ -17,11 +17,14 @@ import { StaffService } from './staff.service';
 import { Public } from '../../common/decorators';
 import { WhereCondition } from '../../common/dto/where-condition.input';
 import { GetRequestHeaders } from '../../common/decorators';
+import { UseGuards } from '@nestjs/common';
+import { AccessTokenGuard } from '../../common/guards';
 
+@UseGuards(AccessTokenGuard)
 @Public()
 @Resolver((of) => Entity)
 export class StaffResolver {
-  constructor(private readonly service: StaffService) {}
+  constructor(private readonly service: StaffService) { }
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,
     nullable: true,
