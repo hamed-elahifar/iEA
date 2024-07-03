@@ -57,11 +57,13 @@ input CreateJobInput {
   company: String!
   department: String!
   grading: String!
+  organizationLevel: OrganizationLevelEnum!
   title: String!
 }
 
 input CreateStaffInput {
   company: String!
+  department: String!
   email: String
   firstname: String
   lastname: String
@@ -101,7 +103,6 @@ type Job {
   deletedAt: Date!
   grading: String!
   organizationLevel: OrganizationLevelEnum!
-  posts: Post!
   title: String!
   updatedAt: Date!
 }
@@ -131,7 +132,6 @@ enum OrganizationLevelEnum {
   EXPERT
   MANAGEMENT
   PRESIDENCY
-  RESPONSIBLE
   SUPERIOR
   TECHNICIAN
   WORKER
@@ -140,16 +140,6 @@ enum OrganizationLevelEnum {
 input PaginationArgs {
   limit: Int = 10
   offset: Int = 0
-}
-
-type Post {
-  _id: String!
-  company: Company!
-  createdAt: Date!
-  deletedAt: Date!
-  owner: Staff!
-  title: String!
-  updatedAt: Date!
 }
 
 type Query {
@@ -170,6 +160,7 @@ type Staff {
   company: Company!
   createdAt: Date!
   deletedAt: Date
+  department: String
   email: String
   firstname: String
   job: String
@@ -209,6 +200,7 @@ input UpdateJobInput {
 }
 
 input UpdateStaffInput {
+  department: String!
   firstname: String
   lastname: String
   nationalNumber: String

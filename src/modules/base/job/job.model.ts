@@ -26,18 +26,18 @@ export class Job {
   @Prop({ type: String })
   grading: string;
 
-  @Field(() => Post)
-  @Prop({
-    type: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: Post.name,
-        autopopulate: true,
-      },
-    ],
-    required: true,
-  })
-  posts: Post[];
+  // @Field(() => Post)
+  // @Prop({
+  //   type: [
+  //     {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: Post.name,
+  //       autopopulate: true,
+  //     },
+  //   ],
+  //   required: true,
+  // })
+  // posts: Post[];
 
   @Field(() => Company)
   @Prop({

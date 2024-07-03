@@ -18,7 +18,7 @@ export class ActivityService {
   constructor(
     private readonly companyRepository: CompanyRepository,
     private readonly repository: ActivityRepository,
-  ) {}
+  ) { }
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     const company = await this.companyRepository.findOne({
@@ -41,28 +41,27 @@ export class ActivityService {
 
   async findOne(
     entityFilterQuery: FilterQuery<Entity>,
-    projection: string[],
+    projection?: string[],
   ): Promise<EntityDocument> {
     return this.repository.findOne(entityFilterQuery, projection);
   }
 
-  async findAll({ select, where, pagination }): Promise<EntityDocument[]> {
+  async findAll({ select, where, pagination }: { select: string[], where: object, pagination?: object }): Promise<EntityDocument[]> {
     return this.repository.findAll(where, select, pagination);
   }
 
-  async update(id, attrs: UpdateInput): Promise<EntityDocument> {
+  async update(_id, attrs: UpdateInput): Promise<EntityDocument> {
     // @TODO may be we should find it first
-    const result = await this.repository.update({ _id: id }, { $set: attrs });
+    const result = await this.repository.update({ _id }, { $set: attrs });
 
     if (!result) {
-      throw new NotFoundException(`${id} not found`);
+      throw new NotFoundException(`${_id} not found`);
     }
-
     return result;
   }
 
-  async delete(id: string) {
-    // @TODO may be we should find it first
-    return this.repository.delete({ id });
+  async delete(_id: string) {
+     // @TODO may be we should find it first
+    return this.repository.delete({ _id });
   }
 }

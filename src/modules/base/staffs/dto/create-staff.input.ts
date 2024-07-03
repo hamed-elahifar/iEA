@@ -50,4 +50,9 @@ export class CreateStaffInput {
   @IsString()
   @Field()
   company: string;
+
+  @IsString()
+  @IsOptional()
+  @Field()
+  department?: string
 }

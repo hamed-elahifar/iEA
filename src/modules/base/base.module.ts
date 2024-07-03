@@ -6,6 +6,7 @@ import {
   CompanyRepository,
   CompanyResolver,
   CompanyService,
+  CompanyController,
 } from './companies';
 import { ActivityRepository } from './activities/activity.repository';
 import { JwtModule } from '@nestjs/jwt';
@@ -18,6 +19,7 @@ import {
   DepartmentResolver,
   DepartmentService,
   DepartmentRepository,
+  DepartmentController,
 } from './departments';
 import {
   Staff,
@@ -25,6 +27,7 @@ import {
   StaffRepository,
   StaffResolver,
   StaffService,
+  StaffController,
 } from './staffs';
 import {
   Activity,
@@ -32,11 +35,13 @@ import {
   ActivityResolver,
   ActivitySchema,
   ActivityService,
+  ActivityController,
 } from './activities';
-import { Job, JobSchema, JobRepository, JobResolver, JobService } from './job';
+import { Job, JobSchema, JobRepository, JobResolver, JobService, JobController } from './job';
 import { Post, PostSchema } from './job/post.model';
 
 @Module({
+  controllers: [ActivityController, CompanyController, DepartmentController, StaffController, JobController],
   imports: [
     AuthModule,
     ConfigModule,
@@ -87,4 +92,4 @@ import { Post, PostSchema } from './job/post.model';
     JobRepository,
   ],
 })
-export class BaseModule {}
+export class BaseModule { }

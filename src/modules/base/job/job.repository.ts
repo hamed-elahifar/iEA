@@ -9,8 +9,7 @@ import { Company } from '../companies';
 export class JobRepository extends BaseRepository<EntityDocument> {
   constructor(
     @InjectModel(Entity.name) model: Model<EntityDocument>,
-    @InjectModel(Company.name) companyModel: Model<Company>,
   ) {
-    super(model, companyModel);
+    super(model);
   }
 }

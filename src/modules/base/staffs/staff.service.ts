@@ -19,7 +19,7 @@ export class StaffService {
     @InjectModel(Company.name)
     private readonly companyRepository: CompanyRepository,
     private readonly repository: StaffRepository,
-  ) {}
+  ) { }
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     const company = await this.companyRepository.findOne({
@@ -56,7 +56,7 @@ export class StaffService {
     return entity;
   }
 
-  async findAll({ select, where, pagination }): Promise<EntityDocument[]> {
+  async findAll({ select, where, pagination }: {select: string[], where: object, pagination?: object}): Promise<EntityDocument[]> {
     return this.repository.findAll(where, select, pagination);
   }
 
@@ -70,7 +70,7 @@ export class StaffService {
     return result;
   }
 
-  async delete(id: string) {
-    return this.repository.delete({ id });
+  async delete(_id: string) {
+    return this.repository.delete({ _id });
   }
 }

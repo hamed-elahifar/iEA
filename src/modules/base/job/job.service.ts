@@ -14,7 +14,7 @@ export class JobService {
   constructor(
     private readonly companyRepository: CompanyRepository,
     private readonly repository: JobRepository,
-  ) {}
+  ) { }
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     const company = await this.companyRepository.findOne({
@@ -51,7 +51,7 @@ export class JobService {
     return entity;
   }
 
-  async findAll({ select, where, pagination }): Promise<EntityDocument[]> {
+  async findAll({ select, where, pagination }: { select: string[], where: object, pagination?: object }): Promise<EntityDocument[]> {
     return this.repository.findAll(where, select, pagination);
   }
 
@@ -65,7 +65,7 @@ export class JobService {
     return result;
   }
 
-  async delete(id: string) {
-    return this.repository.delete({ id });
+  async delete(_id: string) {
+    return this.repository.delete({ _id });
   }
 }

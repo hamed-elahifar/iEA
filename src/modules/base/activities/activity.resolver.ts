@@ -5,10 +5,12 @@ import { CreateActivityInput as CreateInput } from './dto/create-activity.input'
 import { UpdateActivityInput as UpdateInput } from './dto/update-activity.input';
 import { Selected } from '../../common/decorators/selected.decorator';
 import { PaginationArgs } from '../../common/dto/pagination.input';
-import { UseGuards } from '@nestjs/common';
 import { WhereCondition } from '../../common/dto/where-condition.input';
 import { GetRequestHeaders } from '../../common/decorators';
+import { UseGuards } from '@nestjs/common';
+import { AccessTokenGuard } from '../../common/guards';
 
+@UseGuards(AccessTokenGuard)
 @Resolver((of) => Entity)
 export class ActivityResolver {
   constructor(private readonly service: ActivityService) {}

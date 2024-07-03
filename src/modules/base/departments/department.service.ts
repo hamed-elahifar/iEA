@@ -59,7 +59,7 @@ export class DepartmentService {
     return entity;
   }
 
-  async findAll({ select, where, pagination }): Promise<EntityDocument[]> {
+  async findAll({ select, where, pagination }: { select: string[], where: object, pagination?: object }): Promise<EntityDocument[]> {
     return this.repository.findAll(where, select, pagination);
   }
 
@@ -73,7 +73,7 @@ export class DepartmentService {
     return result;
   }
 
-  async delete(id: string) {
-    return this.repository.delete({ id });
+  async delete(_id: string) {
+    return this.repository.delete({ _id });
   }
 }

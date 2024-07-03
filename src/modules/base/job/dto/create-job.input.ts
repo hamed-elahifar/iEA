@@ -1,6 +1,7 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
 import { Post } from '../post.model';
+import { OrganizationLevelEnum } from '../enums';
 
 @InputType()
 export class CreateJobInput {
@@ -19,6 +20,10 @@ export class CreateJobInput {
   @IsString()
   @Field()
   company: string;
+  
+  @IsString()
+  @Field()
+  organizationLevel: OrganizationLevelEnum
 
   // @Field(() => [Post])
   // posts: Post[];

@@ -5,3 +5,4 @@ export * from './activity.service';
 export * from './activity-company.resolver';
 export * from './dto/';
 export * from './enums/';
+export * from './activity.controller'

@@ -25,7 +25,7 @@ export class CompanyResolver {
     nullable: true,
   })
   async create(@Args(`create${Entity.name}Input`) createInput: CreateInput, @GetCurrentUser() user: any) {
-    console.log(user)
+    // console.log(user)
     return this.service.create(createInput);
   }
 

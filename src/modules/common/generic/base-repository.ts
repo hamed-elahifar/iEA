@@ -1,4 +1,3 @@
-import { NotFoundException } from '@nestjs/common';
 import {
   Document,
   FilterQuery,
@@ -6,24 +5,13 @@ import {
   PopulateOptions,
   UpdateQuery,
 } from 'mongoose';
-import { Company } from '../../base/companies';
 
 export abstract class BaseRepository<T extends Document> {
   constructor(
     protected readonly entityModel: Model<T>,
-    protected readonly companyModel: Model<Company>,
-  ) {}
+  ) { }
 
   async create(createEntityData: unknown & { company?: string }): Promise<T> {
-    if (createEntityData.company) {
-      const company = await this.companyModel.findOne({
-        _id: createEntityData.company,
-      });
-      if (!company) {
-        throw new NotFoundException(`${Company.name} not found`);
-      }
-    }
-
     const entity = new this.entityModel(createEntityData) as T;
     return entity.save();
   }
@@ -66,11 +54,11 @@ export abstract class BaseRepository<T extends Document> {
       query = query.populate(populateOptions);
     }
 
-    if (pagination.limit) {
+    if (pagination?.limit) {
       query = query.limit(pagination.limit);
     }
 
-    if (pagination.offset) {
+    if (pagination?.offset) {
       query = query.skip(pagination.offset);
     }
 

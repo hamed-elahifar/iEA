@@ -61,6 +61,10 @@ export class Staff {
   })
   company: Company;
 
+  @Field({ nullable: true })
+  @Prop({ required: false })
+  department?: string
+
   @Field(() => Date)
   createdAt: Date;
 

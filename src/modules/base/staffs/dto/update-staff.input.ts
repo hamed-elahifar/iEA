@@ -32,4 +32,9 @@ export class UpdateStaffInput {
   @IsOptional()
   @Field({ nullable: true })
   position?: string;
+
+  @IsString()
+  @IsOptional()
+  @Field()
+  department: string
 }

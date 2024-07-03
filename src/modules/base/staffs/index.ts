@@ -3,3 +3,4 @@ export * from './staff.repository';
 export * from './staff.resolver';
 export * from './staff.service';
 export * from './dto/';
+export * from './staff.controller'

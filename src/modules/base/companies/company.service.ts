@@ -8,19 +8,18 @@ import {
   CompanyDocument as EntityDocument,
 } from './company.model';
 import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
-import { CompanyRepository } from './company.repository';
 import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
+import { CompanyRepository } from './company.repository';
 import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class CompanyService {
-  constructor(private readonly repository: CompanyRepository) {}
+  constructor(private readonly repository: CompanyRepository) { }
 
   async create(createInput: CreateInput): Promise<EntityDocument> {
     const exist = await this.findOne({
       entityFilterQuery: { name: createInput.name },
     });
-
     if (exist) {
       throw new ConflictException(`${Entity.name} aleady exist`);
     }
@@ -38,7 +37,7 @@ export class CompanyService {
     return this.repository.findOne(entityFilterQuery, projection);
   }
 
-  async findAll({ select, where, pagination }): Promise<EntityDocument[]> {
+  async findAll({ select, where, pagination }: { select: string[], where: object, pagination?: object }): Promise<EntityDocument[]> {
     return this.repository.findAll(where, select, pagination);
   }
 
@@ -52,7 +51,7 @@ export class CompanyService {
     return result;
   }
 
-  async delete(id: string) {
-    return this.repository.delete({ id });
+  async delete(_id: string) {
+    return this.repository.delete({ _id });
   }
 }
