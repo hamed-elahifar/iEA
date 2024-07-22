@@ -19,7 +19,7 @@ export class CreateActivityInput {
   @IsString()
   @IsOptional()
   @Field()
-  position: string;
+  position?: string;
 
   @IsString()
   @Field()

@@ -8,6 +8,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 import { altairExpress } from 'altair-express-middleware';
 
+
 async function bootstrap() {
   const logger = new Logger('Main');
 
@@ -35,6 +36,9 @@ async function bootstrap() {
     // logger: false,
     // logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
+
+  
+
 
   app.enableCors({
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
@@ -85,22 +89,22 @@ async function bootstrap() {
 
   app.use(compression());
 
-  app.use(
-    '/graphql',
-    altairExpress({
-      endpointURL: '/graphql',
-      subscriptionsEndpoint: '/graphql',
-      subscriptionsProtocol: 'ws',
-      initialSettings: {
-        'theme.editorFontFamily':
-          "'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace",
-        'theme.fontsize': 24,
-        theme: 'dark',
-        enableExperimental: false,
-        'request.withCredentials': true,
-      },
-    }),
-  );
+  // app.use(
+  //   '/graphql',
+  //   altairExpress({
+  //     endpointURL: '/graphql',
+  //     subscriptionsEndpoint: '/graphql',
+  //     subscriptionsProtocol: 'ws',
+  //     initialSettings: {
+  //       'theme.editorFontFamily':
+  //         "'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace",
+  //       'theme.fontsize': 24,
+  //       theme: 'dark',
+  //       enableExperimental: false,
+  //       'request.withCredentials': true,
+  //     },
+  //   }),
+  // );
 
   const port: number = +configService.getOrThrow<number>('PORT');
 

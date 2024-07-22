@@ -21,11 +21,11 @@ export class CompanyService {
       entityFilterQuery: { name: createInput.name },
     });
     if (exist) {
-      throw new ConflictException(`${Entity.name} aleady exist`);
+      throw new ConflictException(`${Entity.name} already exists`);
     }
 
     // @TODO
-    // loop all childeren ID and check if they are exist
+    // loop all children ID and check if they are exist
 
     return this.repository.create(createInput);
   }

@@ -32,7 +32,7 @@ export class DepartmentService {
 
     const exist = await this.repository.findOne({ title: createInput.title, company: createInput.company })
     if (exist) {
-      throw new ConflictException(`${Entity.name} aleady exist`)
+      throw new ConflictException(`${Entity.name} already exists`)
     }
 
     const supervisor = await this.staffRepository.findOne({ _id: createInput.supervisor })

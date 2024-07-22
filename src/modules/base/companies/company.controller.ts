@@ -6,7 +6,6 @@ import { Company } from './company.model';
 import { CreateCompanyInput as CreateInput } from './dto/create-company.input';
 import { UpdateCompanyInput as UpdateInput } from './dto/update-company.input';
 
-
 @UseGuards(AccessTokenGuard)
 @Controller('company')
 export class CompanyController {

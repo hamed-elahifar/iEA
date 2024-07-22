@@ -11,32 +11,39 @@ import { JwtPayload, Tokens } from './types';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './user.model';
-import { HashingSerivce } from './hashing.service';
+import { HashingService } from './hashing.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<User>,
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
     private jwtService: JwtService,
     private config: ConfigService,
-    private readonly hashingService: HashingSerivce,
-  ) {}
+    private readonly hashingService: HashingService,
+  ) { }
 
   async signup(dto: AuthDto): Promise<Tokens> {
-    let token;
     try {
-      const user = new this.userModel(dto);
-      await user.save();
-      token = await this.generateToken({
+      const hashedPassword = await this.hashingService.hash(dto.password);
+      const user = await this.userModel.create({
+        ...dto,
+        password: hashedPassword,
+      });
+  
+      const token = await this.generateToken({
         id: user.id,
         username: user.username,
         company: user.company,
       });
+  
+      return token;
     } catch (error) {
-      throw new ConflictException();
+      if (error.code === 11000) {
+        throw new ConflictException('Username already exists');
+      }
+      throw error;
     }
-
-    return token;
   }
 
   async login(dto: AuthDto): Promise<Tokens> {

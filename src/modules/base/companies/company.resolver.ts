@@ -13,19 +13,16 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 import { UseGuards } from '@nestjs/common';
 import { AccessTokenGuard } from '../../common/guards';
 
-// @UseGuards(RolesGuard) 
 @UseGuards(AccessTokenGuard)
 @Resolver((of) => Entity)
 export class CompanyResolver {
   constructor(private readonly service: CompanyService) { }
 
-  // @Roles(UserRoleEnum.ADMIN)
   @Mutation((returns) => Entity, {
     name: `create${Entity.name}`,
     nullable: true,
   })
   async create(@Args(`create${Entity.name}Input`) createInput: CreateInput, @GetCurrentUser() user: any) {
-    // console.log(user)
     return this.service.create(createInput);
   }
 
