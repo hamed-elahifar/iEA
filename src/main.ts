@@ -7,7 +7,7 @@ import mongoose from 'mongoose';
 import compression from 'compression';
 import helmet from 'helmet';
 import { altairExpress } from 'altair-express-middleware';
-
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const logger = new Logger('Main');
@@ -37,7 +37,28 @@ async function bootstrap() {
     // logger: ['log', 'error', 'warn', 'debug', 'verbose'],
   });
 
-  
+  const options = new DocumentBuilder()
+    .setTitle('IEA API')
+    .setDescription('Your API description')
+    .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'Authorization',
+        description: 'Enter the token with the `Bearer: ` prefix, e.g. "Bearer abcde12345".',
+        in: 'header'
+      },
+      'access-token', // This name here is important for matching up with @ApiBearerAuth() in your controller!
+    )
+    .addServer('http://localhost:3000/', 'Local environment')
+    .addServer('https://srv.cloudium.ir:3000/', 'Staging')
+    .addTag('Your API Tag')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api-docs', app, document);
 
 
   app.enableCors({

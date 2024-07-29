@@ -32,7 +32,7 @@ export class ActivityService {
     try {
       return this.repository.create(createInput);
     } catch (error) {
-      if ((error.code = 11000)) {
+      if (error.code === 11000) {
         throw new ConflictException('Already Exists');
       }
       throw error;
