@@ -39,7 +39,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle('IEA API')
-    .setDescription('Your API description')
+    .setDescription('API Documentation')
     .setVersion('1.0')
     .addBearerAuth(
       {
@@ -52,9 +52,9 @@ async function bootstrap() {
       },
       'access-token', // This name here is important for matching up with @ApiBearerAuth() in your controller!
     )
-    .addServer('http://localhost:3000/', 'Local environment')
-    .addServer('http://srv.cloudium.ir:3000/', 'Staging')
-    .addTag('Your API Tag')
+    // .addServer('http://localhost:3000/', 'Local environment')
+    // .addServer('http://srv.cloudium.ir:3000/', 'Staging')
+    // .addTag('Your API Tag')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
