@@ -53,7 +53,7 @@ async function bootstrap() {
       'access-token', // This name here is important for matching up with @ApiBearerAuth() in your controller!
     )
     .addServer('http://localhost:3000/', 'Local environment')
-    .addServer('https://srv.cloudium.ir:3000/', 'Staging')
+    .addServer('http://srv.cloudium.ir:3000/', 'Staging')
     .addTag('Your API Tag')
     .build();
 
